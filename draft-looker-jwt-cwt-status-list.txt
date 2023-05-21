@@ -1,0 +1,352 @@
+
+
+
+
+Network Working Group                                          T. Looker
+Internet-Draft                                                     MATTR
+Intended status: Informational                               21 May 2023
+Expires: 22 November 2023
+
+
+                        JWT and CWT Status List
+                draft-looker-jwt-cwt-status-list-latest
+
+Abstract
+
+   This specification defines a status list representation and
+   processing rules for usage with JSON Web Tokens [RFC7519] and CBOR
+   Web Tokens [RFC8392].
+
+About This Document
+
+   This note is to be removed before publishing as an RFC.
+
+   The latest revision of this draft can be found at
+   https://vcstuff.github.io/draft-looker-jwt-cwt-status-list/draft-
+   looker-jwt-cwt-status-list.html.  Status information for this
+   document may be found at https://datatracker.ietf.org/doc/draft-
+   looker-jwt-cwt-status-list/.
+
+   Source for this draft and an issue tracker can be found at
+   https://github.com/vcstuff/draft-looker-jwt-cwt-status-list.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 22 November 2023.
+
+Copyright Notice
+
+   Copyright (c) 2023 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.
+
+Table of Contents
+
+   1.  Introduction
+   2.  Conventions and Definitions
+   3.  JSON Web Token Representation
+     3.1.  JWT Format and Processing Requirements
+       3.1.1.  Status Claim Format
+     3.2.  Status List JWT Format and Processing Requirements
+       3.2.1.  Status List Claim Format
+     3.3.  Revocation Status List Definition
+   4.  Security Considerations
+     4.1.  Correct decoding and parsing of the encoded status list
+     4.2.  Cached and Stale status lists
+     4.3.  Authorized access to the Status List
+     4.4.  History
+   5.  Privacy Considerations
+     5.1.  Herd Privacy
+     5.2.  Profiling
+     5.3.  Correlation Risks and Tracking
+     5.4.  Malicious Issuers
+     5.5.  Hosting Service (what's a better name here?)
+   6.  IANA Considerations
+   7.  Normative References
+   Acknowledgments
+   Author's Address
+
+1.  Introduction
+
+   JSON Web Tokens (JWTs) [RFC7519] and CBOR Web Tokens (CWTs) [RFC8392]
+   as secure token formats, have vast possible applications.  Some of
+   these applications can involve issuing a token whereby certain
+   semantics about the token can change over time which are important to
+   be able to communicate to relying parties in an interoperable manner,
+   such as whether the token is considered revoked by its issuer.
+
+   This document defines a status list using JWT and CWT for
+   representation that is capable of communicating the individual
+   statuses of multiple tokens.  The document also defines how an issuer
+   of a token references a status list in a JWT or CWT which has a
+   status to convey.
+
+   The following diagram depicts the basic conceptual relationship.
+
+   +---------------+                     +---------------+
+   |               |                     |               |
+   |               |                     |               |
+   |     Token     |    References       |  Status List  |
+   |(JWT/CWT Based)|-------------------->|(JWT/CWT Based)|
+   |               |                     |               |
+   |               |                     |               |
+   +---------------+                     +---------------+
+
+2.  Conventions and Definitions
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
+3.  JSON Web Token Representation
+
+3.1.  JWT Format and Processing Requirements
+
+   The following rules apply to validating a JWT which references a
+   status list.  Application of additional restrictions and policy are
+   at the discretion of the verifying party.
+
+   1.  The JWT MUST contain an "iss" (issuer) claim that contains a
+       unique string based identifier for the entity that issued the
+       JWT.  In the absence of an application profile specifying
+       otherwise, compliant applications MUST compare issuer values
+       using the Simple String Comparison method defined in
+       Section 6.2.1 of [RFC3986].  The value MUST be equal to that of
+       the "iss" claim contained within the referenced status list JWT.
+
+   2.  The JWT MUST contain an "sts" (status) claim conforming to the
+       rules outlined in Section 3.1.1
+
+   The following example is the decoded header and payload of a JWT
+   meeting the processing rules as defined above.
+
+   {
+     "alg": "ES256",
+     "kid": "11"
+   }
+   .
+   {
+     "iss": "https://example.com",
+     "sts": {
+       "typ": "revocation-list",
+       "idx": 0,
+       "uri": "https://example.com/statuslists/1"
+     }
+   }
+
+3.1.1.  Status Claim Format
+
+   The following rules apply to validating the "sts" (status) claim
+
+   1.  The claim value MUST be a valid JSON object.
+
+   2.  The claim value object MUST contain a "typ" (type) attribute with
+       a string based value that represents the type of status list
+       referenced.  The value MUST be equal to that of the "typ"
+       attribute in the "sts_lst" claim for the referenced status list.
+
+   3.  The claim value object MUST contain an "idx" (index) attribute
+       with a numberic based value that represents the index to check
+       for status information in the status list for the current JWT.
+       The value of this attribute MUST be a non-negative number,
+       containing a value of zero or greater.  Refer to xx for details
+       on the validation procedure.
+
+   4.  The claim value object MUST contain a "uri" attribute with a
+       string based value that identifies the status list containing the
+       status information for the JWT.  The value of this attribute MUST
+       be a uri conforming to [RFC3986]
+
+3.2.  Status List JWT Format and Processing Requirements
+
+   The following rules apply to validating a JWT based status list.
+   Application of additional restrictions and policy are at the
+   discretion of the verifying party.
+
+   1.  The JWT MUST contain an "iss" (issuer) claim that contains a
+       unique string based identifier for the entity that issued the
+       JWT.  In the absence of an application profile specifying
+       otherwise, compliant applications MUST compare issuer values
+       using the Simple String Comparison method defined in
+       Section 6.2.1 of [RFC3986].  The value MUST be equal to that of
+       the "iss" claim contained within the JWT who's status is being
+       verified.
+
+   2.  The JWT MUST contain an "iat" (issued at) claim that identifies
+       the time at which it was issued.
+
+   3.  The JWT MUST contain an "sts_lst" (status list) claim conforming
+       to the rules outlined in Section 3.2.1.
+
+   4.  The JWT MAY contain an "exp" (expiration time) claim that
+       convey's when it is considered expired by its issuer.
+
+   5.  The JWT MAY contain other claims.
+
+   6.  The JWT MUST be digitally signed using an asymmetric
+       cryptographic algorithm.  Relying parties MUST reject the JWT if
+       it is using a Message Authentication Code (MAC) based algorithm.
+       Relying parties MUST reject JWTs with an invalid signature.
+
+   7.  Relying parties MUST reject a JWT that is not valid in all other
+       respects per "JSON Web Token (JWT)" [RFC7519].
+
+   {
+     "alg": "ES256",
+     "kid": "11"
+   }
+   .
+   {
+     "iss": "https://example.com",
+     "iat": 1683560915,
+     "exp": 1686232115,
+     "sts_lst": {
+       "typ": "revocation-list",
+       "lst": "H4sIAAAAAAAAA-3BMQEAAADCoPVPbQwfoAA......IC3AYbSVKsAQAAA"
+     }
+   }
+
+3.2.1.  Status List Claim Format
+
+   The following rules apply to validating the "sts_lst" (status list)
+   claim
+
+   1.  The claim value MUST be a valid JSON object.
+
+   2.  The claim value object MUST contain a "typ" (type) attribute with
+       a string based value that represents the type of status list
+       referenced.  The value MUST be equal to that of the "typ"
+       attribute in the "sts" claim for the token who's status is being
+       validated.
+
+   3.  The claim value object MUST contain a "lst" (list) attribute with
+       a string based value that represents the status values for all
+       the tokens it conveys statuses for.  The value MUST be a base64
+       encoded string using RFCXXX containing a GZIP compressed octet
+       string [RFC1952].
+
+3.3.  Revocation Status List Definition
+
+   This document formally defines the "revocation-list" status list type
+   which applies the following additional validation rules beyond those
+   described in Section 3.1 and Section 3.2.
+
+   The "uri" attribute contained within a JWT using the "sts" claim MUST
+   be an HTTPS based URL that when resolved via an HTTPS GET request
+   returns a content type "application/jwt" containing the status list.
+
+   TODO add more
+
+4.  Security Considerations
+
+4.1.  Correct decoding and parsing of the encoded status list
+
+   TODO elaborate on risks of incorrect parsing/decoding leading to
+   erroneuos status data
+
+4.2.  Cached and Stale status lists
+
+   TODO consumers/Verifiers of the status list should be aware if they
+   fetch the up-to-date data
+
+4.3.  Authorized access to the Status List
+
+   TODO elaborate on authorization mechanisms preventing misuse and
+   profiling as described in privacy section
+
+4.4.  History
+
+   TODO elaborate on status list only providing the up-to date/latest
+   status, no historical data, may be provided by the underlying hosting
+   architecture
+
+5.  Privacy Considerations
+
+5.1.  Herd Privacy
+
+   TODO elaborate on herd privacy, size of the status list
+
+5.2.  Profiling
+
+   TODO elaborate on Verifiers regularly fetching the status list to
+   create a profile, possible countermeasures with authorized access to
+   the status list
+
+5.3.  Correlation Risks and Tracking
+
+   TODO elaborate on Issuer-Verifier correlation and Verifier-Verifier
+   correlation as the status list introduces unique,trackable data TODO
+   elaborate on issuers avoiding sequential usage of indices and status
+   lists
+
+5.4.  Malicious Issuers
+
+   TODO elaborate on issuers generating unique status lists per JWT
+   token that do not offer herd privacy
+
+5.5.  Hosting Service (what's a better name here?)
+
+   TODO elaborate on increased privacy if the status list is hosted by a
+   third party instead of the issuer reducing tracking possiblities
+
+6.  IANA Considerations
+
+   This document has no IANA actions.
+
+7.  Normative References
+
+   [RFC1952]  Deutsch, P., "GZIP file format specification version 4.3",
+              RFC 1952, DOI 10.17487/RFC1952, May 1996,
+              <https://www.rfc-editor.org/rfc/rfc1952>.
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
+              Resource Identifier (URI): Generic Syntax", STD 66,
+              RFC 3986, DOI 10.17487/RFC3986, January 2005,
+              <https://www.rfc-editor.org/rfc/rfc3986>.
+
+   [RFC7519]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token
+              (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015,
+              <https://www.rfc-editor.org/rfc/rfc7519>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+   [RFC8392]  Jones, M., Wahlstroem, E., Erdtman, S., and H. Tschofenig,
+              "CBOR Web Token (CWT)", RFC 8392, DOI 10.17487/RFC8392,
+              May 2018, <https://www.rfc-editor.org/rfc/rfc8392>.
+
+Acknowledgments
+
+   TODO acknowledge.
+
+Author's Address
+
+   Tobias Looker
+   MATTR
+   Email: tobias.looker@mattr.global

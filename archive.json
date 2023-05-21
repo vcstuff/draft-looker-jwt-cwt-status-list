@@ -1,0 +1,310 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2023-05-21T00:13:42.106049+00:00",
+  "repo": "vcstuff/draft-looker-jwt-cwt-status-list",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [
+    {
+      "number": 1,
+      "id": "I_kwDOJZ2aqs5mOZGo",
+      "title": "Extensibility point - Allowing for different types of statuses",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/issues/1",
+      "state": "OPEN",
+      "author": "tplooker",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The draft currently sets at least directionally that there can be different types of status lists that convey different kinds of statuses (e.g revocation vs a more complex suspended/active/inactive status setup), w.r.t I think we need to agree:\r\n\r\n1. We think this extensibility point is useful\r\n2. What the extensibility point should control e.g does it affect things like the number of bits allocated per index (so more than a binary state can be expressed)\r\n3. Does it control the type of URI the status list can be resolved from e.g MUST be an HTTPS url or is that controlled else where.",
+      "createdAt": "2023-05-18T06:08:10Z",
+      "updatedAt": "2023-05-19T12:57:59Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "paulbastian",
+          "authorAssociation": "NONE",
+          "body": "@c2bo and me were thinking on that. Our ideas were:\r\n- having the possibility that a status contains more than one bit is very useful and should be included. Otherwise multiple statuses for one token (e.g. revocation and suspension) requires two status lists, this means additional calls, potential syncing issues etc. this is a shortcoming of the StatusList2021\r\n- the spec should serve a predefined template for the most common usecases, e.g. simple revocation with 1 bit and maybe one more template with revocation and suspension\r\n- in other cases the statusList should either include the definition in its metadata and/or point to a issuer-controlled URL that explains the status bits\r\n\r\nOur proposal was:\r\n```\r\n{\r\n    \"iss\": \"https://example.org/\" //MUST\r\n    \"iat\": 1683560915, //MUST\r\n    \"exp\": 1686232115, //MAY -> this allows issuer to defined a TTL\r\n    // this part probably needs to change\r\n    \"def\": { // optional: could be left out if pre-defined type\r\n        \"bits\": 2, //MUST\r\n        \"state_definitions_uri\":, //CONDITIONAL: uri to explanations\r\n        \"state_definitions\" { //CONDITIONAL: explanations inline\r\n            \"0\" : \"VALID\",\r\n            \"1\" : \"SUSPENDED\",\r\n            \"2\" : \"REVOKED\",\r\n            \"3\" : \"UNDEFINED\" //or absent\r\n        }\r\n    }\r\n    \"encoded_status\" : \"H4sIAAAAAAAAA-3BMQEAAADCoPVPbQwfoAAAAAAAAAAAAAAAAAAAAIC3AYbSVKsAQAAA\"\r\n}\r\n```\r\nIn this example `state_definitions_uri` could point to a tempalte from this spec",
+          "createdAt": "2023-05-19T12:22:14Z",
+          "updatedAt": "2023-05-19T12:22:14Z"
+        },
+        {
+          "author": "c2bo",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I do believe we have to give some pre-defined interpretations - parsing the different states doesn't really work well for fully automated flows imho. Biggest question then would be if just mentioning that template via name would be enough or if we still want to have that information served in the status list as well.\r\n\r\nIf we take revocation as an example, then we likely need to define at least 2 default templates similar to these:\r\n- 1bit-revocation:\r\n where 0 equals `VALID` and 1 equals `REVOKED`\r\n- 2bit-revocation: \r\n 0 = `VALID`\r\n 1 = `REVOKED`\r\n 2 = `SUSPENDED`\r\n 3 = ..\r\n\r\nWe could then either have that definition as part of the JWT or just reference via name/uri (which I would prefer - makes implementation a lot easier). ",
+          "createdAt": "2023-05-19T12:57:59Z",
+          "updatedAt": "2023-05-19T12:57:59Z"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "id": "I_kwDOJZ2aqs5mOaOs",
+      "title": "Document validation procedure",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/issues/2",
+      "state": "OPEN",
+      "author": "tplooker",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "We need to document end to end the validation procedure for a JWT and CWT referencing a status list including resolution of the status list, validation of the status list and how to get the status information for the JWT referencing the status list.",
+      "createdAt": "2023-05-18T06:09:52Z",
+      "updatedAt": "2023-05-18T06:09:52Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 3,
+      "id": "I_kwDOJZ2aqs5mOaZC",
+      "title": "Document the CWT variation of the status list",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/issues/3",
+      "state": "OPEN",
+      "author": "tplooker",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "As described in the title, detail the CWT representation of the status list which is complementary to the JWT representation.",
+      "createdAt": "2023-05-18T06:10:35Z",
+      "updatedAt": "2023-05-18T06:10:35Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 4,
+      "id": "I_kwDOJZ2aqs5mOa7a",
+      "title": "Add a privacy consideration around suggested list sizes for heard privacy",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/issues/4",
+      "state": "OPEN",
+      "author": "tplooker",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "As described in the title the size of the list (number of token statuses represented by the list) will have a significant impact on privacy related applications.",
+      "createdAt": "2023-05-18T06:12:50Z",
+      "updatedAt": "2023-05-18T06:12:50Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 5,
+      "id": "I_kwDOJZ2aqs5mWe-e",
+      "title": "Add the size of the statusList as a property",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/issues/5",
+      "state": "OPEN",
+      "author": "paulbastian",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "It could be handy to include the size of the statusList, i.e. the total number of entities and there status.\r\nThis could serve as an additional check that the statusList was correctly uncompressed and decoded by the verifier, especially if we think about including variable size of bits per status, see #1 \r\nProposed change to the current draft:\r\n```\r\n{\r\n  \"alg\": \"ES256\",\r\n  \"kid\": \"11\"\r\n}\r\n.\r\n{\r\n  \"iss\": \"https://example.com\",\r\n  \"iat\": 1683560915,\r\n  \"exp\": 1686232115,\r\n  \"sts_lst\": {\r\n    \"typ\": \"revocation-list\",\r\n    \"size\": 16384,\r\n    \"lst\": \"H4sIAAAAAAAAA-3BMQEAAADCoPVPbQwfoAA......IC3AYbSVKsAQAAA\"\r\n  }\r\n}\r\n```",
+      "createdAt": "2023-05-19T12:27:52Z",
+      "updatedAt": "2023-05-19T12:27:52Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 7,
+      "id": "I_kwDOJZ2aqs5mW5EE",
+      "title": "Optional authorization towards the statusList endpoint",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/issues/7",
+      "state": "OPEN",
+      "author": "paulbastian",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "To limit the tracking/profiling possiblities of the statusList, an optional mechanism for verifiers to get authorized access could be implemented. This limits the entities that have access to the status list. A mechanism could be:\r\n- not defined in this spec but added to privacy considerations\r\n- defined in this spec",
+      "createdAt": "2023-05-19T13:44:53Z",
+      "updatedAt": "2023-05-19T18:59:54Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "c2bo",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I think it is a good idea to at least desribe the different scenarios of who (verifier/holder) is requesting the status list and how it is protected.",
+          "createdAt": "2023-05-19T18:59:54Z",
+          "updatedAt": "2023-05-19T18:59:54Z"
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "id": "I_kwDOJZ2aqs5ma42d",
+      "title": "STS acronym",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/issues/9",
+      "state": "OPEN",
+      "author": "peppelinux",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "In the OAuth2 ecosystem we have already the acronym STS, as Security Token Service, as defined in Token Exchange RFC 8693\r\n\r\nwhy not simply `status`?",
+      "createdAt": "2023-05-21T00:07:19Z",
+      "updatedAt": "2023-05-21T00:07:19Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 10,
+      "id": "I_kwDOJZ2aqs5ma5F5",
+      "title": "Ownership of the status endpoint and third party status list providers use case",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/issues/10",
+      "state": "OPEN",
+      "author": "peppelinux",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "we assume (and that's good) that the issuer of a VC is responsible of its lifecycle, and then it has to maintain the revocation status of its issued vcs.\r\n\r\nthere may be some cases where the revocation list could be deployed outside the issuer domain\r\n\r\nin this case the status JSON Object shouln't be a JWS instead, signed by the owner of the status list (different from the isser)? \r\n\r\n````\r\n  \"sts\": $JWS\r\n````  ",
+      "createdAt": "2023-05-21T00:11:48Z",
+      "updatedAt": "2023-05-21T00:11:48Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
+  "pulls": [
+    {
+      "number": 6,
+      "id": "PR_kwDOJZ2aqs5Q5MSP",
+      "title": "fix broken links",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/pull/6",
+      "state": "MERGED",
+      "author": "c2bo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fixing links to point to new org",
+      "createdAt": "2023-05-19T13:40:13Z",
+      "updatedAt": "2023-05-19T19:27:44Z",
+      "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
+      "baseRefName": "main",
+      "baseRefOid": "05f0630a52d47d8f9ca09629cf93c0eefe128016",
+      "headRepository": "c2bo/draft-looker-jwt-cwt-status-list",
+      "headRefName": "fix/links",
+      "headRefOid": "bffa41854f0ea7f669fa3940a776240ede0279bc",
+      "closedAt": "2023-05-19T19:27:44Z",
+      "mergedAt": "2023-05-19T19:27:44Z",
+      "mergedBy": "tplooker",
+      "mergeCommit": {
+        "oid": "8fd1578c37e3077c753f9f571e5d9d99e18ed7d8"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJZ2aqs5ViCuh",
+          "commit": {
+            "abbreviatedOid": "bffa418"
+          },
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-05-19T19:27:39Z",
+          "updatedAt": "2023-05-19T19:27:40Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "id": "PR_kwDOJZ2aqs5Q6BHV",
+      "title": "Drafting Privacy and Security Considerations",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/pull/8",
+      "state": "OPEN",
+      "author": "paulbastian",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "gathering some ideas on privacy and security considerations",
+      "createdAt": "2023-05-19T16:23:43Z",
+      "updatedAt": "2023-05-19T19:29:36Z",
+      "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
+      "baseRefName": "main",
+      "baseRefOid": "05f0630a52d47d8f9ca09629cf93c0eefe128016",
+      "headRepository": "paulbastian/draft-looker-jwt-cwt-status-list",
+      "headRefName": "main",
+      "headRefOid": "9b46a5a58a8cb986e074a664c8875fcf8c706131",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Looking good @paulbastian you should be able to run 'make fix-lint' locally to fix the whitespace issues",
+          "createdAt": "2023-05-19T19:29:35Z",
+          "updatedAt": "2023-05-19T19:29:35Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJZ2aqs5Vh9ZL",
+          "commit": {
+            "abbreviatedOid": "9b46a5a"
+          },
+          "author": "c2bo",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "Need to remove the trailing whitespaces for the markdown tooling to be happy",
+          "createdAt": "2023-05-19T19:12:53Z",
+          "updatedAt": "2023-05-19T19:13:53Z",
+          "comments": [
+            {
+              "originalPosition": 28,
+              "body": "```suggestion\r\nTODO elaborate on issuers avoiding sequential usage of indices and status lists\r\n```",
+              "createdAt": "2023-05-19T19:12:53Z",
+              "updatedAt": "2023-05-19T19:13:53Z"
+            },
+            {
+              "originalPosition": 20,
+              "body": "```suggestion\r\n## Herd Privacy\r\n```",
+              "createdAt": "2023-05-19T19:13:02Z",
+              "updatedAt": "2023-05-19T19:13:53Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
