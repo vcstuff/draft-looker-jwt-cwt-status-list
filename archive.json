@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-05-21T00:13:42.106049+00:00",
+  "timestamp": "2023-05-23T01:03:03.504832+00:00",
   "repo": "vcstuff/draft-looker-jwt-cwt-status-list",
   "labels": [
     {
@@ -62,12 +62,12 @@
       "labels": [],
       "body": "The draft currently sets at least directionally that there can be different types of status lists that convey different kinds of statuses (e.g revocation vs a more complex suspended/active/inactive status setup), w.r.t I think we need to agree:\r\n\r\n1. We think this extensibility point is useful\r\n2. What the extensibility point should control e.g does it affect things like the number of bits allocated per index (so more than a binary state can be expressed)\r\n3. Does it control the type of URI the status list can be resolved from e.g MUST be an HTTPS url or is that controlled else where.",
       "createdAt": "2023-05-18T06:08:10Z",
-      "updatedAt": "2023-05-19T12:57:59Z",
+      "updatedAt": "2023-05-21T21:17:13Z",
       "closedAt": null,
       "comments": [
         {
           "author": "paulbastian",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "@c2bo and me were thinking on that. Our ideas were:\r\n- having the possibility that a status contains more than one bit is very useful and should be included. Otherwise multiple statuses for one token (e.g. revocation and suspension) requires two status lists, this means additional calls, potential syncing issues etc. this is a shortcoming of the StatusList2021\r\n- the spec should serve a predefined template for the most common usecases, e.g. simple revocation with 1 bit and maybe one more template with revocation and suspension\r\n- in other cases the statusList should either include the definition in its metadata and/or point to a issuer-controlled URL that explains the status bits\r\n\r\nOur proposal was:\r\n```\r\n{\r\n    \"iss\": \"https://example.org/\" //MUST\r\n    \"iat\": 1683560915, //MUST\r\n    \"exp\": 1686232115, //MAY -> this allows issuer to defined a TTL\r\n    // this part probably needs to change\r\n    \"def\": { // optional: could be left out if pre-defined type\r\n        \"bits\": 2, //MUST\r\n        \"state_definitions_uri\":, //CONDITIONAL: uri to explanations\r\n        \"state_definitions\" { //CONDITIONAL: explanations inline\r\n            \"0\" : \"VALID\",\r\n            \"1\" : \"SUSPENDED\",\r\n            \"2\" : \"REVOKED\",\r\n            \"3\" : \"UNDEFINED\" //or absent\r\n        }\r\n    }\r\n    \"encoded_status\" : \"H4sIAAAAAAAAA-3BMQEAAADCoPVPbQwfoAAAAAAAAAAAAAAAAAAAAIC3AYbSVKsAQAAA\"\r\n}\r\n```\r\nIn this example `state_definitions_uri` could point to a tempalte from this spec",
           "createdAt": "2023-05-19T12:22:14Z",
           "updatedAt": "2023-05-19T12:22:14Z"
@@ -78,6 +78,13 @@
           "body": "I do believe we have to give some pre-defined interpretations - parsing the different states doesn't really work well for fully automated flows imho. Biggest question then would be if just mentioning that template via name would be enough or if we still want to have that information served in the status list as well.\r\n\r\nIf we take revocation as an example, then we likely need to define at least 2 default templates similar to these:\r\n- 1bit-revocation:\r\n where 0 equals `VALID` and 1 equals `REVOKED`\r\n- 2bit-revocation: \r\n 0 = `VALID`\r\n 1 = `REVOKED`\r\n 2 = `SUSPENDED`\r\n 3 = ..\r\n\r\nWe could then either have that definition as part of the JWT or just reference via name/uri (which I would prefer - makes implementation a lot easier). ",
           "createdAt": "2023-05-19T12:57:59Z",
           "updatedAt": "2023-05-19T12:57:59Z"
+        },
+        {
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> Our proposal was:\r\n\r\nThanks this is great to be able to review!  IMO the simplest possible conveyance about what statues a list can represent I believe can be done through the sts.typ alone. Because I think majority of implementations will require explicit handling of different status types rather than supporting generic statuses. For example as an implementation if I were to come across a JWT with a sts.typ value set to \"revocation-list\" it would mean each status entry in the list is represented by 1bit where when the bit is set to 0 it represents NOT REVOKED status and when the bit is set to 1 it represents REVOKED.",
+          "createdAt": "2023-05-21T21:17:12Z",
+          "updatedAt": "2023-05-21T21:17:12Z"
         }
       ]
     },
@@ -136,14 +143,43 @@
       "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/issues/5",
       "state": "OPEN",
       "author": "paulbastian",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "It could be handy to include the size of the statusList, i.e. the total number of entities and there status.\r\nThis could serve as an additional check that the statusList was correctly uncompressed and decoded by the verifier, especially if we think about including variable size of bits per status, see #1 \r\nProposed change to the current draft:\r\n```\r\n{\r\n  \"alg\": \"ES256\",\r\n  \"kid\": \"11\"\r\n}\r\n.\r\n{\r\n  \"iss\": \"https://example.com\",\r\n  \"iat\": 1683560915,\r\n  \"exp\": 1686232115,\r\n  \"sts_lst\": {\r\n    \"typ\": \"revocation-list\",\r\n    \"size\": 16384,\r\n    \"lst\": \"H4sIAAAAAAAAA-3BMQEAAADCoPVPbQwfoAA......IC3AYbSVKsAQAAA\"\r\n  }\r\n}\r\n```",
       "createdAt": "2023-05-19T12:27:52Z",
-      "updatedAt": "2023-05-19T12:27:52Z",
+      "updatedAt": "2023-05-22T20:31:38Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Just so I understand better @paulbastian is your concern that developers would struggle to decode the status list reliably and that size would assist in validating this was done correctly? Because if so I think test vectors would probably assist in this regard. If its about corruption of the list it self I dont think that is of material concern because the list is always signed. R.e multi bits per status what would size convey in this context the number of bits/bytes or statuses represented?",
+          "createdAt": "2023-05-21T20:53:20Z",
+          "updatedAt": "2023-05-21T20:53:20Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Exactly, integrity is protected by the signature, but uncompressing and getting the correct index needs to be done correctly. I agree we should add text vectors to the spec, let's open an issue on that.\nIn my opinion size = total bits uncompressed / bits per status = number of entities covered by the status list.\nDo you agree?",
+          "createdAt": "2023-05-21T20:56:10Z",
+          "updatedAt": "2023-05-21T20:57:45Z"
+        },
+        {
+          "author": "c2bo",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Does it make sense to introduce\r\n`size` = amount of entries \r\n`states` = possible states that an entry can have (e.g., 2 for standard revocation)\r\nas mandatory values to the status list? That would allow for an easy check if interpretation/conversion of the status list worked properly on the verifier side.\r\n\r\n\r\nWould result in something like this:\r\n```\r\n{\r\n  \"iss\": \"https://example.com\",\r\n  \"iat\": 1683560915,\r\n  \"exp\": 1686232115,\r\n  \"status\": {\r\n    \"typ\": \"revocation-list\",\r\n    \"size\": 16384,\r\n    \"states\": 2,\r\n    \"lst\": \"H4sIAAAAAAAAA-3BMQEAAADCoPVPbQwfoAA......IC3AYbSVKsAQAAA\"\r\n  }\r\n}\r\n```",
+          "createdAt": "2023-05-22T08:58:11Z",
+          "updatedAt": "2023-05-22T08:58:11Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@tplooker are you arguing that it is not necessary at all? While I agree that you could get additional safety of correct deciding through test vectors, I think it is anyway a useful metadata to have and does not take large amounts of space.",
+          "createdAt": "2023-05-22T20:31:38Z",
+          "updatedAt": "2023-05-22T20:31:38Z"
+        }
+      ]
     },
     {
       "number": 7,
@@ -152,12 +188,12 @@
       "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/issues/7",
       "state": "OPEN",
       "author": "paulbastian",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "To limit the tracking/profiling possiblities of the statusList, an optional mechanism for verifiers to get authorized access could be implemented. This limits the entities that have access to the status list. A mechanism could be:\r\n- not defined in this spec but added to privacy considerations\r\n- defined in this spec",
       "createdAt": "2023-05-19T13:44:53Z",
-      "updatedAt": "2023-05-19T18:59:54Z",
+      "updatedAt": "2023-05-22T08:37:05Z",
       "closedAt": null,
       "comments": [
         {
@@ -166,6 +202,20 @@
           "body": "I think it is a good idea to at least desribe the different scenarios of who (verifier/holder) is requesting the status list and how it is protected.",
           "createdAt": "2023-05-19T18:59:54Z",
           "updatedAt": "2023-05-19T18:59:54Z"
+        },
+        {
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Agreed, one question this raises for me is whether there needs to be any information in the status entry of the issued credential that convey's this constraint to a verifying party (e.g the status list is access controlled and you need to do X to be able to resolve it?)",
+          "createdAt": "2023-05-21T20:49:28Z",
+          "updatedAt": "2023-05-21T20:49:28Z"
+        },
+        {
+          "author": "c2bo",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Either as an entry in the issued credential or we need to provide some form of meta information online prior to requesting the status list?",
+          "createdAt": "2023-05-22T08:37:05Z",
+          "updatedAt": "2023-05-22T08:37:05Z"
         }
       ]
     },
@@ -181,9 +231,38 @@
       "labels": [],
       "body": "In the OAuth2 ecosystem we have already the acronym STS, as Security Token Service, as defined in Token Exchange RFC 8693\r\n\r\nwhy not simply `status`?",
       "createdAt": "2023-05-21T00:07:19Z",
-      "updatedAt": "2023-05-21T00:07:19Z",
+      "updatedAt": "2023-05-22T21:03:28Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thanks for flagging, yes we can consider this,  I was trying to align to the informal convention JWT's typically use for root level claims which are strings with 3 characters.",
+          "createdAt": "2023-05-21T20:47:42Z",
+          "updatedAt": "2023-05-21T20:47:42Z"
+        },
+        {
+          "author": "peppelinux",
+          "authorAssociation": "NONE",
+          "body": "I love this sensibility, even if from years at this part this convention is not respected anymore\r\n\r\n`sta` is weird\r\n`stat` is something good even if outside the three chars, at the same time it may be misleading since stat may point also to statistics\r\n\r\nwho knows if `status` besides being explicit represents the best compromise after all",
+          "createdAt": "2023-05-21T21:10:50Z",
+          "updatedAt": "2023-05-21T21:10:50Z"
+        },
+        {
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Agreed, status feels like the most sensible compromise, I will prepare a PR that makes this change.",
+          "createdAt": "2023-05-21T22:18:36Z",
+          "updatedAt": "2023-05-21T22:18:36Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Agreed, please also adopt this for the status_list",
+          "createdAt": "2023-05-22T21:03:28Z",
+          "updatedAt": "2023-05-22T21:03:28Z"
+        }
+      ]
     },
     {
       "number": 10,
@@ -197,9 +276,83 @@
       "labels": [],
       "body": "we assume (and that's good) that the issuer of a VC is responsible of its lifecycle, and then it has to maintain the revocation status of its issued vcs.\r\n\r\nthere may be some cases where the revocation list could be deployed outside the issuer domain\r\n\r\nin this case the status JSON Object shouln't be a JWS instead, signed by the owner of the status list (different from the isser)? \r\n\r\n````\r\n  \"sts\": $JWS\r\n````  ",
       "createdAt": "2023-05-21T00:11:48Z",
-      "updatedAt": "2023-05-21T00:11:48Z",
+      "updatedAt": "2023-05-22T21:06:56Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@peppelinux 3rd party distribution of the status list (e.g it being hosted by someone other than the issuer) I think is a good usecase to elaborate on, however regardless of host I think it is important that the list is always signed by the issuer.",
+          "createdAt": "2023-05-21T20:46:25Z",
+          "updatedAt": "2023-05-21T20:46:25Z"
+        },
+        {
+          "author": "peppelinux",
+          "authorAssociation": "NONE",
+          "body": "I prefer a decentralized approach, where each issuer manages the lifecycle of its issuance but there comes other models where revocation must or may be hosted to third parties \r\n\r\nso we should give a verifiable attestation of the status provider, and this attestation must be verifiable\r\n\r\nthis brings again the aspect to have this status object directly as a JWS for both cases but I'd prefer a plantext json is the issuer is the same, just because it is simple and the hope that there won't be centralized approaches\r\n\r\ndifferently, if the issuer is not the same and the status object should be a JWS, well in it we should have a verifiable trust (x5c, trust_chain ...) embedded or referenced in it -> payload increase but necessary ",
+          "createdAt": "2023-05-21T21:15:51Z",
+          "updatedAt": "2023-05-21T21:15:51Z"
+        },
+        {
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@peppelinux so If I understand you correctly you would like to support a model where the statuse being conveyed about a JWT is by someone other than the issuer of the JWT?",
+          "createdAt": "2023-05-21T22:17:24Z",
+          "updatedAt": "2023-05-21T22:17:24Z"
+        },
+        {
+          "author": "peppelinux",
+          "authorAssociation": "NONE",
+          "body": "I dont like It but there May be some cases when It Is required\r\n\r\nNot in my implementations :-)",
+          "createdAt": "2023-05-22T06:37:38Z",
+          "updatedAt": "2023-05-22T06:37:38Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I have this use case also in mind, I parked this concept in the privacy considerations part 5.5 as hosting service. It's an easy way to get additional privacy because the issuer can not track who accessed the status list",
+          "createdAt": "2023-05-22T21:06:55Z",
+          "updatedAt": "2023-05-22T21:06:55Z"
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "id": "I_kwDOJZ2aqs5ma5Qn",
+      "title": "idx is a counter then a information leaker",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/issues/11",
+      "state": "OPEN",
+      "author": "peppelinux",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Since idx is a positive integer number, it is assumed that its numbering is given by a counter\r\nby guessing all the positive number greater than zero, an adversary would know how many credential a credential issuer has issued\r\n\r\nwould it be better using an exadecimal and opaque uid instead of a number?",
+      "createdAt": "2023-05-21T00:14:59Z",
+      "updatedAt": "2023-05-22T21:12:20Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@peppelinux, an adversary looking at a status list only knows the maximum number of *possible* statuses that a list conveys, it cannot detect how many credentials have been issued by looking at the status list alone because issuers typically pre-allocate the list ahead of assigning a credential specific index in the list. Issuers can also employ certain noise techniques if they so choose by having \"dead entries\" in the list that are never assigned a credential.",
+          "createdAt": "2023-05-21T20:44:08Z",
+          "updatedAt": "2023-05-21T20:44:08Z"
+        },
+        {
+          "author": "peppelinux",
+          "authorAssociation": "NONE",
+          "body": "it seems the answer that closes this issue\r\n\r\nbefore doing that, and as an editorial strategy, I suggest to place your comment, even in a raw way, in the privacy consideration of the specs\r\n\r\nthat would take track of the FAQ directly in the specs",
+          "createdAt": "2023-05-21T21:17:53Z",
+          "updatedAt": "2023-05-21T21:17:53Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I agree. This probably belongs to the section 5.3 correlation risks and tracking as a counter measure\n\n",
+          "createdAt": "2023-05-22T21:12:20Z",
+          "updatedAt": "2023-05-22T21:12:20Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -250,24 +403,26 @@
       "id": "PR_kwDOJZ2aqs5Q6BHV",
       "title": "Drafting Privacy and Security Considerations",
       "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/pull/8",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "paulbastian",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "gathering some ideas on privacy and security considerations",
       "createdAt": "2023-05-19T16:23:43Z",
-      "updatedAt": "2023-05-19T19:29:36Z",
+      "updatedAt": "2023-05-21T20:40:47Z",
       "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
       "baseRefName": "main",
       "baseRefOid": "05f0630a52d47d8f9ca09629cf93c0eefe128016",
       "headRepository": "paulbastian/draft-looker-jwt-cwt-status-list",
       "headRefName": "main",
-      "headRefOid": "9b46a5a58a8cb986e074a664c8875fcf8c706131",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "d6e597910b4aeb1c7076738bf8b9abdde84f169d",
+      "closedAt": "2023-05-21T20:40:47Z",
+      "mergedAt": "2023-05-21T20:40:47Z",
+      "mergedBy": "tplooker",
+      "mergeCommit": {
+        "oid": "1de1ae351567921de967dd8d042725d7766b8245"
+      },
       "comments": [
         {
           "author": "tplooker",
