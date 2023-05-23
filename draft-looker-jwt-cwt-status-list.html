@@ -1269,7 +1269,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <ol start="1" type="1" class="normal type-1" id="section-3.1-2">
 <li id="section-3.1-2.1">The JWT <span class="bcp14">MUST</span> contain an "iss" (issuer) claim that contains a unique string based identifier for the entity that issued the JWT. In the absence of an application profile specifying otherwise, compliant applications <span class="bcp14">MUST</span> compare issuer values using the Simple String Comparison method defined in Section 6.2.1 of <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>. The value <span class="bcp14">MUST</span> be equal to that of the "iss" claim contained within the referenced status list JWT.<a href="#section-3.1-2.1" class="pilcrow">¶</a>
 </li>
-          <li id="section-3.1-2.2">The JWT <span class="bcp14">MUST</span> contain an "sts" (status) claim conforming to the rules outlined in <a href="#jwt-status-claim-format" class="auto internal xref">Section 3.1.1</a><a href="#section-3.1-2.2" class="pilcrow">¶</a>
+          <li id="section-3.1-2.2">The JWT <span class="bcp14">MUST</span> contain an "status" (status) claim conforming to the rules outlined in <a href="#jwt-status-claim-format" class="auto internal xref">Section 3.1.1</a><a href="#section-3.1-2.2" class="pilcrow">¶</a>
 </li>
         </ol>
 <p id="section-3.1-3">The following example is the decoded header and payload of a JWT meeting the processing rules as defined above.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
@@ -1282,7 +1282,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 .
 {
   "iss": "https://example.com",
-  "sts": {
+  "status": {
     "typ": "revocation-list",
     "idx": 0,
     "uri": "https://example.com/statuslists/1"
@@ -1296,11 +1296,11 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
           <h4 id="name-status-claim-format">
 <a href="#section-3.1.1" class="section-number selfRef">3.1.1. </a><a href="#name-status-claim-format" class="section-name selfRef">Status Claim Format</a>
           </h4>
-<p id="section-3.1.1-1">The following rules apply to validating the "sts" (status) claim<a href="#section-3.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-1">The following rules apply to validating the "status" (status) claim<a href="#section-3.1.1-1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-3.1.1-2">
 <li id="section-3.1.1-2.1">The claim value <span class="bcp14">MUST</span> be a valid JSON object.<a href="#section-3.1.1-2.1" class="pilcrow">¶</a>
 </li>
-            <li id="section-3.1.1-2.2">The claim value object <span class="bcp14">MUST</span> contain a "typ" (type) attribute with a string based value that represents the type of status list referenced. The value <span class="bcp14">MUST</span> be equal to that of the "typ" attribute in the "sts_lst" claim for the referenced status list.<a href="#section-3.1.1-2.2" class="pilcrow">¶</a>
+            <li id="section-3.1.1-2.2">The claim value object <span class="bcp14">MUST</span> contain a "typ" (type) attribute with a string based value that represents the type of status list referenced. The value <span class="bcp14">MUST</span> be equal to that of the "typ" attribute in the "status_list" claim for the referenced status list.<a href="#section-3.1.1-2.2" class="pilcrow">¶</a>
 </li>
             <li id="section-3.1.1-2.3">The claim value object <span class="bcp14">MUST</span> contain an "idx" (index) attribute with a numberic based value that represents the index to check for status information in the status list for the current JWT. The value of this attribute <span class="bcp14">MUST</span> be a non-negative number, containing a value of zero or greater. Refer to xx for details on the validation procedure.<a href="#section-3.1.1-2.3" class="pilcrow">¶</a>
 </li>
@@ -1322,7 +1322,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 </li>
           <li id="section-3.2-2.2">The JWT <span class="bcp14">MUST</span> contain an "iat" (issued at) claim that identifies the time at which it was issued.<a href="#section-3.2-2.2" class="pilcrow">¶</a>
 </li>
-          <li id="section-3.2-2.3">The JWT <span class="bcp14">MUST</span> contain an "sts_lst" (status list) claim conforming to the rules outlined in <a href="#jwt-status-list-claim-format" class="auto internal xref">Section 3.2.1</a>.<a href="#section-3.2-2.3" class="pilcrow">¶</a>
+          <li id="section-3.2-2.3">The JWT <span class="bcp14">MUST</span> contain an "status_list" (status list) claim conforming to the rules outlined in <a href="#jwt-status-list-claim-format" class="auto internal xref">Section 3.2.1</a>.<a href="#section-3.2-2.3" class="pilcrow">¶</a>
 </li>
           <li id="section-3.2-2.4">The JWT <span class="bcp14">MAY</span> contain an "exp" (expiration time) claim that convey's when it is considered expired by its issuer.<a href="#section-3.2-2.4" class="pilcrow">¶</a>
 </li>
@@ -1344,7 +1344,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
   "iss": "https://example.com",
   "iat": 1683560915,
   "exp": 1686232115,
-  "sts_lst": {
+  "status_list": {
     "typ": "revocation-list",
     "lst": "H4sIAAAAAAAAA-3BMQEAAADCoPVPbQwfoAA......IC3AYbSVKsAQAAA"
   }
@@ -1357,11 +1357,11 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
           <h4 id="name-status-list-claim-format">
 <a href="#section-3.2.1" class="section-number selfRef">3.2.1. </a><a href="#name-status-list-claim-format" class="section-name selfRef">Status List Claim Format</a>
           </h4>
-<p id="section-3.2.1-1">The following rules apply to validating the "sts_lst" (status list) claim<a href="#section-3.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.2.1-1">The following rules apply to validating the "status_list" (status list) claim<a href="#section-3.2.1-1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-3.2.1-2">
 <li id="section-3.2.1-2.1">The claim value <span class="bcp14">MUST</span> be a valid JSON object.<a href="#section-3.2.1-2.1" class="pilcrow">¶</a>
 </li>
-            <li id="section-3.2.1-2.2">The claim value object <span class="bcp14">MUST</span> contain a "typ" (type) attribute with a string based value that represents the type of status list referenced. The value <span class="bcp14">MUST</span> be equal to that of the "typ" attribute in the "sts" claim for the token who's status is being validated.<a href="#section-3.2.1-2.2" class="pilcrow">¶</a>
+            <li id="section-3.2.1-2.2">The claim value object <span class="bcp14">MUST</span> contain a "typ" (type) attribute with a string based value that represents the type of status list referenced. The value <span class="bcp14">MUST</span> be equal to that of the "typ" attribute in the "status" claim for the token who's status is being validated.<a href="#section-3.2.1-2.2" class="pilcrow">¶</a>
 </li>
             <li id="section-3.2.1-2.3">The claim value object <span class="bcp14">MUST</span> contain a "lst" (list) attribute with a string based value that represents the status values for all the tokens it conveys statuses for. The value <span class="bcp14">MUST</span> be a base64 encoded string using RFCXXX containing a GZIP compressed octet string <span>[<a href="#RFC1952" class="cite xref">RFC1952</a>]</span>.<a href="#section-3.2.1-2.3" class="pilcrow">¶</a>
 </li>
@@ -1376,7 +1376,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-revocation-status-list-defi" class="section-name selfRef">Revocation Status List Definition</a>
         </h3>
 <p id="section-3.3-1">This document formally defines the "revocation-list" status list type which applies the following additional validation rules beyond those described in <a href="#jwt-format-and-processing" class="auto internal xref">Section 3.1</a> and <a href="#jwt-status-list-format-and-processing" class="auto internal xref">Section 3.2</a>.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
-<p id="section-3.3-2">The "uri" attribute contained within a JWT using the "sts" claim <span class="bcp14">MUST</span> be an HTTPS based URL that when resolved via an HTTPS GET request returns a content type "application/jwt" containing the status list.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
+<p id="section-3.3-2">The "uri" attribute contained within a JWT using the "status" claim <span class="bcp14">MUST</span> be an HTTPS based URL that when resolved via an HTTPS GET request returns a content type "application/jwt" containing the status list.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
 <p id="section-3.3-3">TODO add more<a href="#section-3.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>

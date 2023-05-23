@@ -134,7 +134,7 @@ Table of Contents
        Section 6.2.1 of [RFC3986].  The value MUST be equal to that of
        the "iss" claim contained within the referenced status list JWT.
 
-   2.  The JWT MUST contain an "sts" (status) claim conforming to the
+   2.  The JWT MUST contain an "status" (status) claim conforming to the
        rules outlined in Section 3.1.1
 
    The following example is the decoded header and payload of a JWT
@@ -147,7 +147,7 @@ Table of Contents
    .
    {
      "iss": "https://example.com",
-     "sts": {
+     "status": {
        "typ": "revocation-list",
        "idx": 0,
        "uri": "https://example.com/statuslists/1"
@@ -156,14 +156,15 @@ Table of Contents
 
 3.1.1.  Status Claim Format
 
-   The following rules apply to validating the "sts" (status) claim
+   The following rules apply to validating the "status" (status) claim
 
    1.  The claim value MUST be a valid JSON object.
 
    2.  The claim value object MUST contain a "typ" (type) attribute with
        a string based value that represents the type of status list
        referenced.  The value MUST be equal to that of the "typ"
-       attribute in the "sts_lst" claim for the referenced status list.
+       attribute in the "status_list" claim for the referenced status
+       list.
 
    3.  The claim value object MUST contain an "idx" (index) attribute
        with a numberic based value that represents the index to check
@@ -195,8 +196,8 @@ Table of Contents
    2.  The JWT MUST contain an "iat" (issued at) claim that identifies
        the time at which it was issued.
 
-   3.  The JWT MUST contain an "sts_lst" (status list) claim conforming
-       to the rules outlined in Section 3.2.1.
+   3.  The JWT MUST contain an "status_list" (status list) claim
+       conforming to the rules outlined in Section 3.2.1.
 
    4.  The JWT MAY contain an "exp" (expiration time) claim that
        convey's when it is considered expired by its issuer.
@@ -220,7 +221,7 @@ Table of Contents
      "iss": "https://example.com",
      "iat": 1683560915,
      "exp": 1686232115,
-     "sts_lst": {
+     "status_list": {
        "typ": "revocation-list",
        "lst": "H4sIAAAAAAAAA-3BMQEAAADCoPVPbQwfoAA......IC3AYbSVKsAQAAA"
      }
@@ -228,16 +229,16 @@ Table of Contents
 
 3.2.1.  Status List Claim Format
 
-   The following rules apply to validating the "sts_lst" (status list)
-   claim
+   The following rules apply to validating the "status_list" (status
+   list) claim
 
    1.  The claim value MUST be a valid JSON object.
 
    2.  The claim value object MUST contain a "typ" (type) attribute with
        a string based value that represents the type of status list
        referenced.  The value MUST be equal to that of the "typ"
-       attribute in the "sts" claim for the token who's status is being
-       validated.
+       attribute in the "status" claim for the token who's status is
+       being validated.
 
    3.  The claim value object MUST contain a "lst" (list) attribute with
        a string based value that represents the status values for all
@@ -251,9 +252,10 @@ Table of Contents
    which applies the following additional validation rules beyond those
    described in Section 3.1 and Section 3.2.
 
-   The "uri" attribute contained within a JWT using the "sts" claim MUST
-   be an HTTPS based URL that when resolved via an HTTPS GET request
-   returns a content type "application/jwt" containing the status list.
+   The "uri" attribute contained within a JWT using the "status" claim
+   MUST be an HTTPS based URL that when resolved via an HTTPS GET
+   request returns a content type "application/jwt" containing the
+   status list.
 
    TODO add more
 
