@@ -4,8 +4,8 @@
 
 Network Working Group                                          T. Looker
 Internet-Draft                                                     MATTR
-Intended status: Informational                               21 May 2023
-Expires: 22 November 2023
+Intended status: Informational                               23 May 2023
+Expires: 24 November 2023
 
 
                         JWT and CWT Status List
@@ -45,7 +45,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 22 November 2023.
+   This Internet-Draft will expire on 24 November 2023.
 
 Copyright Notice
 
@@ -297,7 +297,10 @@ Table of Contents
    TODO elaborate on Issuer-Verifier correlation and Verifier-Verifier
    correlation as the status list introduces unique,trackable data TODO
    elaborate on issuers avoiding sequential usage of indices and status
-   lists
+   lists TODO elaborate that a status list only gives information about
+   the maximum number of possible statuses that a list conveys, issuers
+   are recommended to pre-allocate lists, use dead entries that are
+   never assigned or other obfuscation mechanisms
 
 5.4.  Malicious Issuers
 
