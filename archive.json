@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-05-23T01:03:03.504832+00:00",
+  "timestamp": "2023-05-25T01:03:34.738738+00:00",
   "repo": "vcstuff/draft-looker-jwt-cwt-status-list",
   "labels": [
     {
@@ -132,9 +132,24 @@
       "labels": [],
       "body": "As described in the title the size of the list (number of token statuses represented by the list) will have a significant impact on privacy related applications.",
       "createdAt": "2023-05-18T06:12:50Z",
-      "updatedAt": "2023-05-18T06:12:50Z",
+      "updatedAt": "2023-05-23T20:07:02Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I see this is related to #12 ",
+          "createdAt": "2023-05-23T15:41:36Z",
+          "updatedAt": "2023-05-23T15:41:36Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Should we define a minimum size or give this as a recommendation in privacy recommendation?",
+          "createdAt": "2023-05-23T20:07:02Z",
+          "updatedAt": "2023-05-23T20:07:02Z"
+        }
+      ]
     },
     {
       "number": 5,
@@ -224,15 +239,15 @@
       "id": "I_kwDOJZ2aqs5ma42d",
       "title": "STS acronym",
       "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/issues/9",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "peppelinux",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "In the OAuth2 ecosystem we have already the acronym STS, as Security Token Service, as defined in Token Exchange RFC 8693\r\n\r\nwhy not simply `status`?",
       "createdAt": "2023-05-21T00:07:19Z",
-      "updatedAt": "2023-05-22T21:03:28Z",
-      "closedAt": null,
+      "updatedAt": "2023-05-23T19:04:15Z",
+      "closedAt": "2023-05-23T19:04:15Z",
       "comments": [
         {
           "author": "tplooker",
@@ -261,6 +276,20 @@
           "body": "Agreed, please also adopt this for the status_list",
           "createdAt": "2023-05-22T21:03:28Z",
           "updatedAt": "2023-05-22T21:03:28Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Close with #16 ?",
+          "createdAt": "2023-05-23T15:40:43Z",
+          "updatedAt": "2023-05-23T15:40:43Z"
+        },
+        {
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Agreed, closing.",
+          "createdAt": "2023-05-23T19:04:15Z",
+          "updatedAt": "2023-05-23T19:04:15Z"
         }
       ]
     },
@@ -321,15 +350,15 @@
       "id": "I_kwDOJZ2aqs5ma5Qn",
       "title": "idx is a counter then a information leaker",
       "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/issues/11",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "peppelinux",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "Since idx is a positive integer number, it is assumed that its numbering is given by a counter\r\nby guessing all the positive number greater than zero, an adversary would know how many credential a credential issuer has issued\r\n\r\nwould it be better using an exadecimal and opaque uid instead of a number?",
       "createdAt": "2023-05-21T00:14:59Z",
-      "updatedAt": "2023-05-22T21:12:20Z",
-      "closedAt": null,
+      "updatedAt": "2023-05-23T19:08:54Z",
+      "closedAt": "2023-05-23T19:08:54Z",
       "comments": [
         {
           "author": "tplooker",
@@ -351,6 +380,84 @@
           "body": "I agree. This probably belongs to the section 5.3 correlation risks and tracking as a counter measure\n\n",
           "createdAt": "2023-05-22T21:12:20Z",
           "updatedAt": "2023-05-22T21:12:20Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Close with #15 ?",
+          "createdAt": "2023-05-23T15:35:22Z",
+          "updatedAt": "2023-05-23T15:35:22Z"
+        },
+        {
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Agreed, closing.",
+          "createdAt": "2023-05-23T19:08:54Z",
+          "updatedAt": "2023-05-23T19:08:54Z"
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "id": "I_kwDOJZ2aqs5mpyJ8",
+      "title": "Define Minimum Size",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/issues/12",
+      "state": "CLOSED",
+      "author": "paulbastian",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Define a minimum size or give this as a recommendation in privacy recommendation?",
+      "createdAt": "2023-05-23T14:42:54Z",
+      "updatedAt": "2023-05-23T20:06:49Z",
+      "closedAt": "2023-05-23T20:06:49Z",
+      "comments": [
+        {
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Would suggest we closed in favour of #4?",
+          "createdAt": "2023-05-23T19:05:18Z",
+          "updatedAt": "2023-05-23T19:05:18Z"
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "id": "I_kwDOJZ2aqs5mqEtA",
+      "title": "Add Terminology and rephrase the Token",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/issues/13",
+      "state": "OPEN",
+      "author": "paulbastian",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "We need a common and better name for the first JWT aka Token aka StatusListEntry.\r\nMy proposal would be:\r\n- Subject Token\r\n- **Subject JWT**\r\n- Status Holding JWT",
+      "createdAt": "2023-05-23T15:24:35Z",
+      "updatedAt": "2023-05-23T15:24:35Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 14,
+      "id": "I_kwDOJZ2aqs5mqGA5",
+      "title": "Remove typ from Token status data",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/issues/14",
+      "state": "OPEN",
+      "author": "paulbastian",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The current proposal for the JWT having a status is:\r\n```\r\n{\r\n  \"alg\": \"ES256\",\r\n  \"kid\": \"11\"\r\n}\r\n.\r\n{\r\n  \"iss\": \"https://example.com\",\r\n  \"sts\": {\r\n    \"typ\": \"revocation-list\",\r\n    \"idx\": 0,\r\n    \"uri\": \"https://example.com/statuslists/1\"\r\n  }\r\n}\r\n```\r\nIn my opinion the `typ`claim here is absolete.\r\nThe type of the status list should be known from the `typ`claim in the Status List JWT.\r\nHow to fetch the Status List JWT is given by the specification or by the scheme in `uri`.",
+      "createdAt": "2023-05-23T15:27:34Z",
+      "updatedAt": "2023-05-23T15:49:13Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Also remove the phrase \"The value MUST be equal to that of the \"typ\" attribute in the \"sts\" claim for the token who's status is being validated\" as this is obsolete in this case as well",
+          "createdAt": "2023-05-23T15:49:13Z",
+          "updatedAt": "2023-05-23T15:49:13Z"
         }
       ]
     }
@@ -460,6 +567,124 @@
           ]
         }
       ]
+    },
+    {
+      "number": 15,
+      "id": "PR_kwDOJZ2aqs5RKPbK",
+      "title": "add privacy consideration on issuers mechanisms to obfuscate actual u\u2026",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/pull/15",
+      "state": "MERGED",
+      "author": "paulbastian",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "\u2026sage",
+      "createdAt": "2023-05-23T15:34:58Z",
+      "updatedAt": "2023-05-23T19:02:27Z",
+      "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
+      "baseRefName": "main",
+      "baseRefOid": "1de1ae351567921de967dd8d042725d7766b8245",
+      "headRepository": "paulbastian/draft-looker-jwt-cwt-status-list",
+      "headRefName": "privacy",
+      "headRefOid": "699ab02ce71124983448f1c97cf72ddb753b23ce",
+      "closedAt": "2023-05-23T19:02:27Z",
+      "mergedAt": "2023-05-23T19:02:27Z",
+      "mergedBy": "tplooker",
+      "mergeCommit": {
+        "oid": "911f25837d219ac5f6f0e9a7fc5fb0f6f49762e9"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJZ2aqs5V2psY",
+          "commit": {
+            "abbreviatedOid": "699ab02"
+          },
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-05-23T19:02:19Z",
+          "updatedAt": "2023-05-23T19:02:19Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "id": "PR_kwDOJZ2aqs5RKRQC",
+      "title": "rename sts and sts_lst",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/pull/16",
+      "state": "MERGED",
+      "author": "paulbastian",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-05-23T15:40:16Z",
+      "updatedAt": "2023-05-23T19:03:51Z",
+      "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
+      "baseRefName": "main",
+      "baseRefOid": "1de1ae351567921de967dd8d042725d7766b8245",
+      "headRepository": "paulbastian/draft-looker-jwt-cwt-status-list",
+      "headRefName": "bikeshedding",
+      "headRefOid": "6703e13f2240695b3cda07904aa5a934fa7ed161",
+      "closedAt": "2023-05-23T19:03:51Z",
+      "mergedAt": "2023-05-23T19:03:50Z",
+      "mergedBy": "tplooker",
+      "mergeCommit": {
+        "oid": "b90e150d6df05231298d446619924a1bfb5ad94e"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJZ2aqs5V2qND",
+          "commit": {
+            "abbreviatedOid": "6703e13"
+          },
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-05-23T19:03:40Z",
+          "updatedAt": "2023-05-23T19:03:40Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "id": "PR_kwDOJZ2aqs5RKpwh",
+      "title": "draft for status types and defintiions",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/pull/17",
+      "state": "OPEN",
+      "author": "paulbastian",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-05-23T16:45:15Z",
+      "updatedAt": "2023-05-24T10:42:32Z",
+      "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
+      "baseRefName": "main",
+      "baseRefOid": "b90e150d6df05231298d446619924a1bfb5ad94e",
+      "headRepository": "paulbastian/draft-looker-jwt-cwt-status-list",
+      "headRefName": "types",
+      "headRefOid": "03d680dc693d66463160f1f669089a2c328e84a5",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Micha proposed to change REVOKED to INVALID, as it gives less intention whether this is a permanent state and the issuers could reflect a suspension also with a 1bit size status list as well",
+          "createdAt": "2023-05-24T10:42:32Z",
+          "updatedAt": "2023-05-24T10:42:32Z"
+        }
+      ],
+      "reviews": []
     }
   ]
 }
