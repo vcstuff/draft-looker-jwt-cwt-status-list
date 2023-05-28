@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-05-25T01:03:34.738738+00:00",
+  "timestamp": "2023-05-28T01:10:10.560651+00:00",
   "repo": "vcstuff/draft-looker-jwt-cwt-status-list",
   "labels": [
     {
@@ -132,7 +132,7 @@
       "labels": [],
       "body": "As described in the title the size of the list (number of token statuses represented by the list) will have a significant impact on privacy related applications.",
       "createdAt": "2023-05-18T06:12:50Z",
-      "updatedAt": "2023-05-23T20:07:02Z",
+      "updatedAt": "2023-05-26T12:45:49Z",
       "closedAt": null,
       "comments": [
         {
@@ -148,6 +148,13 @@
           "body": "Should we define a minimum size or give this as a recommendation in privacy recommendation?",
           "createdAt": "2023-05-23T20:07:02Z",
           "updatedAt": "2023-05-23T20:07:02Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "use SHOULD for minimum size 16K",
+          "createdAt": "2023-05-26T12:45:49Z",
+          "updatedAt": "2023-05-26T12:45:49Z"
         }
       ]
     },
@@ -208,7 +215,7 @@
       "labels": [],
       "body": "To limit the tracking/profiling possiblities of the statusList, an optional mechanism for verifiers to get authorized access could be implemented. This limits the entities that have access to the status list. A mechanism could be:\r\n- not defined in this spec but added to privacy considerations\r\n- defined in this spec",
       "createdAt": "2023-05-19T13:44:53Z",
-      "updatedAt": "2023-05-22T08:37:05Z",
+      "updatedAt": "2023-05-26T12:43:11Z",
       "closedAt": null,
       "comments": [
         {
@@ -231,6 +238,13 @@
           "body": "Either as an entry in the issued credential or we need to provide some form of meta information online prior to requesting the status list?",
           "createdAt": "2023-05-22T08:37:05Z",
           "updatedAt": "2023-05-22T08:37:05Z"
+        },
+        {
+          "author": "c2bo",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Main spec should have a short discussion why/where this would make sense.\r\nIn-depth discussion can happen in an appendix.",
+          "createdAt": "2023-05-26T12:43:11Z",
+          "updatedAt": "2023-05-26T12:43:11Z"
         }
       ]
     },
@@ -433,9 +447,24 @@
       "labels": [],
       "body": "We need a common and better name for the first JWT aka Token aka StatusListEntry.\r\nMy proposal would be:\r\n- Subject Token\r\n- **Subject JWT**\r\n- Status Holding JWT",
       "createdAt": "2023-05-23T15:24:35Z",
-      "updatedAt": "2023-05-23T15:24:35Z",
+      "updatedAt": "2023-05-26T12:36:04Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Yes I had a similar thought, I agree with Subject JWT.",
+          "createdAt": "2023-05-25T04:15:33Z",
+          "updatedAt": "2023-05-25T04:15:33Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I discussed with @c2bo that the spec is supposed to work for JWT and CWT, so maybe Subject Token might fit better?",
+          "createdAt": "2023-05-26T12:36:03Z",
+          "updatedAt": "2023-05-26T12:36:03Z"
+        }
+      ]
     },
     {
       "number": 14,
@@ -449,7 +478,7 @@
       "labels": [],
       "body": "The current proposal for the JWT having a status is:\r\n```\r\n{\r\n  \"alg\": \"ES256\",\r\n  \"kid\": \"11\"\r\n}\r\n.\r\n{\r\n  \"iss\": \"https://example.com\",\r\n  \"sts\": {\r\n    \"typ\": \"revocation-list\",\r\n    \"idx\": 0,\r\n    \"uri\": \"https://example.com/statuslists/1\"\r\n  }\r\n}\r\n```\r\nIn my opinion the `typ`claim here is absolete.\r\nThe type of the status list should be known from the `typ`claim in the Status List JWT.\r\nHow to fetch the Status List JWT is given by the specification or by the scheme in `uri`.",
       "createdAt": "2023-05-23T15:27:34Z",
-      "updatedAt": "2023-05-23T15:49:13Z",
+      "updatedAt": "2023-05-25T20:45:50Z",
       "closedAt": null,
       "comments": [
         {
@@ -458,6 +487,27 @@
           "body": "Also remove the phrase \"The value MUST be equal to that of the \"typ\" attribute in the \"sts\" claim for the token who's status is being validated\" as this is obsolete in this case as well",
           "createdAt": "2023-05-23T15:49:13Z",
           "updatedAt": "2023-05-23T15:49:13Z"
+        },
+        {
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Im not against this proposed simplification however removing it would prevent an extensibility point based of the 'typ' value to control what types of uri could be found in the URI e.g are these always https? or are other schemes supported?",
+          "createdAt": "2023-05-25T04:14:48Z",
+          "updatedAt": "2023-05-25T04:14:48Z"
+        },
+        {
+          "author": "c2bo",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Other schemes could be supported using a different prefix in the `uri` field: the uri could for example be a DID path like did:example:123/status.\r\nI don't think we should worry about that too much for the time being.",
+          "createdAt": "2023-05-25T12:00:23Z",
+          "updatedAt": "2023-05-25T12:00:23Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I agree with @c2bo . The scheme is probably enough. I would suggest making HTTPS schemes a MUST requirement and other schemes MAY be used",
+          "createdAt": "2023-05-25T20:45:50Z",
+          "updatedAt": "2023-05-25T20:45:50Z"
         }
       ]
     }
@@ -664,13 +714,13 @@
       "labels": [],
       "body": "",
       "createdAt": "2023-05-23T16:45:15Z",
-      "updatedAt": "2023-05-24T10:42:32Z",
+      "updatedAt": "2023-05-26T12:59:24Z",
       "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
       "baseRefName": "main",
       "baseRefOid": "b90e150d6df05231298d446619924a1bfb5ad94e",
       "headRepository": "paulbastian/draft-looker-jwt-cwt-status-list",
       "headRefName": "types",
-      "headRefOid": "03d680dc693d66463160f1f669089a2c328e84a5",
+      "headRefOid": "562b19e83a696f82907d5ecc97185ed0b624c557",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -685,6 +735,53 @@
         }
       ],
       "reviews": []
+    },
+    {
+      "number": 18,
+      "id": "PR_kwDOJZ2aqs5RVzIX",
+      "title": "First iteration for the encoding ",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/pull/18",
+      "state": "OPEN",
+      "author": "c2bo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Questions for the encoding:\r\n- base64 vs url-safe base64\r\n- bitwise encoding right now is least significant bit to most significant bit\r\n\r\nThe part describing the bit-encoding still needs be rewritten\r\n\r\nIn general:\r\nI searched a bit for better ways to encode/compress but in terms of simplicity and support for different programming languages, it seems some form of byte array and gZIP seem to be a pretty decent pick.",
+      "createdAt": "2023-05-25T12:34:58Z",
+      "updatedAt": "2023-05-26T07:12:25Z",
+      "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
+      "baseRefName": "main",
+      "baseRefOid": "b90e150d6df05231298d446619924a1bfb5ad94e",
+      "headRepository": "c2bo/draft-looker-jwt-cwt-status-list",
+      "headRefName": "feature/encoding",
+      "headRefOid": "13e1d2fbbd45a1a4540749c025f63af52cd0b78b",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJZ2aqs5WJmCj",
+          "commit": {
+            "abbreviatedOid": "13e1d2f"
+          },
+          "author": "MichScha",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-05-26T07:12:24Z",
+          "updatedAt": "2023-05-26T07:12:25Z",
+          "comments": [
+            {
+              "originalPosition": 26,
+              "body": "Better understanding by adding the possible states of a status with number of bits\r\nExample of a byte representing 4  statuses (2 bit possible values each) with indices 0,1,2,3:",
+              "createdAt": "2023-05-26T07:12:24Z",
+              "updatedAt": "2023-05-26T07:12:25Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
