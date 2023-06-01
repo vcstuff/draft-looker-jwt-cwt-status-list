@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-05-30T01:05:57.203489+00:00",
+  "timestamp": "2023-06-01T01:25:50.810827+00:00",
   "repo": "vcstuff/draft-looker-jwt-cwt-status-list",
   "labels": [
     {
@@ -447,7 +447,7 @@
       "labels": [],
       "body": "We need a common and better name for the first JWT aka Token aka StatusListEntry.\r\nMy proposal would be:\r\n- Subject Token\r\n- **Subject JWT**\r\n- Status Holding JWT",
       "createdAt": "2023-05-23T15:24:35Z",
-      "updatedAt": "2023-05-26T12:36:04Z",
+      "updatedAt": "2023-05-30T14:44:54Z",
       "closedAt": null,
       "comments": [
         {
@@ -463,6 +463,13 @@
           "body": "I discussed with @c2bo that the spec is supposed to work for JWT and CWT, so maybe Subject Token might fit better?",
           "createdAt": "2023-05-26T12:36:03Z",
           "updatedAt": "2023-05-26T12:36:03Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Addressing these issues in #20 ",
+          "createdAt": "2023-05-30T14:44:53Z",
+          "updatedAt": "2023-05-30T14:44:53Z"
         }
       ]
     },
@@ -523,9 +530,31 @@
       "labels": [],
       "body": "I did a first review of this draft. As a newbie to the topic, I found the following issues:\r\n\r\n- I miss a description of the fundamental concept, i.e. the status list itself is a JWT (issued by the same issuer issuing the JWTs), the status list JWT is obtained from a URL hosted by that issuer or another party, the link between the JWT and its status list is provided through data in the JWT. I suggest to add this in the Introduction (or an Overview) section. \r\n- When reading Section 3.1. for the first time I was confused whether it describes the status list JWT or the JWT referring to the status list. I think it is the latter and it should be clear to the reader on first sight. \r\n- I  think the order of definition should be changed. Right now, I'm supposed to understand how a status list JWT is used in a JWT without even knowing what that status list JWT is. I suggest to change order: 1) Overview of the concepts, 2) specify status list JWT (structure and where/how to obtain), 3) embedding in a JWT (syntax, processing rules, ...). ",
       "createdAt": "2023-05-28T10:28:05Z",
-      "updatedAt": "2023-05-28T10:28:05Z",
+      "updatedAt": "2023-05-30T14:44:29Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Agree on 1+2. As mentioned in #13 we need a better word describing the \"Token\" that is being described by the status List. I will make a PR using \"Subject Token\" as this comprises both JSON and CBOR formats.\r\nAgree on 3 as well.",
+          "createdAt": "2023-05-30T08:34:12Z",
+          "updatedAt": "2023-05-30T08:34:12Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "For reordering it would make sense to get forward with the existing PRs first and do it afterwards..",
+          "createdAt": "2023-05-30T08:35:43Z",
+          "updatedAt": "2023-05-30T08:35:43Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Addressing some of these issues in #20 ",
+          "createdAt": "2023-05-30T14:44:28Z",
+          "updatedAt": "2023-05-30T14:44:28Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -764,13 +793,13 @@
       "labels": [],
       "body": "Questions for the encoding:\r\n- base64 vs url-safe base64\r\n- bitwise encoding right now is least significant bit to most significant bit\r\n\r\nThe part describing the bit-encoding still needs be rewritten\r\n\r\nIn general:\r\nI searched a bit for better ways to encode/compress but in terms of simplicity and support for different programming languages, it seems some form of byte array and gZIP seem to be a pretty decent pick.",
       "createdAt": "2023-05-25T12:34:58Z",
-      "updatedAt": "2023-05-26T07:12:25Z",
+      "updatedAt": "2023-05-30T21:30:25Z",
       "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
       "baseRefName": "main",
       "baseRefOid": "b90e150d6df05231298d446619924a1bfb5ad94e",
       "headRepository": "c2bo/draft-looker-jwt-cwt-status-list",
       "headRefName": "feature/encoding",
-      "headRefOid": "13e1d2fbbd45a1a4540749c025f63af52cd0b78b",
+      "headRefOid": "453c427a38f8502ea28c7a5b8621a8d9095ab7a0",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -794,6 +823,148 @@
               "body": "Better understanding by adding the possible states of a status with number of bits\r\nExample of a byte representing 4  statuses (2 bit possible values each) with indices 0,1,2,3:",
               "createdAt": "2023-05-26T07:12:24Z",
               "updatedAt": "2023-05-26T07:12:25Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5WiXZM",
+          "commit": {
+            "abbreviatedOid": "453c427"
+          },
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-05-30T21:30:25Z",
+          "updatedAt": "2023-05-30T21:30:25Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "If #20 is merged ahead will need to update this PR with the required language alignment e.g credential -> subject token",
+              "createdAt": "2023-05-30T21:30:25Z",
+              "updatedAt": "2023-05-30T21:30:25Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 20,
+      "id": "PR_kwDOJZ2aqs5RscE6",
+      "title": "add introduction text, rename to Subject Token",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/pull/20",
+      "state": "OPEN",
+      "author": "paulbastian",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-05-30T14:43:32Z",
+      "updatedAt": "2023-05-31T09:40:35Z",
+      "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
+      "baseRefName": "main",
+      "baseRefOid": "b90e150d6df05231298d446619924a1bfb5ad94e",
+      "headRepository": "paulbastian/draft-looker-jwt-cwt-status-list",
+      "headRefName": "introduction",
+      "headRefOid": "31dd746eb85dd1664ed4dd4b04630a01182c19f8",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@tplooker Whats' failing on the build here?",
+          "createdAt": "2023-05-30T14:59:47Z",
+          "updatedAt": "2023-05-30T14:59:47Z"
+        },
+        {
+          "author": "c2bo",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "`RFC-XXXX` breaks the build\r\nAll RFC references are resolved interally and linked",
+          "createdAt": "2023-05-30T18:54:49Z",
+          "updatedAt": "2023-05-30T18:54:49Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJZ2aqs5WiWIb",
+          "commit": {
+            "abbreviatedOid": "31dd746"
+          },
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-05-30T21:26:33Z",
+          "updatedAt": "2023-05-30T21:26:34Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "```suggestion\r\nThis document defines a status list in JWT and CWT representation that describes the individual statuses of multiple subject tokens. The statuses of each subject token are conveyed via a bit array in the status list. Each subject token during issuance is allocated an index which represents a position within this bit array and the value of the bit(s) at this position correspond to the subject tokens status. The document also defines how an issuer of a subject token in JWT or CTW representation references a status list. Status lists may be composed for expressing a range of status types, the document defines two configurations for the most common use cases as well as an extensibility mechanism for custom status list types. The status list may be used by an issuer in the Issuer-Holder-Verifier model, as described in (XXX) to express the status of verifiable credentials (Subject Tokens) issued by an issuer.\r\n```",
+              "createdAt": "2023-05-30T21:26:33Z",
+              "updatedAt": "2023-05-30T21:26:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5WiWe2",
+          "commit": {
+            "abbreviatedOid": "31dd746"
+          },
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-05-30T21:27:18Z",
+          "updatedAt": "2023-05-30T21:27:18Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "Bit of a suggested revision to the text here.",
+              "createdAt": "2023-05-30T21:27:18Z",
+              "updatedAt": "2023-05-30T21:27:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5WiW6s",
+          "commit": {
+            "abbreviatedOid": "31dd746"
+          },
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-05-30T21:28:41Z",
+          "updatedAt": "2023-05-30T21:28:42Z",
+          "comments": [
+            {
+              "originalPosition": 51,
+              "body": "Not super convinced of this, I think this is pending resolution around whether we agree if the status list provider != issuer otherwise I think issuer suffices?",
+              "createdAt": "2023-05-30T21:28:41Z",
+              "updatedAt": "2023-05-30T21:28:42Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5WlbBH",
+          "commit": {
+            "abbreviatedOid": "31dd746"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-05-31T09:40:34Z",
+          "updatedAt": "2023-05-31T09:40:35Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "@tplooker Looking at other RFCs like JWT, I see that things that are mentioned in the terminology are capitalized throughout the text. Why does this not apply here?",
+              "createdAt": "2023-05-31T09:40:35Z",
+              "updatedAt": "2023-05-31T09:40:35Z"
             }
           ]
         }
