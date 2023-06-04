@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-06-01T01:25:50.810827+00:00",
+  "timestamp": "2023-06-04T01:22:36.717937+00:00",
   "repo": "vcstuff/draft-looker-jwt-cwt-status-list",
   "labels": [
     {
@@ -793,13 +793,13 @@
       "labels": [],
       "body": "Questions for the encoding:\r\n- base64 vs url-safe base64\r\n- bitwise encoding right now is least significant bit to most significant bit\r\n\r\nThe part describing the bit-encoding still needs be rewritten\r\n\r\nIn general:\r\nI searched a bit for better ways to encode/compress but in terms of simplicity and support for different programming languages, it seems some form of byte array and gZIP seem to be a pretty decent pick.",
       "createdAt": "2023-05-25T12:34:58Z",
-      "updatedAt": "2023-05-30T21:30:25Z",
+      "updatedAt": "2023-06-01T13:57:39Z",
       "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
       "baseRefName": "main",
       "baseRefOid": "b90e150d6df05231298d446619924a1bfb5ad94e",
       "headRepository": "c2bo/draft-looker-jwt-cwt-status-list",
       "headRefName": "feature/encoding",
-      "headRefOid": "453c427a38f8502ea28c7a5b8621a8d9095ab7a0",
+      "headRefOid": "7bdf31d3bc5665d58a159dac44e833d84edc5bd2",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -845,6 +845,26 @@
               "updatedAt": "2023-05-30T21:30:25Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5WwLKL",
+          "commit": {
+            "abbreviatedOid": "453c427"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-06-01T13:22:49Z",
+          "updatedAt": "2023-06-01T13:22:50Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "```suggestion\r\nEach status of a credential MUST be represented with a bit size of 1,2,4, or 8. Therefore up to 2,4,16, or 256 statuses for a credential depending on the bit-size are possible. This limitation was introduced to reduce the amount of bit manipulation necessary to one byte for every operation and thus keeping implementations simpler and less error prone.\r\n```",
+              "createdAt": "2023-06-01T13:22:49Z",
+              "updatedAt": "2023-06-01T13:22:50Z"
+            }
+          ]
         }
       ]
     },
@@ -860,13 +880,13 @@
       "labels": [],
       "body": "",
       "createdAt": "2023-05-30T14:43:32Z",
-      "updatedAt": "2023-05-31T09:40:35Z",
+      "updatedAt": "2023-06-01T13:56:54Z",
       "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
       "baseRefName": "main",
       "baseRefOid": "b90e150d6df05231298d446619924a1bfb5ad94e",
       "headRepository": "paulbastian/draft-looker-jwt-cwt-status-list",
       "headRefName": "introduction",
-      "headRefOid": "31dd746eb85dd1664ed4dd4b04630a01182c19f8",
+      "headRefOid": "5644ac8ea1bf0c7d3557183a1bfca2fde56b6edc",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -967,6 +987,52 @@
               "updatedAt": "2023-05-31T09:40:35Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5Wvvvx",
+          "commit": {
+            "abbreviatedOid": "31dd746"
+          },
+          "author": "tlodderstedt",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-06-01T12:30:37Z",
+          "updatedAt": "2023-06-01T12:30:37Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5Wv_oH",
+          "commit": {
+            "abbreviatedOid": "31dd746"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-06-01T13:01:19Z",
+          "updatedAt": "2023-06-01T13:01:20Z",
+          "comments": [
+            {
+              "originalPosition": 51,
+              "body": "This relates to #10 and is in line with the issuer-holder-verifier model described in the SD-JWT spec. Outsourcing the status list hosting to another party has potential privacy benefits so I would definitly include the option",
+              "createdAt": "2023-06-01T13:01:20Z",
+              "updatedAt": "2023-06-01T13:02:01Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5WweOy",
+          "commit": {
+            "abbreviatedOid": "5644ac8"
+          },
+          "author": "c2bo",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-06-01T13:56:54Z",
+          "updatedAt": "2023-06-01T13:56:54Z",
+          "comments": []
         }
       ]
     }
