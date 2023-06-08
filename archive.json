@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-06-04T01:22:36.717937+00:00",
+  "timestamp": "2023-06-08T01:13:25.323386+00:00",
   "repo": "vcstuff/draft-looker-jwt-cwt-status-list",
   "labels": [
     {
@@ -555,6 +555,38 @@
           "updatedAt": "2023-05-30T14:44:28Z"
         }
       ]
+    },
+    {
+      "number": 21,
+      "id": "I_kwDOJZ2aqs5oC0TD",
+      "title": "Title / Future Proofness for other formats than bitarrays",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/issues/21",
+      "state": "OPEN",
+      "author": "paulbastian",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "I'm wondering whether\r\na) this document shall always only be about status list using bitarrays/bitstrings\r\nor\r\nb) we want to leave a window open to enable other forms of storage\r\n\r\nIn case of a) it could make sense to name bit array in the title of the document.\r\nIn case of b) it could make sense to add a field that reference the existing mechanism",
+      "createdAt": "2023-06-07T10:23:03Z",
+      "updatedAt": "2023-06-07T10:23:03Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 24,
+      "id": "I_kwDOJZ2aqs5oGi-v",
+      "title": "Add implementations consinderations",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/issues/24",
+      "state": "OPEN",
+      "author": "paulbastian",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Add:\r\n- prevent double allocating an index\r\n- randomize allocation of indexes/avoid sequential usage",
+      "createdAt": "2023-06-07T19:34:15Z",
+      "updatedAt": "2023-06-07T19:34:15Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -759,13 +791,13 @@
       "labels": [],
       "body": "",
       "createdAt": "2023-05-23T16:45:15Z",
-      "updatedAt": "2023-05-26T12:59:24Z",
+      "updatedAt": "2023-06-07T12:18:45Z",
       "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
       "baseRefName": "main",
       "baseRefOid": "b90e150d6df05231298d446619924a1bfb5ad94e",
       "headRepository": "paulbastian/draft-looker-jwt-cwt-status-list",
       "headRefName": "types",
-      "headRefOid": "562b19e83a696f82907d5ecc97185ed0b624c557",
+      "headRefOid": "e1ad08f88d6832faddcbb14d001e0a4e1988df21",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -777,9 +809,57 @@
           "body": "Micha proposed to change REVOKED to INVALID, as it gives less intention whether this is a permanent state and the issuers could reflect a suspension also with a 1bit size status list as well",
           "createdAt": "2023-05-24T10:42:32Z",
           "updatedAt": "2023-05-24T10:42:32Z"
+        },
+        {
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I'm in agreement with Kristina, the more I look at this the more I think we should have one possible enumeration of statuses rather than allowing every issuer to define their own, the question then becomes how big that set needs to be as it controls how many bits are allocated to each credential in the status list.",
+          "createdAt": "2023-06-06T20:51:34Z",
+          "updatedAt": "2023-06-06T20:51:34Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I'm fine with defining the first bit as valid/invalid. I think providing the option for additional bits offers benefits with acceptable tradeoffs",
+          "createdAt": "2023-06-07T05:29:03Z",
+          "updatedAt": "2023-06-07T05:29:03Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I've made some changes, please recheck @tplooker @Sakurann ",
+          "createdAt": "2023-06-07T12:18:45Z",
+          "updatedAt": "2023-06-07T12:18:45Z"
         }
       ],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOJZ2aqs5XVFf1",
+          "commit": {
+            "abbreviatedOid": "562b19e"
+          },
+          "author": "tlodderstedt",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-06-06T12:58:26Z",
+          "updatedAt": "2023-06-06T12:58:26Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5XYOI3",
+          "commit": {
+            "abbreviatedOid": "562b19e"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "NONE",
+          "state": "CHANGES_REQUESTED",
+          "body": "sorry, I am not onboard with giving the issuers the complete freedom to define their own status values. for the interop purposes, the valid and invalid values MUST always be the same. ie 0 is always valid and 1 is always invalid. (or vice versa - that I do not care). so when the bit size is bigger than 2, the first bite is always valid/invalid and from the second bit, it can be suspended, etc.",
+          "createdAt": "2023-06-06T19:53:34Z",
+          "updatedAt": "2023-06-06T19:53:34Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 18,
@@ -880,7 +960,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2023-05-30T14:43:32Z",
-      "updatedAt": "2023-06-01T13:56:54Z",
+      "updatedAt": "2023-06-07T19:27:12Z",
       "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
       "baseRefName": "main",
       "baseRefOid": "b90e150d6df05231298d446619924a1bfb5ad94e",
@@ -905,6 +985,62 @@
           "body": "`RFC-XXXX` breaks the build\r\nAll RFC references are resolved interally and linked",
           "createdAt": "2023-05-30T18:54:49Z",
           "updatedAt": "2023-05-30T18:54:49Z"
+        },
+        {
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> I am sorry, I am completely lost with the idea of using a term subject token to say digital credential/verifiable credential. and the definition of a subject token does not really give a rationale why it is called subject token and only talks about relationship with the status list...\r\n\r\nThere are possible applications of this draft that go beyond just verifiable credentials, hence we do not want to use that term in this draft IMO. \"Token\" is already a term broadly used in this space e.g CWT and JWT both use it, \"subject\" was used in this context because it is also a term used heavily w.r.t tokens, feel free to suggest alternative terminology but at this point I think subject token is the best I've heard suggested.",
+          "createdAt": "2023-06-06T20:54:30Z",
+          "updatedAt": "2023-06-06T20:54:30Z"
+        },
+        {
+          "author": "Sakurann",
+          "authorAssociation": "NONE",
+          "body": "can we simply use JWT/CWT instead of creating any kind of abstraction term like `subject token`? One person i asked for feedback associated `subject token` with a token used to communicate a subject of an email.",
+          "createdAt": "2023-06-06T21:04:54Z",
+          "updatedAt": "2023-06-06T21:04:54Z"
+        },
+        {
+          "author": "Sakurann",
+          "authorAssociation": "NONE",
+          "body": "or, bottomline, please stick to `token`. `subject token` is very confusing.",
+          "createdAt": "2023-06-07T00:04:14Z",
+          "updatedAt": "2023-06-07T00:04:14Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I'm with Tobias on this and prefer introducing a new term here. Otherwise things get really weird because the status list is also a JWT/CWT and a token. We need something that clearly separated the status list token and the other token. I think subject token is the best we have. Also subject is leaving towards what we have as credentialSubject in the VC world, so the term subject is kind of established in this context",
+          "createdAt": "2023-06-07T05:24:13Z",
+          "updatedAt": "2023-06-07T05:25:46Z"
+        },
+        {
+          "author": "Sakurann",
+          "authorAssociation": "NONE",
+          "body": "I am really strongly against \"Subject Token\". Not only because it is not intuitive (I have been asking various people in this space and no one would associate what it trying to be conveyed), but we should not be introducing a new term in this already confusing ecosystem. \n\nMoreover, this status list mechanism can be used with a JWT/CWT that does not necessarily contain a subject (like SD-JWT-VC), so using a term subject because it is widely used is not a sufficient reason.\n\nKeep referring to it as a token, because this draft should not be opinionated about what is in the JWT/CWT whose status is being expressed should be fine, if a \"status list JWT/CWT\" is always referred as such. there are multiple occurrences where \"status list JWT\" is referred to simply as a JWT which should be fixed IMO.",
+          "createdAt": "2023-06-07T05:53:43Z",
+          "updatedAt": "2023-06-07T05:54:40Z"
+        },
+        {
+          "author": "c2bo",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "We need clear terminology for:\r\n- the status list token (i think this one fits pretty well)\r\n- the credential / token that is bound to the status list\r\n\r\nI do believe only calling it token will cause confusion with the status list token. We can also call it something else like credential if we do a proper introduction of the term in the beginning?",
+          "createdAt": "2023-06-07T13:50:49Z",
+          "updatedAt": "2023-06-07T13:50:49Z"
+        },
+        {
+          "author": "Sakurann",
+          "authorAssociation": "NONE",
+          "body": "Why call \"status list token\" and not \"status list JWT/CWT\"?",
+          "createdAt": "2023-06-07T14:00:06Z",
+          "updatedAt": "2023-06-07T14:00:16Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "agreed on call:\r\nrename Status List to Status List Token\r\nintroduce Status List for the actual bitarray\r\nrename Subject Token to Referenced Token\r\nremove Status List Provider for now and introduce it later if neccessary",
+          "createdAt": "2023-06-07T19:27:12Z",
+          "updatedAt": "2023-06-07T19:27:12Z"
         }
       ],
       "reviews": [
@@ -1033,8 +1169,159 @@
           "createdAt": "2023-06-01T13:56:54Z",
           "updatedAt": "2023-06-01T13:56:54Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5XYOlP",
+          "commit": {
+            "abbreviatedOid": "5644ac8"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-06-06T19:54:54Z",
+          "updatedAt": "2023-06-06T19:54:54Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\r\nJSON Web Tokens (JWTs) {{RFC7519}} and CBOR Web Tokens (CWTs) {{RFC8392}} as secure token formats, have vast possible applications. Some of these applications can involve issuing a token whereby certain semantics about the token can change over time which are important to be able to communicate to relying parties in an interoperable manner, such as whether the token is considered invalidated or suspended by its issuer.\r\n```\r\n\r\nto match with the rest of terminology",
+              "createdAt": "2023-06-06T19:54:54Z",
+              "updatedAt": "2023-06-06T19:54:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5XYO3c",
+          "commit": {
+            "abbreviatedOid": "5644ac8"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-06-06T19:55:37Z",
+          "updatedAt": "2023-06-06T19:55:37Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "```suggestion\r\nThis document defines a status list in JWT and CWT representations that describes the individual statuses of multiple subject tokens. The statuses of each subject token are conveyed via a bit array in the status list. Each subject token during issuance is allocated an index which represents a position within this bit array and the value of the bit(s) at this position correspond to the subject tokens status. The document also defines how an issuer of a subject token in JWT or CTW representation references a status list. Status lists may be composed for expressing a range of status types, the document defines two configurations for the most common use cases as well as an extensibility mechanism for custom status list types. The status list may be used by an issuer in the Issuer-Holder-Verifier model, as described in (XXX) to express the status of verifiable credentials (Subject Tokens) issued by an issuer.\r\n```",
+              "createdAt": "2023-06-06T19:55:37Z",
+              "updatedAt": "2023-06-06T19:55:37Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5XYPv9",
+          "commit": {
+            "abbreviatedOid": "5644ac8"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "NONE",
+          "state": "CHANGES_REQUESTED",
+          "body": "I am sorry, I am completely lost with the idea of using a term `subject token` to say `digital credential/verifiable credential`. and the definition of a `subject token` does not really give a rationale why it is called `subject token` and only talks about relationship with the status list...",
+          "createdAt": "2023-06-06T19:58:16Z",
+          "updatedAt": "2023-06-06T19:58:16Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5XYuYw",
+          "commit": {
+            "abbreviatedOid": "5644ac8"
+          },
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-06-06T20:55:37Z",
+          "updatedAt": "2023-06-06T20:55:37Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "```suggestion\r\nThis document defines a status list in JWT and CWT representation that describes the individual statuses of multiple subject tokens. The statuses of each subject token are conveyed via a bit array in the status list. Each subject token during issuance is allocated an index which represents a position within this bit array and the value of the bit(s) at this position correspond to the subject tokens status. The document also defines how an issuer of a subject token in JWT or CWT representation references a status list. Status lists may be composed for expressing a range of status types, the document defines two configurations for the most common use cases as well as an extensibility mechanism for custom status list types. The status list may be used by an issuer in the Issuer-Holder-Verifier model, as described in (XXX) to express the status of verifiable credentials (Subject Tokens) issued by an issuer.\r\n```",
+              "createdAt": "2023-06-06T20:55:37Z",
+              "updatedAt": "2023-06-06T20:55:37Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5XYvAg",
+          "commit": {
+            "abbreviatedOid": "5644ac8"
+          },
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-06-06T20:57:03Z",
+          "updatedAt": "2023-06-06T20:57:03Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5XgVxY",
+          "commit": {
+            "abbreviatedOid": "5644ac8"
+          },
+          "author": "tlodderstedt",
+          "authorAssociation": "NONE",
+          "state": "CHANGES_REQUESTED",
+          "body": "I understand the concerns of @Sakurann. \r\n\r\nStatusList2021 just uses the term StatusList2021Credential. I think we could use the term status list token. status list JWT/CWT would be fine as well. ",
+          "createdAt": "2023-06-07T16:10:54Z",
+          "updatedAt": "2023-06-07T16:10:54Z",
+          "comments": []
         }
       ]
+    },
+    {
+      "number": 22,
+      "id": "PR_kwDOJZ2aqs5SaDaW",
+      "title": "Adding to privacy considerations",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/pull/22",
+      "state": "OPEN",
+      "author": "paulbastian",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-06-07T12:17:35Z",
+      "updatedAt": "2023-06-07T12:17:36Z",
+      "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
+      "baseRefName": "main",
+      "baseRefOid": "b90e150d6df05231298d446619924a1bfb5ad94e",
+      "headRepository": "paulbastian/draft-looker-jwt-cwt-status-list",
+      "headRefName": "privacy",
+      "headRefOid": "351968f72362ba41da2a4730bbf7f261c931a406",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 23,
+      "id": "PR_kwDOJZ2aqs5SakUh",
+      "title": "first iteration on authorized access",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/pull/23",
+      "state": "OPEN",
+      "author": "c2bo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-06-07T13:30:10Z",
+      "updatedAt": "2023-06-07T13:30:11Z",
+      "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
+      "baseRefName": "main",
+      "baseRefOid": "b90e150d6df05231298d446619924a1bfb5ad94e",
+      "headRepository": "c2bo/draft-looker-jwt-cwt-status-list",
+      "headRefName": "authorization-statuslist-endpoint",
+      "headRefOid": "2a202ef4945029e5a0c076e7628201eb7a3f093c",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
