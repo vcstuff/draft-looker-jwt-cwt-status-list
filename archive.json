@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-06-08T01:13:25.323386+00:00",
+  "timestamp": "2023-06-11T01:19:52.347825+00:00",
   "repo": "vcstuff/draft-looker-jwt-cwt-status-list",
   "labels": [
     {
@@ -791,13 +791,13 @@
       "labels": [],
       "body": "",
       "createdAt": "2023-05-23T16:45:15Z",
-      "updatedAt": "2023-06-07T12:18:45Z",
+      "updatedAt": "2023-06-09T13:24:12Z",
       "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
       "baseRefName": "main",
       "baseRefOid": "b90e150d6df05231298d446619924a1bfb5ad94e",
       "headRepository": "paulbastian/draft-looker-jwt-cwt-status-list",
       "headRefName": "types",
-      "headRefOid": "e1ad08f88d6832faddcbb14d001e0a4e1988df21",
+      "headRefOid": "d8d7d57483888b713a1f91f4e53fc486a3d727aa",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -830,6 +830,27 @@
           "body": "I've made some changes, please recheck @tplooker @Sakurann ",
           "createdAt": "2023-06-07T12:18:45Z",
           "updatedAt": "2023-06-07T12:18:45Z"
+        },
+        {
+          "author": "Sakurann",
+          "authorAssociation": "NONE",
+          "body": "umm I thought we agreed to remove the concept of the \"typ\" attribute.. so no `revocation-list` and no `suspention-status-list`.\r\n",
+          "createdAt": "2023-06-09T06:38:59Z",
+          "updatedAt": "2023-06-09T06:38:59Z"
+        },
+        {
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Yeah that was captured here @Sakurann https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/pull/20#issuecomment-1581385983",
+          "createdAt": "2023-06-09T09:04:41Z",
+          "updatedAt": "2023-06-09T09:04:41Z"
+        },
+        {
+          "author": "tlodderstedt",
+          "authorAssociation": "NONE",
+          "body": "> umm I thought we agreed to remove the concept of the \"typ\" attribute.. so no `revocation-list` and no `suspention-status-list`.\r\n\r\nBut I assume the Status List Token will have a `typ` JOSE header to properly distinguish it from other JWTs, right?",
+          "createdAt": "2023-06-09T10:43:55Z",
+          "updatedAt": "2023-06-09T10:43:55Z"
         }
       ],
       "reviews": [
@@ -960,13 +981,13 @@
       "labels": [],
       "body": "",
       "createdAt": "2023-05-30T14:43:32Z",
-      "updatedAt": "2023-06-07T19:27:12Z",
+      "updatedAt": "2023-06-09T14:36:25Z",
       "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
       "baseRefName": "main",
       "baseRefOid": "b90e150d6df05231298d446619924a1bfb5ad94e",
       "headRepository": "paulbastian/draft-looker-jwt-cwt-status-list",
       "headRefName": "introduction",
-      "headRefOid": "5644ac8ea1bf0c7d3557183a1bfca2fde56b6edc",
+      "headRefOid": "cda485814be679014ad0076733989c15eeacc989",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -1041,6 +1062,13 @@
           "body": "agreed on call:\r\nrename Status List to Status List Token\r\nintroduce Status List for the actual bitarray\r\nrename Subject Token to Referenced Token\r\nremove Status List Provider for now and introduce it later if neccessary",
           "createdAt": "2023-06-07T19:27:12Z",
           "updatedAt": "2023-06-07T19:27:12Z"
+        },
+        {
+          "author": "Sakurann",
+          "authorAssociation": "NONE",
+          "body": "btw sd-jwt vc spec mentions status provider :)",
+          "createdAt": "2023-06-09T06:55:07Z",
+          "updatedAt": "2023-06-09T06:55:07Z"
         }
       ],
       "reviews": [
