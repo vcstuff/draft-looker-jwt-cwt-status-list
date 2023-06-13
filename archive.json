@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-06-11T01:19:52.347825+00:00",
+  "timestamp": "2023-06-13T01:11:14.016936+00:00",
   "repo": "vcstuff/draft-looker-jwt-cwt-status-list",
   "labels": [
     {
@@ -587,6 +587,22 @@
       "updatedAt": "2023-06-07T19:34:15Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 25,
+      "id": "I_kwDOJZ2aqs5ofMTN",
+      "title": "JOSE typ for Status List Token",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/issues/25",
+      "state": "OPEN",
+      "author": "paulbastian",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "              > umm I thought we agreed to remove the concept of the \"typ\" attribute.. so no `revocation-list` and no `suspention-status-list`.\r\n\r\nBut I assume the Status List Token will have a `typ` JOSE header to properly distinguish it from other JWTs, right?\r\n\r\n_Originally posted by @tlodderstedt in https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/issues/17#issuecomment-1584372077_\r\n            ",
+      "createdAt": "2023-06-12T15:25:01Z",
+      "updatedAt": "2023-06-12T15:25:01Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -791,7 +807,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2023-05-23T16:45:15Z",
-      "updatedAt": "2023-06-09T13:24:12Z",
+      "updatedAt": "2023-06-12T15:25:44Z",
       "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
       "baseRefName": "main",
       "baseRefOid": "b90e150d6df05231298d446619924a1bfb5ad94e",
@@ -851,6 +867,13 @@
           "body": "> umm I thought we agreed to remove the concept of the \"typ\" attribute.. so no `revocation-list` and no `suspention-status-list`.\r\n\r\nBut I assume the Status List Token will have a `typ` JOSE header to properly distinguish it from other JWTs, right?",
           "createdAt": "2023-06-09T10:43:55Z",
           "updatedAt": "2023-06-09T10:43:55Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> > umm I thought we agreed to remove the concept of the \"typ\" attribute.. so no `revocation-list` and no `suspention-status-list`.\r\n> \r\n> But I assume the Status List Token will have a `typ` JOSE header to properly distinguish it from other JWTs, right?\r\n\r\nI approve, but moved to separate issue",
+          "createdAt": "2023-06-12T15:25:44Z",
+          "updatedAt": "2023-06-12T15:25:44Z"
         }
       ],
       "reviews": [
@@ -879,6 +902,32 @@
           "createdAt": "2023-06-06T19:53:34Z",
           "updatedAt": "2023-06-06T19:53:34Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5V20ho",
+          "commit": {
+            "abbreviatedOid": "d8d7d57"
+          },
+          "author": "c2bo",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-05-23T19:33:12Z",
+          "updatedAt": "2023-06-12T15:22:00Z",
+          "comments": [
+            {
+              "originalPosition": 48,
+              "body": "Should we also call this VALID?",
+              "createdAt": "2023-05-23T19:33:13Z",
+              "updatedAt": "2023-06-12T15:22:00Z"
+            },
+            {
+              "originalPosition": 67,
+              "body": "Imho, we should change this to 0 -> valid, 1-> revoked, 2 -> suspended. That way it is a clear extension to the 1bit one",
+              "createdAt": "2023-05-23T19:34:22Z",
+              "updatedAt": "2023-06-12T15:22:00Z"
+            }
+          ]
         }
       ]
     },
@@ -972,7 +1021,7 @@
     {
       "number": 20,
       "id": "PR_kwDOJZ2aqs5RscE6",
-      "title": "add introduction text, rename to Subject Token",
+      "title": "add introduction text, rename to Referenced Token",
       "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/pull/20",
       "state": "OPEN",
       "author": "paulbastian",
@@ -981,13 +1030,13 @@
       "labels": [],
       "body": "",
       "createdAt": "2023-05-30T14:43:32Z",
-      "updatedAt": "2023-06-09T14:36:25Z",
+      "updatedAt": "2023-06-12T15:07:12Z",
       "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
       "baseRefName": "main",
       "baseRefOid": "b90e150d6df05231298d446619924a1bfb5ad94e",
       "headRepository": "paulbastian/draft-looker-jwt-cwt-status-list",
       "headRefName": "introduction",
-      "headRefOid": "cda485814be679014ad0076733989c15eeacc989",
+      "headRefOid": "95bb340f8dcce89ab87d76b3df254e4f2f50d07b",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -1069,6 +1118,13 @@
           "body": "btw sd-jwt vc spec mentions status provider :)",
           "createdAt": "2023-06-09T06:55:07Z",
           "updatedAt": "2023-06-09T06:55:07Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@tlodderstedt @Sakurann can you approve this PR?",
+          "createdAt": "2023-06-12T13:09:31Z",
+          "updatedAt": "2023-06-12T13:09:31Z"
         }
       ],
       "reviews": [
@@ -1295,6 +1351,39 @@
           "body": "I understand the concerns of @Sakurann. \r\n\r\nStatusList2021 just uses the term StatusList2021Credential. I think we could use the term status list token. status list JWT/CWT would be fine as well. ",
           "createdAt": "2023-06-07T16:10:54Z",
           "updatedAt": "2023-06-07T16:10:54Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5XwT1l",
+          "commit": {
+            "abbreviatedOid": "310a60a"
+          },
+          "author": "c2bo",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2023-06-09T14:36:24Z",
+          "updatedAt": "2023-06-12T15:05:08Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "```suggestion\r\nThis document defines a Status List in JWT and CWT representation that describes the individual statuses of multiple Referenced Tokens. The statuses of all Referenced Tokens are conveyed via a bit array in the Status List. Each Referenced Token during issuance is allocated an index which represents a position within this bit array and the value of the bit(s) at this position correspond to the Referenced Token's status. The document also defines how an issuer of a Referenced Token in JWT or CTW representation references a Status List Token. Status Lists may be composed for expressing a range of Status Types, the document defines basic Status Types for the most common use cases as well as an extensibility mechanism for custom Status Types. The Status List Token may be used by an issuer in the Issuer-Holder-Verifier model, as described in (XXX) to express the status of verifiable credentials (Referenced Tokens) issued by an issuer.\r\n```",
+              "createdAt": "2023-06-09T14:36:25Z",
+              "updatedAt": "2023-06-12T15:05:08Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5X7UO8",
+          "commit": {
+            "abbreviatedOid": "95bb340"
+          },
+          "author": "c2bo",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-06-12T15:07:12Z",
+          "updatedAt": "2023-06-12T15:07:12Z",
           "comments": []
         }
       ]
