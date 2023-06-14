@@ -4,8 +4,8 @@
 
 Network Working Group                                          T. Looker
 Internet-Draft                                                     MATTR
-Intended status: Informational                               23 May 2023
-Expires: 24 November 2023
+Intended status: Informational                              14 June 2023
+Expires: 16 December 2023
 
 
                         JWT and CWT Status List
@@ -45,7 +45,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 November 2023.
+   This Internet-Draft will expire on 16 December 2023.
 
 Copyright Notice
 
@@ -61,26 +61,28 @@ Copyright Notice
 Table of Contents
 
    1.  Introduction
+     1.1.  Rationale
    2.  Conventions and Definitions
-   3.  JSON Web Token Representation
-     3.1.  JWT Format and Processing Requirements
-       3.1.1.  Status Claim Format
-     3.2.  Status List JWT Format and Processing Requirements
-       3.2.1.  Status List Claim Format
-     3.3.  Revocation Status List Definition
-   4.  Security Considerations
-     4.1.  Correct decoding and parsing of the encoded status list
-     4.2.  Cached and Stale status lists
-     4.3.  Authorized access to the Status List
-     4.4.  History
-   5.  Privacy Considerations
-     5.1.  Herd Privacy
-     5.2.  Profiling
-     5.3.  Correlation Risks and Tracking
-     5.4.  Malicious Issuers
-     5.5.  Hosting Service (what's a better name here?)
-   6.  IANA Considerations
-   7.  Normative References
+   3.  Terminology
+   4.  JSON Web Token Representation
+     4.1.  Referenced Token Format and Processing Requirements
+       4.1.1.  Status Claim Format
+     4.2.  Status List JWT Format and Processing Requirements
+       4.2.1.  Status List Claim Format
+     4.3.  Revocation Status List Definition
+   5.  Security Considerations
+     5.1.  Correct decoding and parsing of the encoded status list
+     5.2.  Cached and Stale status lists
+     5.3.  Authorized access to the Status List
+     5.4.  History
+   6.  Privacy Considerations
+     6.1.  Herd Privacy
+     6.2.  Profiling
+     6.3.  Correlation Risks and Tracking
+     6.4.  Malicious Issuers
+     6.5.  Hosting Service (what's a better name here?)
+   7.  IANA Considerations
+   8.  Normative References
    Acknowledgments
    Author's Address
 
@@ -91,24 +93,56 @@ Table of Contents
    these applications can involve issuing a token whereby certain
    semantics about the token can change over time which are important to
    be able to communicate to relying parties in an interoperable manner,
-   such as whether the token is considered revoked by its issuer.
+   such as whether the token is considered invalidated or suspended by
+   its issuer.
 
-   This document defines a status list using JWT and CWT for
-   representation that is capable of communicating the individual
-   statuses of multiple tokens.  The document also defines how an issuer
-   of a token references a status list in a JWT or CWT which has a
-   status to convey.
+   This document defines a Status List in JWT and CWT representations
+   that describes the individual statuses of multiple Referenced Tokens.
+   The statuses of all Referenced Tokens are conveyed via a bit array in
+   the Status List.  Each Referenced Token is allocated an index during
+   issuance which represents a position within this bit array and the
+   value of the bit(s) at this position correspond to the Referenced
+   Token's status.  The document also defines how an issuer of a
+   Referenced Token in JWT or CWT representation references a Status
+   List Token.  Status Lists may be composed for expressing a range of
+   Status Types, the document defines basic Status Types for the most
+   common use cases as well as an extensibility mechanism for custom
+   Status Types.  The Status List Token may be used by an issuer in the
+   Issuer-Holder-Verifier model, as described in (XXX) to express the
+   status of verifiable credentials (Referenced Tokens) issued by an
+   issuer.
 
    The following diagram depicts the basic conceptual relationship.
 
-   +---------------+                     +---------------+
-   |               |                     |               |
-   |               |                     |               |
-   |     Token     |    References       |  Status List  |
-   |(JWT/CWT Based)|-------------------->|(JWT/CWT Based)|
-   |               |                     |               |
-   |               |                     |               |
-   +---------------+                     +---------------+
+   +------------------+                    +-------------------+
+   |                  |      References    |                   |
+   |                  |------------------->|                   |
+   | Referenced Token |                    | Status List Token |
+   | (JWT/CWT Based)  |                    |  (JWT/CWT Based)  |
+   |                  |  Describes Status  |                   |
+   |                  |<-------------------|                   |
+   +------------------+                    +-------------------+
+
+1.1.  Rationale
+
+   Revocation mechanisms are an essential part for most identity
+   ecoosystems.  In the past, revocation of X.509 TLS certificates has
+   been proven difficult as traditional certificate revocation lists
+   (CRLs) have limited scalability and the Online Certificate Status
+   Protocol (OCSP) has additional privacy risks as the client is leaking
+   the requested website to a third party.  OSCP stapling is adressing
+   some of these problems at the cost of less up-to-date data.  Modern
+   approaches use accumulator-based revocation registries and Zero-
+   Knowledge-Proofs to accomodate for this privacy gap but face
+   scalability issues again.
+
+   The approach of this specification seeks to find a balance between
+   scalability, security and privacy by minimizing the status
+   information to mere bits and compressing the resulting binary data.
+   Thereby a Status List may contain statuses of 100.000 or more
+   Referenced Tokens, but still remain relatively small.  Placing large
+   amounts of Referenced Tokens into the same list also enables a herd
+   privacy towards the Issuer.
 
 2.  Conventions and Definitions
 
@@ -118,13 +152,27 @@ Table of Contents
    BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
-3.  JSON Web Token Representation
+3.  Terminology
 
-3.1.  JWT Format and Processing Requirements
+   Status List A bit array that lists the statuses of many Referenced
+   Tokens.
 
-   The following rules apply to validating a JWT which references a
-   status list.  Application of additional restrictions and policy are
-   at the discretion of the verifying party.
+   Status List Token A token in JWT or CWT representation that contains
+   a Status List.
+
+   Referenced Token A token in JWT or CWT representation which contains
+   a reference to a Status List Token.  The information from the
+   contained Status List may give a verifier additional information
+   about up-to-date status of the Referenced Token.
+
+4.  JSON Web Token Representation
+
+4.1.  Referenced Token Format and Processing Requirements
+
+   The following rules apply to validating a Referenced Token in JWT
+   representation which references a Status List Token.  Application of
+   additional restrictions and policy are at the discretion of the
+   verifying party.
 
    1.  The JWT MUST contain an "iss" (issuer) claim that contains a
        unique string based identifier for the entity that issued the
@@ -132,10 +180,11 @@ Table of Contents
        otherwise, compliant applications MUST compare issuer values
        using the Simple String Comparison method defined in
        Section 6.2.1 of [RFC3986].  The value MUST be equal to that of
-       the "iss" claim contained within the referenced status list JWT.
+       the "iss" claim contained within the referenced Status List
+       Token.
 
    2.  The JWT MUST contain an "status" (status) claim conforming to the
-       rules outlined in Section 3.1.1
+       rules outlined in Section 4.1.1
 
    The following example is the decoded header and payload of a JWT
    meeting the processing rules as defined above.
@@ -154,34 +203,34 @@ Table of Contents
      }
    }
 
-3.1.1.  Status Claim Format
+4.1.1.  Status Claim Format
 
    The following rules apply to validating the "status" (status) claim
 
    1.  The claim value MUST be a valid JSON object.
 
    2.  The claim value object MUST contain a "typ" (type) attribute with
-       a string based value that represents the type of status list
+       a string based value that represents the type of Status List
        referenced.  The value MUST be equal to that of the "typ"
-       attribute in the "status_list" claim for the referenced status
-       list.
+       attribute in the "status_list" claim for the referenced Status
+       List.
 
    3.  The claim value object MUST contain an "idx" (index) attribute
        with a numberic based value that represents the index to check
-       for status information in the status list for the current JWT.
+       for status information in the Status List for the current JWT.
        The value of this attribute MUST be a non-negative number,
        containing a value of zero or greater.  Refer to xx for details
        on the validation procedure.
 
    4.  The claim value object MUST contain a "uri" attribute with a
-       string based value that identifies the status list containing the
+       string based value that identifies the Status List containing the
        status information for the JWT.  The value of this attribute MUST
        be a uri conforming to [RFC3986]
 
-3.2.  Status List JWT Format and Processing Requirements
+4.2.  Status List JWT Format and Processing Requirements
 
-   The following rules apply to validating a JWT based status list.
-   Application of additional restrictions and policy are at the
+   The following rules apply to validating a JWT based Status List
+   Token.  Application of additional restrictions and policy are at the
    discretion of the verifying party.
 
    1.  The JWT MUST contain an "iss" (issuer) claim that contains a
@@ -197,7 +246,7 @@ Table of Contents
        the time at which it was issued.
 
    3.  The JWT MUST contain an "status_list" (status list) claim
-       conforming to the rules outlined in Section 3.2.1.
+       conforming to the rules outlined in Section 4.2.1.
 
    4.  The JWT MAY contain an "exp" (expiration time) claim that
        convey's when it is considered expired by its issuer.
@@ -227,7 +276,7 @@ Table of Contents
      }
    }
 
-3.2.1.  Status List Claim Format
+4.2.1.  Status List Claim Format
 
    The following rules apply to validating the "status_list" (status
    list) claim
@@ -237,20 +286,20 @@ Table of Contents
    2.  The claim value object MUST contain a "typ" (type) attribute with
        a string based value that represents the type of status list
        referenced.  The value MUST be equal to that of the "typ"
-       attribute in the "status" claim for the token who's status is
-       being validated.
+       attribute in the "status" claim for the Referenced Token who's
+       status is being validated.
 
    3.  The claim value object MUST contain a "lst" (list) attribute with
        a string based value that represents the status values for all
-       the tokens it conveys statuses for.  The value MUST be a base64
-       encoded string using RFCXXX containing a GZIP compressed octet
-       string [RFC1952].
+       the Referenced Tokens it conveys statuses for.  The value MUST be
+       a base64 encoded string using RFCXXX containing a GZIP compressed
+       octet string [RFC1952].
 
-3.3.  Revocation Status List Definition
+4.3.  Revocation Status List Definition
 
    This document formally defines the "revocation-list" status list type
    which applies the following additional validation rules beyond those
-   described in Section 3.1 and Section 3.2.
+   described in Section 4.1 and Section 4.2.
 
    The "uri" attribute contained within a JWT using the "status" claim
    MUST be an HTTPS based URL that when resolved via an HTTPS GET
@@ -259,42 +308,42 @@ Table of Contents
 
    TODO add more
 
-4.  Security Considerations
+5.  Security Considerations
 
-4.1.  Correct decoding and parsing of the encoded status list
+5.1.  Correct decoding and parsing of the encoded status list
 
    TODO elaborate on risks of incorrect parsing/decoding leading to
    erroneuos status data
 
-4.2.  Cached and Stale status lists
+5.2.  Cached and Stale status lists
 
    TODO consumers/Verifiers of the status list should be aware if they
    fetch the up-to-date data
 
-4.3.  Authorized access to the Status List
+5.3.  Authorized access to the Status List
 
    TODO elaborate on authorization mechanisms preventing misuse and
    profiling as described in privacy section
 
-4.4.  History
+5.4.  History
 
    TODO elaborate on status list only providing the up-to date/latest
    status, no historical data, may be provided by the underlying hosting
    architecture
 
-5.  Privacy Considerations
+6.  Privacy Considerations
 
-5.1.  Herd Privacy
+6.1.  Herd Privacy
 
    TODO elaborate on herd privacy, size of the status list
 
-5.2.  Profiling
+6.2.  Profiling
 
    TODO elaborate on Verifiers regularly fetching the status list to
    create a profile, possible countermeasures with authorized access to
    the status list
 
-5.3.  Correlation Risks and Tracking
+6.3.  Correlation Risks and Tracking
 
    TODO elaborate on Issuer-Verifier correlation and Verifier-Verifier
    correlation as the status list introduces unique,trackable data TODO
@@ -304,21 +353,25 @@ Table of Contents
    are recommended to pre-allocate lists, use dead entries that are
    never assigned or other obfuscation mechanisms
 
-5.4.  Malicious Issuers
+6.4.  Malicious Issuers
 
-   TODO elaborate on issuers generating unique status lists per JWT
-   token that do not offer herd privacy
+   TODO elaborate on issuers generating unique status lists per
+   Referenced Token that do not offer herd privacy
 
-5.5.  Hosting Service (what's a better name here?)
+6.5.  Hosting Service (what's a better name here?)
 
    TODO elaborate on increased privacy if the status list is hosted by a
-   third party instead of the issuer reducing tracking possiblities
+   third party instead of the issuer reducing tracking possiblities TODO
+   evaluate deifnition of Status List Provider?  An entity that hosts
+   the Status List as a resource for potential verifiers.  The Status
+   List Provider may be the issuer of the Status List but may also be
+   outsourced to a trusted third party.
 
-6.  IANA Considerations
+7.  IANA Considerations
 
    This document has no IANA actions.
 
-7.  Normative References
+8.  Normative References
 
    [RFC1952]  Deutsch, P., "GZIP file format specification version 4.3",
               RFC 1952, DOI 10.17487/RFC1952, May 1996,

@@ -9,20 +9,20 @@
 <meta content="
        This specification defines a status list representation and processing rules for usage with JSON Web Tokens   and CBOR Web Tokens  . 
     " name="description">
-<meta content="xml2rfc 3.17.1" name="generator">
+<meta content="xml2rfc 3.17.3" name="generator">
 <meta content="draft-looker-jwt-cwt-status-list-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.17.1
+  xml2rfc 3.17.3
     Python 3.11.3
     appdirs 1.4.4
     ConfigArgParse 1.5.3
-    google-i18n-address 2.5.2
+    google-i18n-address 3.0.0
     intervaltree 3.1.0
     Jinja2 3.1.2
     lxml 4.9.2
     pycountry 22.3.5
     PyYAML 6.0
-    requests 2.30.0
+    requests 2.31.0
     setuptools 67.7.2
     six 1.16.0
     wcwidth 0.2.6
@@ -607,6 +607,7 @@ sub, sup {
   clear: left;
   float: left;
   text-align: right;
+  margin-right: 1ch;
 }
 #identifiers dd {
   margin: 0;
@@ -1045,11 +1046,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">JWT and CWT Status List</td>
-<td class="right">May 2023</td>
+<td class="right">June 2023</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Looker</td>
-<td class="center">Expires 24 November 2023</td>
+<td class="center">Expires 16 December 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1062,12 +1063,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-looker-jwt-cwt-status-list-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-05-23" class="published">23 May 2023</time>
+<time datetime="2023-06-14" class="published">14 June 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-11-24">24 November 2023</time></dd>
+<dd class="expires"><time datetime="2023-12-16">16 December 2023</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1112,7 +1113,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 24 November 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 16 December 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1140,82 +1141,90 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <nav class="toc"><ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
             <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.1">
+                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-rationale" class="internal xref">Rationale</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
             <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-json-web-token-representati" class="internal xref">JSON Web Token Representation</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
-                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-jwt-format-and-processing-r" class="internal xref">JWT Format and Processing Requirements</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.1">
-                    <p id="section-toc.1-1.3.2.1.2.1.1" class="keepWithNext"><a href="#section-3.1.1" class="auto internal xref">3.1.1</a>.  <a href="#name-status-claim-format" class="internal xref">Status Claim Format</a></p>
-</li>
-                </ul>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
-                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-status-list-jwt-format-and-" class="internal xref">Status List JWT Format and Processing Requirements</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2.2.1">
-                    <p id="section-toc.1-1.3.2.2.2.1.1"><a href="#section-3.2.1" class="auto internal xref">3.2.1</a>.  <a href="#name-status-list-claim-format" class="internal xref">Status List Claim Format</a></p>
-</li>
-                </ul>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
-                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-revocation-status-list-defi" class="internal xref">Revocation Status List Definition</a></p>
-</li>
-            </ul>
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-terminology" class="internal xref">Terminology</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-json-web-token-representati" class="internal xref">JSON Web Token Representation</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
-                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-correct-decoding-and-parsin" class="internal xref">Correct decoding and parsing of the encoded status list</a></p>
+                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-referenced-token-format-and" class="internal xref">Referenced Token Format and Processing Requirements</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1.2.1">
+                    <p id="section-toc.1-1.4.2.1.2.1.1"><a href="#section-4.1.1" class="auto internal xref">4.1.1</a>.  <a href="#name-status-claim-format" class="internal xref">Status Claim Format</a></p>
+</li>
+                </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
-                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-cached-and-stale-status-lis" class="internal xref">Cached and Stale status lists</a></p>
+                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-status-list-jwt-format-and-" class="internal xref">Status List JWT Format and Processing Requirements</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2.2.1">
+                    <p id="section-toc.1-1.4.2.2.2.1.1"><a href="#section-4.2.1" class="auto internal xref">4.2.1</a>.  <a href="#name-status-list-claim-format" class="internal xref">Status List Claim Format</a></p>
+</li>
+                </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3">
-                <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="auto internal xref">4.3</a>.  <a href="#name-authorized-access-to-the-st" class="internal xref">Authorized access to the Status List</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.4">
-                <p id="section-toc.1-1.4.2.4.1"><a href="#section-4.4" class="auto internal xref">4.4</a>.  <a href="#name-history" class="internal xref">History</a></p>
+                <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="auto internal xref">4.3</a>.  <a href="#name-revocation-status-list-defi" class="internal xref">Revocation Status List Definition</a></p>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-privacy-considerations" class="internal xref">Privacy Considerations</a></p>
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
-                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-herd-privacy" class="internal xref">Herd Privacy</a></p>
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-correct-decoding-and-parsin" class="internal xref">Correct decoding and parsing of the encoded status list</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
-                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-profiling" class="internal xref">Profiling</a></p>
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-cached-and-stale-status-lis" class="internal xref">Cached and Stale status lists</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.3">
-                <p id="section-toc.1-1.5.2.3.1"><a href="#section-5.3" class="auto internal xref">5.3</a>.  <a href="#name-correlation-risks-and-track" class="internal xref">Correlation Risks and Tracking</a></p>
+                <p id="section-toc.1-1.5.2.3.1"><a href="#section-5.3" class="auto internal xref">5.3</a>.  <a href="#name-authorized-access-to-the-st" class="internal xref">Authorized access to the Status List</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.4">
-                <p id="section-toc.1-1.5.2.4.1"><a href="#section-5.4" class="auto internal xref">5.4</a>.  <a href="#name-malicious-issuers" class="internal xref">Malicious Issuers</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.5">
-                <p id="section-toc.1-1.5.2.5.1"><a href="#section-5.5" class="auto internal xref">5.5</a>.  <a href="#name-hosting-service-whats-a-bet" class="internal xref">Hosting Service (what's a better name here?)</a></p>
+                <p id="section-toc.1-1.5.2.4.1"><a href="#section-5.4" class="auto internal xref">5.4</a>.  <a href="#name-history" class="internal xref">History</a></p>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-privacy-considerations" class="internal xref">Privacy Considerations</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-herd-privacy" class="internal xref">Herd Privacy</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
+                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-profiling" class="internal xref">Profiling</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.3">
+                <p id="section-toc.1-1.6.2.3.1"><a href="#section-6.3" class="auto internal xref">6.3</a>.  <a href="#name-correlation-risks-and-track" class="internal xref">Correlation Risks and Tracking</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.4">
+                <p id="section-toc.1-1.6.2.4.1"><a href="#section-6.4" class="auto internal xref">6.4</a>.  <a href="#name-malicious-issuers" class="internal xref">Malicious Issuers</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.5">
+                <p id="section-toc.1-1.6.2.5.1"><a href="#section-6.5" class="auto internal xref">6.5</a>.  <a href="#name-hosting-service-whats-a-bet" class="internal xref">Hosting Service (what's a better name here?)</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
-            <p id="section-toc.1-1.8.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
-            <p id="section-toc.1-1.9.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
+            <p id="section-toc.1-1.9.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
 </li>
         </ul>
 </nav>
@@ -1226,21 +1235,30 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">JSON Web Tokens (JWTs) <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span> and CBOR Web Tokens (CWTs) <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span> as secure token formats, have vast possible applications. Some of these applications can involve issuing a token whereby certain semantics about the token can change over time which are important to be able to communicate to relying parties in an interoperable manner, such as whether the token is considered revoked by its issuer.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">This document defines a status list using JWT and CWT for representation that is capable of communicating the individual statuses of multiple tokens. The document also defines how an issuer of a token references a status list in a JWT or CWT which has a status to convey.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-1">JSON Web Tokens (JWTs) <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span> and CBOR Web Tokens (CWTs) <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span> as secure token formats, have vast possible applications. Some of these applications can involve issuing a token whereby certain semantics about the token can change over time which are important to be able to communicate to relying parties in an interoperable manner, such as whether the token is considered invalidated or suspended by its issuer.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">This document defines a Status List in JWT and CWT representations that describes the individual statuses of multiple Referenced Tokens. The statuses of all Referenced Tokens are conveyed via a bit array in the Status List. Each Referenced Token is allocated an index during issuance which represents a position within this bit array and the value of the bit(s) at this position correspond to the Referenced Token's status. The document also defines how an issuer of a Referenced Token in JWT or CWT representation references a Status List Token. Status Lists may be composed for expressing a range of Status Types, the document defines basic Status Types for the most common use cases as well as an extensibility mechanism for custom Status Types. The Status List Token may be used by an issuer in the Issuer-Holder-Verifier model, as described in (XXX) to express the status of verifiable credentials (Referenced Tokens) issued by an issuer.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">The following diagram depicts the basic conceptual relationship.<a href="#section-1-3" class="pilcrow">¶</a></p>
 <div class="alignLeft art-ascii-art art-text artwork" id="section-1-4">
 <pre>
-+---------------+                     +---------------+
-|               |                     |               |
-|               |                     |               |
-|     Token     |    References       |  Status List  |
-|(JWT/CWT Based)|--------------------&gt;|(JWT/CWT Based)|
-|               |                     |               |
-|               |                     |               |
-+---------------+                     +---------------+
++------------------+                    +-------------------+
+|                  |      References    |                   |
+|                  |-------------------&gt;|                   |
+| Referenced Token |                    | Status List Token |
+| (JWT/CWT Based)  |                    |  (JWT/CWT Based)  |
+|                  |  Describes Status  |                   |
+|                  |&lt;-------------------|                   |
++------------------+                    +-------------------+
 
 </pre><a href="#section-1-4" class="pilcrow">¶</a>
+</div>
+<div id="rationale">
+<section id="section-1.1">
+        <h3 id="name-rationale">
+<a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-rationale" class="section-name selfRef">Rationale</a>
+        </h3>
+<p id="section-1.1-1">Revocation mechanisms are an essential part for most identity ecoosystems. In the past, revocation of X.509 TLS certificates has been proven difficult as traditional certificate revocation lists (CRLs) have limited scalability and the Online Certificate Status Protocol (OCSP) has additional privacy risks as the client is leaking the requested website to a third party. OSCP stapling is adressing some of these problems at the cost of less up-to-date data. Modern approaches use accumulator-based revocation registries and Zero-Knowledge-Proofs to accomodate for this privacy gap but face scalability issues again.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+<p id="section-1.1-2">The approach of this specification seeks to find a balance between scalability, security and privacy by minimizing the status information to mere bits and compressing the resulting binary data. Thereby a Status List may contain statuses of 100.000 or more Referenced Tokens, but still remain relatively small. Placing large amounts of Referenced Tokens into the same list also enables a herd privacy towards the Issuer.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
+</section>
 </div>
 </section>
 </div>
@@ -1255,25 +1273,38 @@ described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</s
 appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="json-web-token-representation">
+<div id="terminology">
 <section id="section-3">
-      <h2 id="name-json-web-token-representati">
-<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-json-web-token-representati" class="section-name selfRef">JSON Web Token Representation</a>
+      <h2 id="name-terminology">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-terminology" class="section-name selfRef">Terminology</a>
       </h2>
-<div id="jwt-format-and-processing">
-<section id="section-3.1">
-        <h3 id="name-jwt-format-and-processing-r">
-<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-jwt-format-and-processing-r" class="section-name selfRef">JWT Format and Processing Requirements</a>
+<p id="section-3-1">Status List
+ A bit array that lists the statuses of many Referenced Tokens.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-2">Status List Token
+ A token in JWT or CWT representation that contains a Status List.<a href="#section-3-2" class="pilcrow">¶</a></p>
+<p id="section-3-3">Referenced Token
+ A token in JWT or CWT representation which contains a reference to a Status List Token. The information from the contained Status List may give a verifier additional information about up-to-date status of the Referenced Token.<a href="#section-3-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="json-web-token-representation">
+<section id="section-4">
+      <h2 id="name-json-web-token-representati">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-json-web-token-representati" class="section-name selfRef">JSON Web Token Representation</a>
+      </h2>
+<div id="jwt-referenced-token">
+<section id="section-4.1">
+        <h3 id="name-referenced-token-format-and">
+<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-referenced-token-format-and" class="section-name selfRef">Referenced Token Format and Processing Requirements</a>
         </h3>
-<p id="section-3.1-1">The following rules apply to validating a JWT which references a status list. Application of additional restrictions and policy are at the discretion of the verifying party.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="section-3.1-2">
-<li id="section-3.1-2.1">The JWT <span class="bcp14">MUST</span> contain an "iss" (issuer) claim that contains a unique string based identifier for the entity that issued the JWT. In the absence of an application profile specifying otherwise, compliant applications <span class="bcp14">MUST</span> compare issuer values using the Simple String Comparison method defined in Section 6.2.1 of <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>. The value <span class="bcp14">MUST</span> be equal to that of the "iss" claim contained within the referenced status list JWT.<a href="#section-3.1-2.1" class="pilcrow">¶</a>
+<p id="section-4.1-1">The following rules apply to validating a Referenced Token in JWT representation which references a Status List Token. Application of additional restrictions and policy are at the discretion of the verifying party.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-4.1-2">
+<li id="section-4.1-2.1">The JWT <span class="bcp14">MUST</span> contain an "iss" (issuer) claim that contains a unique string based identifier for the entity that issued the JWT. In the absence of an application profile specifying otherwise, compliant applications <span class="bcp14">MUST</span> compare issuer values using the Simple String Comparison method defined in Section 6.2.1 of <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>. The value <span class="bcp14">MUST</span> be equal to that of the "iss" claim contained within the referenced Status List Token.<a href="#section-4.1-2.1" class="pilcrow">¶</a>
 </li>
-          <li id="section-3.1-2.2">The JWT <span class="bcp14">MUST</span> contain an "status" (status) claim conforming to the rules outlined in <a href="#jwt-status-claim-format" class="auto internal xref">Section 3.1.1</a><a href="#section-3.1-2.2" class="pilcrow">¶</a>
+          <li id="section-4.1-2.2">The JWT <span class="bcp14">MUST</span> contain an "status" (status) claim conforming to the rules outlined in <a href="#jwt-referenced-token-status" class="auto internal xref">Section 4.1.1</a><a href="#section-4.1-2.2" class="pilcrow">¶</a>
 </li>
         </ol>
-<p id="section-3.1-3">The following example is the decoded header and payload of a JWT meeting the processing rules as defined above.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
-<div class="alignLeft art-ascii-art art-text artwork" id="section-3.1-4">
+<p id="section-4.1-3">The following example is the decoded header and payload of a JWT meeting the processing rules as defined above.<a href="#section-4.1-3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-ascii-art art-text artwork" id="section-4.1-4">
 <pre>
 {
   "alg": "ES256",
@@ -1289,22 +1320,22 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
   }
 }
 
-</pre><a href="#section-3.1-4" class="pilcrow">¶</a>
+</pre><a href="#section-4.1-4" class="pilcrow">¶</a>
 </div>
-<div id="jwt-status-claim-format">
-<section id="section-3.1.1">
+<div id="jwt-referenced-token-status">
+<section id="section-4.1.1">
           <h4 id="name-status-claim-format">
-<a href="#section-3.1.1" class="section-number selfRef">3.1.1. </a><a href="#name-status-claim-format" class="section-name selfRef">Status Claim Format</a>
+<a href="#section-4.1.1" class="section-number selfRef">4.1.1. </a><a href="#name-status-claim-format" class="section-name selfRef">Status Claim Format</a>
           </h4>
-<p id="section-3.1.1-1">The following rules apply to validating the "status" (status) claim<a href="#section-3.1.1-1" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="section-3.1.1-2">
-<li id="section-3.1.1-2.1">The claim value <span class="bcp14">MUST</span> be a valid JSON object.<a href="#section-3.1.1-2.1" class="pilcrow">¶</a>
+<p id="section-4.1.1-1">The following rules apply to validating the "status" (status) claim<a href="#section-4.1.1-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-4.1.1-2">
+<li id="section-4.1.1-2.1">The claim value <span class="bcp14">MUST</span> be a valid JSON object.<a href="#section-4.1.1-2.1" class="pilcrow">¶</a>
 </li>
-            <li id="section-3.1.1-2.2">The claim value object <span class="bcp14">MUST</span> contain a "typ" (type) attribute with a string based value that represents the type of status list referenced. The value <span class="bcp14">MUST</span> be equal to that of the "typ" attribute in the "status_list" claim for the referenced status list.<a href="#section-3.1.1-2.2" class="pilcrow">¶</a>
+            <li id="section-4.1.1-2.2">The claim value object <span class="bcp14">MUST</span> contain a "typ" (type) attribute with a string based value that represents the type of Status List referenced. The value <span class="bcp14">MUST</span> be equal to that of the "typ" attribute in the "status_list" claim for the referenced Status List.<a href="#section-4.1.1-2.2" class="pilcrow">¶</a>
 </li>
-            <li id="section-3.1.1-2.3">The claim value object <span class="bcp14">MUST</span> contain an "idx" (index) attribute with a numberic based value that represents the index to check for status information in the status list for the current JWT. The value of this attribute <span class="bcp14">MUST</span> be a non-negative number, containing a value of zero or greater. Refer to xx for details on the validation procedure.<a href="#section-3.1.1-2.3" class="pilcrow">¶</a>
+            <li id="section-4.1.1-2.3">The claim value object <span class="bcp14">MUST</span> contain an "idx" (index) attribute with a numberic based value that represents the index to check for status information in the Status List for the current JWT. The value of this attribute <span class="bcp14">MUST</span> be a non-negative number, containing a value of zero or greater. Refer to xx for details on the validation procedure.<a href="#section-4.1.1-2.3" class="pilcrow">¶</a>
 </li>
-            <li id="section-3.1.1-2.4">The claim value object <span class="bcp14">MUST</span> contain a "uri" attribute with a string based value that identifies the status list containing the status information for the JWT. The value of this attribute <span class="bcp14">MUST</span> be a uri conforming to <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span><a href="#section-3.1.1-2.4" class="pilcrow">¶</a>
+            <li id="section-4.1.1-2.4">The claim value object <span class="bcp14">MUST</span> contain a "uri" attribute with a string based value that identifies the Status List containing the status information for the JWT. The value of this attribute <span class="bcp14">MUST</span> be a uri conforming to <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span><a href="#section-4.1.1-2.4" class="pilcrow">¶</a>
 </li>
           </ol>
 </section>
@@ -1312,28 +1343,28 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 </section>
 </div>
 <div id="jwt-status-list-format-and-processing">
-<section id="section-3.2">
+<section id="section-4.2">
         <h3 id="name-status-list-jwt-format-and-">
-<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-status-list-jwt-format-and-" class="section-name selfRef">Status List JWT Format and Processing Requirements</a>
+<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-status-list-jwt-format-and-" class="section-name selfRef">Status List JWT Format and Processing Requirements</a>
         </h3>
-<p id="section-3.2-1">The following rules apply to validating a JWT based status list. Application of additional restrictions and policy are at the discretion of the verifying party.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="section-3.2-2">
-<li id="section-3.2-2.1">The JWT <span class="bcp14">MUST</span> contain an "iss" (issuer) claim that contains a unique string based identifier for the entity that issued the JWT. In the absence of an application profile specifying otherwise, compliant applications <span class="bcp14">MUST</span> compare issuer values using the Simple String Comparison method defined in Section 6.2.1 of <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>. The value <span class="bcp14">MUST</span> be equal to that of the "iss" claim contained within the JWT who's status is being verified.<a href="#section-3.2-2.1" class="pilcrow">¶</a>
+<p id="section-4.2-1">The following rules apply to validating a JWT based Status List Token. Application of additional restrictions and policy are at the discretion of the verifying party.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-4.2-2">
+<li id="section-4.2-2.1">The JWT <span class="bcp14">MUST</span> contain an "iss" (issuer) claim that contains a unique string based identifier for the entity that issued the JWT. In the absence of an application profile specifying otherwise, compliant applications <span class="bcp14">MUST</span> compare issuer values using the Simple String Comparison method defined in Section 6.2.1 of <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>. The value <span class="bcp14">MUST</span> be equal to that of the "iss" claim contained within the JWT who's status is being verified.<a href="#section-4.2-2.1" class="pilcrow">¶</a>
 </li>
-          <li id="section-3.2-2.2">The JWT <span class="bcp14">MUST</span> contain an "iat" (issued at) claim that identifies the time at which it was issued.<a href="#section-3.2-2.2" class="pilcrow">¶</a>
+          <li id="section-4.2-2.2">The JWT <span class="bcp14">MUST</span> contain an "iat" (issued at) claim that identifies the time at which it was issued.<a href="#section-4.2-2.2" class="pilcrow">¶</a>
 </li>
-          <li id="section-3.2-2.3">The JWT <span class="bcp14">MUST</span> contain an "status_list" (status list) claim conforming to the rules outlined in <a href="#jwt-status-list-claim-format" class="auto internal xref">Section 3.2.1</a>.<a href="#section-3.2-2.3" class="pilcrow">¶</a>
+          <li id="section-4.2-2.3">The JWT <span class="bcp14">MUST</span> contain an "status_list" (status list) claim conforming to the rules outlined in <a href="#jwt-status-list-claim-format" class="auto internal xref">Section 4.2.1</a>.<a href="#section-4.2-2.3" class="pilcrow">¶</a>
 </li>
-          <li id="section-3.2-2.4">The JWT <span class="bcp14">MAY</span> contain an "exp" (expiration time) claim that convey's when it is considered expired by its issuer.<a href="#section-3.2-2.4" class="pilcrow">¶</a>
+          <li id="section-4.2-2.4">The JWT <span class="bcp14">MAY</span> contain an "exp" (expiration time) claim that convey's when it is considered expired by its issuer.<a href="#section-4.2-2.4" class="pilcrow">¶</a>
 </li>
-          <li id="section-3.2-2.5">The JWT <span class="bcp14">MAY</span> contain other claims.<a href="#section-3.2-2.5" class="pilcrow">¶</a>
+          <li id="section-4.2-2.5">The JWT <span class="bcp14">MAY</span> contain other claims.<a href="#section-4.2-2.5" class="pilcrow">¶</a>
 </li>
-          <li id="section-3.2-2.6">The JWT <span class="bcp14">MUST</span> be digitally signed using an asymmetric cryptographic algorithm. Relying parties <span class="bcp14">MUST</span> reject the JWT if it is using a Message Authentication Code (MAC) based algorithm. Relying parties <span class="bcp14">MUST</span> reject JWTs with an invalid signature.<a href="#section-3.2-2.6" class="pilcrow">¶</a>
+          <li id="section-4.2-2.6">The JWT <span class="bcp14">MUST</span> be digitally signed using an asymmetric cryptographic algorithm. Relying parties <span class="bcp14">MUST</span> reject the JWT if it is using a Message Authentication Code (MAC) based algorithm. Relying parties <span class="bcp14">MUST</span> reject JWTs with an invalid signature.<a href="#section-4.2-2.6" class="pilcrow">¶</a>
 </li>
-          <li id="section-3.2-2.7">Relying parties <span class="bcp14">MUST</span> reject a JWT that is not valid in all other respects per "JSON Web Token (JWT)" <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>.<a href="#section-3.2-2.7" class="pilcrow">¶</a>
+          <li id="section-4.2-2.7">Relying parties <span class="bcp14">MUST</span> reject a JWT that is not valid in all other respects per "JSON Web Token (JWT)" <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>.<a href="#section-4.2-2.7" class="pilcrow">¶</a>
 </li>
         </ol>
-<div class="alignLeft art-ascii-art art-text artwork" id="section-3.2-3">
+<div class="alignLeft art-ascii-art art-text artwork" id="section-4.2-3">
 <pre>
 {
   "alg": "ES256",
@@ -1350,20 +1381,20 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
   }
 }
 
-</pre><a href="#section-3.2-3" class="pilcrow">¶</a>
+</pre><a href="#section-4.2-3" class="pilcrow">¶</a>
 </div>
 <div id="jwt-status-list-claim-format">
-<section id="section-3.2.1">
+<section id="section-4.2.1">
           <h4 id="name-status-list-claim-format">
-<a href="#section-3.2.1" class="section-number selfRef">3.2.1. </a><a href="#name-status-list-claim-format" class="section-name selfRef">Status List Claim Format</a>
+<a href="#section-4.2.1" class="section-number selfRef">4.2.1. </a><a href="#name-status-list-claim-format" class="section-name selfRef">Status List Claim Format</a>
           </h4>
-<p id="section-3.2.1-1">The following rules apply to validating the "status_list" (status list) claim<a href="#section-3.2.1-1" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="section-3.2.1-2">
-<li id="section-3.2.1-2.1">The claim value <span class="bcp14">MUST</span> be a valid JSON object.<a href="#section-3.2.1-2.1" class="pilcrow">¶</a>
+<p id="section-4.2.1-1">The following rules apply to validating the "status_list" (status list) claim<a href="#section-4.2.1-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-4.2.1-2">
+<li id="section-4.2.1-2.1">The claim value <span class="bcp14">MUST</span> be a valid JSON object.<a href="#section-4.2.1-2.1" class="pilcrow">¶</a>
 </li>
-            <li id="section-3.2.1-2.2">The claim value object <span class="bcp14">MUST</span> contain a "typ" (type) attribute with a string based value that represents the type of status list referenced. The value <span class="bcp14">MUST</span> be equal to that of the "typ" attribute in the "status" claim for the token who's status is being validated.<a href="#section-3.2.1-2.2" class="pilcrow">¶</a>
+            <li id="section-4.2.1-2.2">The claim value object <span class="bcp14">MUST</span> contain a "typ" (type) attribute with a string based value that represents the type of status list referenced. The value <span class="bcp14">MUST</span> be equal to that of the "typ" attribute in the "status" claim for the Referenced Token who's status is being validated.<a href="#section-4.2.1-2.2" class="pilcrow">¶</a>
 </li>
-            <li id="section-3.2.1-2.3">The claim value object <span class="bcp14">MUST</span> contain a "lst" (list) attribute with a string based value that represents the status values for all the tokens it conveys statuses for. The value <span class="bcp14">MUST</span> be a base64 encoded string using RFCXXX containing a GZIP compressed octet string <span>[<a href="#RFC1952" class="cite xref">RFC1952</a>]</span>.<a href="#section-3.2.1-2.3" class="pilcrow">¶</a>
+            <li id="section-4.2.1-2.3">The claim value object <span class="bcp14">MUST</span> contain a "lst" (list) attribute with a string based value that represents the status values for all the Referenced Tokens it conveys statuses for. The value <span class="bcp14">MUST</span> be a base64 encoded string using RFCXXX containing a GZIP compressed octet string <span>[<a href="#RFC1952" class="cite xref">RFC1952</a>]</span>.<a href="#section-4.2.1-2.3" class="pilcrow">¶</a>
 </li>
           </ol>
 </section>
@@ -1371,116 +1402,118 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 </section>
 </div>
 <div id="revocation-status-list-definition">
-<section id="section-3.3">
+<section id="section-4.3">
         <h3 id="name-revocation-status-list-defi">
-<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-revocation-status-list-defi" class="section-name selfRef">Revocation Status List Definition</a>
+<a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-revocation-status-list-defi" class="section-name selfRef">Revocation Status List Definition</a>
         </h3>
-<p id="section-3.3-1">This document formally defines the "revocation-list" status list type which applies the following additional validation rules beyond those described in <a href="#jwt-format-and-processing" class="auto internal xref">Section 3.1</a> and <a href="#jwt-status-list-format-and-processing" class="auto internal xref">Section 3.2</a>.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
-<p id="section-3.3-2">The "uri" attribute contained within a JWT using the "status" claim <span class="bcp14">MUST</span> be an HTTPS based URL that when resolved via an HTTPS GET request returns a content type "application/jwt" containing the status list.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
-<p id="section-3.3-3">TODO add more<a href="#section-3.3-3" class="pilcrow">¶</a></p>
+<p id="section-4.3-1">This document formally defines the "revocation-list" status list type which applies the following additional validation rules beyond those described in <a href="#jwt-referenced-token" class="auto internal xref">Section 4.1</a> and <a href="#jwt-status-list-format-and-processing" class="auto internal xref">Section 4.2</a>.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
+<p id="section-4.3-2">The "uri" attribute contained within a JWT using the "status" claim <span class="bcp14">MUST</span> be an HTTPS based URL that when resolved via an HTTPS GET request returns a content type "application/jwt" containing the status list.<a href="#section-4.3-2" class="pilcrow">¶</a></p>
+<p id="section-4.3-3">TODO add more<a href="#section-4.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
 </div>
 <div id="security-considerations">
-<section id="section-4">
+<section id="section-5">
       <h2 id="name-security-considerations">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
 <div id="correct-decoding-and-parsing-of-the-encoded-status-list">
-<section id="section-4.1">
+<section id="section-5.1">
         <h3 id="name-correct-decoding-and-parsin">
-<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-correct-decoding-and-parsin" class="section-name selfRef">Correct decoding and parsing of the encoded status list</a>
+<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-correct-decoding-and-parsin" class="section-name selfRef">Correct decoding and parsing of the encoded status list</a>
         </h3>
-<p id="section-4.1-1">TODO elaborate on risks of incorrect parsing/decoding leading to erroneuos status data<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.1-1">TODO elaborate on risks of incorrect parsing/decoding leading to erroneuos status data<a href="#section-5.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="cached-and-stale-status-lists">
-<section id="section-4.2">
+<section id="section-5.2">
         <h3 id="name-cached-and-stale-status-lis">
-<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-cached-and-stale-status-lis" class="section-name selfRef">Cached and Stale status lists</a>
+<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-cached-and-stale-status-lis" class="section-name selfRef">Cached and Stale status lists</a>
         </h3>
-<p id="section-4.2-1">TODO consumers/Verifiers of the status list should be aware if they fetch the up-to-date data<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.2-1">TODO consumers/Verifiers of the status list should be aware if they fetch the up-to-date data<a href="#section-5.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authorized-access-to-the-status-list">
-<section id="section-4.3">
+<section id="section-5.3">
         <h3 id="name-authorized-access-to-the-st">
-<a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-authorized-access-to-the-st" class="section-name selfRef">Authorized access to the Status List</a>
+<a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-authorized-access-to-the-st" class="section-name selfRef">Authorized access to the Status List</a>
         </h3>
-<p id="section-4.3-1">TODO elaborate on authorization mechanisms preventing misuse and profiling as described in privacy section<a href="#section-4.3-1" class="pilcrow">¶</a></p>
+<p id="section-5.3-1">TODO elaborate on authorization mechanisms preventing misuse and profiling as described in privacy section<a href="#section-5.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="history">
-<section id="section-4.4">
+<section id="section-5.4">
         <h3 id="name-history">
-<a href="#section-4.4" class="section-number selfRef">4.4. </a><a href="#name-history" class="section-name selfRef">History</a>
+<a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-history" class="section-name selfRef">History</a>
         </h3>
-<p id="section-4.4-1">TODO elaborate on status list only providing the up-to date/latest status, no historical data, may be provided by the underlying hosting architecture<a href="#section-4.4-1" class="pilcrow">¶</a></p>
+<p id="section-5.4-1">TODO elaborate on status list only providing the up-to date/latest status, no historical data, may be provided by the underlying hosting architecture<a href="#section-5.4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
 </div>
 <div id="privacy-considerations">
-<section id="section-5">
+<section id="section-6">
       <h2 id="name-privacy-considerations">
-<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-privacy-considerations" class="section-name selfRef">Privacy Considerations</a>
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-privacy-considerations" class="section-name selfRef">Privacy Considerations</a>
       </h2>
 <div id="herd-privacy">
-<section id="section-5.1">
+<section id="section-6.1">
         <h3 id="name-herd-privacy">
-<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-herd-privacy" class="section-name selfRef">Herd Privacy</a>
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-herd-privacy" class="section-name selfRef">Herd Privacy</a>
         </h3>
-<p id="section-5.1-1">TODO elaborate on herd privacy, size of the status list<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1-1">TODO elaborate on herd privacy, size of the status list<a href="#section-6.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="profiling">
-<section id="section-5.2">
+<section id="section-6.2">
         <h3 id="name-profiling">
-<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-profiling" class="section-name selfRef">Profiling</a>
+<a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-profiling" class="section-name selfRef">Profiling</a>
         </h3>
-<p id="section-5.2-1">TODO elaborate on Verifiers regularly fetching the status list to create a profile, possible countermeasures with authorized access to the status list<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<p id="section-6.2-1">TODO elaborate on Verifiers regularly fetching the status list to create a profile, possible countermeasures with authorized access to the status list<a href="#section-6.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="correlation-risks-and-tracking">
-<section id="section-5.3">
+<section id="section-6.3">
         <h3 id="name-correlation-risks-and-track">
-<a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-correlation-risks-and-track" class="section-name selfRef">Correlation Risks and Tracking</a>
+<a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-correlation-risks-and-track" class="section-name selfRef">Correlation Risks and Tracking</a>
         </h3>
-<p id="section-5.3-1">TODO elaborate on Issuer-Verifier correlation and Verifier-Verifier correlation as the status list introduces unique,trackable data
+<p id="section-6.3-1">TODO elaborate on Issuer-Verifier correlation and Verifier-Verifier correlation as the status list introduces unique,trackable data
 TODO elaborate on issuers avoiding sequential usage of indices and status lists
-TODO elaborate that a status list only gives information about the maximum number of possible statuses that a list conveys, issuers are recommended to pre-allocate lists, use dead entries that are never assigned or other obfuscation mechanisms<a href="#section-5.3-1" class="pilcrow">¶</a></p>
+TODO elaborate that a status list only gives information about the maximum number of possible statuses that a list conveys, issuers are recommended to pre-allocate lists, use dead entries that are never assigned or other obfuscation mechanisms<a href="#section-6.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="malicious-issuers">
-<section id="section-5.4">
+<section id="section-6.4">
         <h3 id="name-malicious-issuers">
-<a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-malicious-issuers" class="section-name selfRef">Malicious Issuers</a>
+<a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-malicious-issuers" class="section-name selfRef">Malicious Issuers</a>
         </h3>
-<p id="section-5.4-1">TODO elaborate on issuers generating unique status lists per JWT token that do not offer herd privacy<a href="#section-5.4-1" class="pilcrow">¶</a></p>
+<p id="section-6.4-1">TODO elaborate on issuers generating unique status lists per Referenced Token that do not offer herd privacy<a href="#section-6.4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="hosting-service-whats-a-better-name-here">
-<section id="section-5.5">
+<section id="section-6.5">
         <h3 id="name-hosting-service-whats-a-bet">
-<a href="#section-5.5" class="section-number selfRef">5.5. </a><a href="#name-hosting-service-whats-a-bet" class="section-name selfRef">Hosting Service (what's a better name here?)</a>
+<a href="#section-6.5" class="section-number selfRef">6.5. </a><a href="#name-hosting-service-whats-a-bet" class="section-name selfRef">Hosting Service (what's a better name here?)</a>
         </h3>
-<p id="section-5.5-1">TODO elaborate on increased privacy if the status list is hosted by a third party instead of the issuer reducing tracking possiblities<a href="#section-5.5-1" class="pilcrow">¶</a></p>
+<p id="section-6.5-1">TODO elaborate on increased privacy if the status list is hosted by a third party instead of the issuer reducing tracking possiblities
+TODO evaluate deifnition of Status List Provider?
+ An entity that hosts the Status List as a resource for potential verifiers. The Status List Provider may be the issuer of the Status List but may also be outsourced to a trusted third party.<a href="#section-6.5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
 </div>
 <div id="iana-considerations">
-<section id="section-6">
+<section id="section-7">
       <h2 id="name-iana-considerations">
-<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-6-1">This document has no IANA actions.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-7-1">This document has no IANA actions.<a href="#section-7-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<section id="section-7">
+<section id="section-8">
       <h2 id="name-normative-references">
-<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
       </h2>
 <dl class="references">
 <dt id="RFC1952">[RFC1952]</dt>
