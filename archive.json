@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-06-13T01:11:14.016936+00:00",
+  "timestamp": "2023-06-15T01:09:33.822092+00:00",
   "repo": "vcstuff/draft-looker-jwt-cwt-status-list",
   "labels": [
     {
@@ -600,7 +600,45 @@
       "labels": [],
       "body": "              > umm I thought we agreed to remove the concept of the \"typ\" attribute.. so no `revocation-list` and no `suspention-status-list`.\r\n\r\nBut I assume the Status List Token will have a `typ` JOSE header to properly distinguish it from other JWTs, right?\r\n\r\n_Originally posted by @tlodderstedt in https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/issues/17#issuecomment-1584372077_\r\n            ",
       "createdAt": "2023-06-12T15:25:01Z",
-      "updatedAt": "2023-06-12T15:25:01Z",
+      "updatedAt": "2023-06-13T18:05:25Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "Sakurann",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "my original comment should be removed from the description because I was referring to the `type` JWT claim. \r\nfor the purpose of this issue, simply put, a status list JWT should be typed per JWT BCP. and I would not expect any objections to that..",
+          "createdAt": "2023-06-13T05:52:29Z",
+          "updatedAt": "2023-06-13T05:52:29Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Agreed, something like\r\n```\r\n{\r\n  \"typ\": \"statuslist+jwt\",\r\n  \"alg\": \"ES256\",\r\n  \"kid\": \"11\"\r\n}\r\n```\r\n?",
+          "createdAt": "2023-06-13T09:45:22Z",
+          "updatedAt": "2023-06-13T09:45:22Z"
+        },
+        {
+          "author": "Sakurann",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "yes!",
+          "createdAt": "2023-06-13T18:05:24Z",
+          "updatedAt": "2023-06-13T18:05:24Z"
+        }
+      ]
+    },
+    {
+      "number": 26,
+      "id": "I_kwDOJZ2aqs5oowGp",
+      "title": "rename \"referenced token\" ",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/issues/26",
+      "state": "OPEN",
+      "author": "Sakurann",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "remaining issue from PR #20. \r\n\r\nalternatives are \"referencing token\".",
+      "createdAt": "2023-06-13T19:20:19Z",
+      "updatedAt": "2023-06-13T19:20:19Z",
       "closedAt": null,
       "comments": []
     }
@@ -807,13 +845,13 @@
       "labels": [],
       "body": "",
       "createdAt": "2023-05-23T16:45:15Z",
-      "updatedAt": "2023-06-12T15:25:44Z",
+      "updatedAt": "2023-06-14T21:45:54Z",
       "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
       "baseRefName": "main",
-      "baseRefOid": "b90e150d6df05231298d446619924a1bfb5ad94e",
+      "baseRefOid": "97d29248904ebb29c899d094066f74d21aecfb04",
       "headRepository": "paulbastian/draft-looker-jwt-cwt-status-list",
       "headRefName": "types",
-      "headRefOid": "d8d7d57483888b713a1f91f4e53fc486a3d727aa",
+      "headRefOid": "64c70917a1f10b0576c2c8e525f5f914822d658a",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -849,7 +887,7 @@
         },
         {
           "author": "Sakurann",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "umm I thought we agreed to remove the concept of the \"typ\" attribute.. so no `revocation-list` and no `suspention-status-list`.\r\n",
           "createdAt": "2023-06-09T06:38:59Z",
           "updatedAt": "2023-06-09T06:38:59Z"
@@ -863,7 +901,7 @@
         },
         {
           "author": "tlodderstedt",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "> umm I thought we agreed to remove the concept of the \"typ\" attribute.. so no `revocation-list` and no `suspention-status-list`.\r\n\r\nBut I assume the Status List Token will have a `typ` JOSE header to properly distinguish it from other JWTs, right?",
           "createdAt": "2023-06-09T10:43:55Z",
           "updatedAt": "2023-06-09T10:43:55Z"
@@ -874,6 +912,34 @@
           "body": "> > umm I thought we agreed to remove the concept of the \"typ\" attribute.. so no `revocation-list` and no `suspention-status-list`.\r\n> \r\n> But I assume the Status List Token will have a `typ` JOSE header to properly distinguish it from other JWTs, right?\r\n\r\nI approve, but moved to separate issue",
           "createdAt": "2023-06-12T15:25:44Z",
           "updatedAt": "2023-06-12T15:25:44Z"
+        },
+        {
+          "author": "Sakurann",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@tlodderstedt typo on my end. yes, JWT should be typed (`typ` claim present), the current spec also introduces a `type` body claim as far as I can see, which is what I am not in agreement with.",
+          "createdAt": "2023-06-13T05:49:57Z",
+          "updatedAt": "2023-06-13T05:49:57Z"
+        },
+        {
+          "author": "Sakurann",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@tplooker I am confused. so the idea is to merge this PR and then remove the \"type\" JWT claim in PR #20?",
+          "createdAt": "2023-06-13T05:50:33Z",
+          "updatedAt": "2023-06-13T05:50:33Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "comment edited, I got confused here as well.\r\nThere is an issue open already as a task and I would like to not blow up the PRs too much",
+          "createdAt": "2023-06-13T05:52:15Z",
+          "updatedAt": "2023-06-13T09:46:58Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@tplooker ready for merge",
+          "createdAt": "2023-06-14T21:45:54Z",
+          "updatedAt": "2023-06-14T21:45:54Z"
         }
       ],
       "reviews": [
@@ -883,7 +949,7 @@
             "abbreviatedOid": "562b19e"
           },
           "author": "tlodderstedt",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "APPROVED",
           "body": "",
           "createdAt": "2023-06-06T12:58:26Z",
@@ -896,7 +962,7 @@
             "abbreviatedOid": "562b19e"
           },
           "author": "Sakurann",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "CHANGES_REQUESTED",
           "body": "sorry, I am not onboard with giving the issuers the complete freedom to define their own status values. for the interop purposes, the valid and invalid values MUST always be the same. ie 0 is always valid and 1 is always invalid. (or vice versa - that I do not care). so when the bit size is bigger than 2, the first bite is always valid/invalid and from the second bit, it can be suspended, etc.",
           "createdAt": "2023-06-06T19:53:34Z",
@@ -928,6 +994,52 @@
               "updatedAt": "2023-06-12T15:22:00Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5YFskQ",
+          "commit": {
+            "abbreviatedOid": "9d7ae60"
+          },
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-06-13T19:09:08Z",
+          "updatedAt": "2023-06-13T19:09:08Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "```suggestion\r\n2. The claim value object MUST contain an \"idx\" (index) attribute with a numeric based value that represents the index to check for status information in the status list for the current JWT. The value of this attribute MUST be a non-negative number, containing a value of zero or greater. Refer to xx for details on the validation procedure.\r\n```",
+              "createdAt": "2023-06-13T19:09:08Z",
+              "updatedAt": "2023-06-13T19:09:08Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5YFs5s",
+          "commit": {
+            "abbreviatedOid": "9d7ae60"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "I am a little confused with calling \"VALID\", \"INVALID\" Status List `type`, but agreed this should be merged",
+          "createdAt": "2023-06-13T19:10:07Z",
+          "updatedAt": "2023-06-13T19:10:07Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5YFtDI",
+          "commit": {
+            "abbreviatedOid": "9d7ae60"
+          },
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "One minor typo",
+          "createdAt": "2023-06-13T19:10:37Z",
+          "updatedAt": "2023-06-13T19:10:37Z",
+          "comments": []
         }
       ]
     },
@@ -943,18 +1055,26 @@
       "labels": [],
       "body": "Questions for the encoding:\r\n- base64 vs url-safe base64\r\n- bitwise encoding right now is least significant bit to most significant bit\r\n\r\nThe part describing the bit-encoding still needs be rewritten\r\n\r\nIn general:\r\nI searched a bit for better ways to encode/compress but in terms of simplicity and support for different programming languages, it seems some form of byte array and gZIP seem to be a pretty decent pick.",
       "createdAt": "2023-05-25T12:34:58Z",
-      "updatedAt": "2023-06-01T13:57:39Z",
+      "updatedAt": "2023-06-14T21:41:47Z",
       "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
       "baseRefName": "main",
       "baseRefOid": "b90e150d6df05231298d446619924a1bfb5ad94e",
       "headRepository": "c2bo/draft-looker-jwt-cwt-status-list",
       "headRefName": "feature/encoding",
-      "headRefOid": "7bdf31d3bc5665d58a159dac44e833d84edc5bd2",
+      "headRefOid": "34d588af7b05256ce87229df50e359e9bd8d7516",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I've made a first implementation in Kotlin today.\r\nTo me, it feels very natural to count Byte indexes up from 0 to size(whether this is left to right or right to left feels a little philosophical) and Bit indexes from right to left.",
+          "createdAt": "2023-06-13T15:11:18Z",
+          "updatedAt": "2023-06-13T15:11:18Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOJZ2aqs5WJmCj",
@@ -1015,6 +1135,98 @@
               "updatedAt": "2023-06-01T13:22:50Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5YMdhX",
+          "commit": {
+            "abbreviatedOid": "7bdf31d"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2023-06-14T14:48:32Z",
+          "updatedAt": "2023-06-14T15:59:23Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "```suggestion\r\nEach status of a Referenced Token MUST be represented with a bit size of 1,2,4, or 8. Therefore up to 2,4,16, or 256 statuses for a Referenced Token, depending on the bit-size, are possible. This limitation is intended to limit bit manipulation necessary to a single byte for every operation and thus keeping implementations simpler and less error prone.\r\n```",
+              "createdAt": "2023-06-14T14:48:32Z",
+              "updatedAt": "2023-06-14T15:59:23Z"
+            },
+            {
+              "originalPosition": 19,
+              "body": "```suggestion\r\n1. The overall status list is encoded as a byte array. Depending on the \"bit-size\" each byte corresponds to 8/(#bit-size) statuses (8,4,2, or 1). The status of each Referenced Token is identified using an index that maps to a specific bits within the byte array. The index starts counting at 0 and ends with \"size\" - 1(being the last valid entry). The bits within an array are counted from least significant bit \"0\" to the most significant bit (\"7\"). All bits of the byte array at a particular index are set to a status value.\r\n```",
+              "createdAt": "2023-06-14T15:55:35Z",
+              "updatedAt": "2023-06-14T15:59:23Z"
+            },
+            {
+              "originalPosition": 23,
+              "body": "I would favor Base64 instead of Base64 URL as I think library support should be better and we do not intend to send the byte array over an URL",
+              "createdAt": "2023-06-14T15:56:23Z",
+              "updatedAt": "2023-06-14T15:59:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5YOTZl",
+          "commit": {
+            "abbreviatedOid": "7bdf31d"
+          },
+          "author": "c2bo",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-06-14T19:18:59Z",
+          "updatedAt": "2023-06-14T19:19:00Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "That was one of the points I wasn't 100% sure about. Url-safe encoding is a tiny bit smaller (= padding) but so far i don't think we would ever convey the status list in some form of URL. \r\nOverall I agree, let's start with base64 for better support and figure out if there are reasons we are not aware of yet to switch to another representaion.",
+              "createdAt": "2023-06-14T19:18:59Z",
+              "updatedAt": "2023-06-14T21:41:47Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5YPEg5",
+          "commit": {
+            "abbreviatedOid": "34d588a"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-06-14T21:38:21Z",
+          "updatedAt": "2023-06-14T21:38:21Z",
+          "comments": [
+            {
+              "originalPosition": 41,
+              "body": "this is missing the encoded list",
+              "createdAt": "2023-06-14T21:38:21Z",
+              "updatedAt": "2023-06-14T21:38:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5YPE6m",
+          "commit": {
+            "abbreviatedOid": "7bdf31d"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-06-14T21:40:02Z",
+          "updatedAt": "2023-06-14T21:40:02Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "I refrain from my point after speaking with Micha Kraus. He mentioned that JWT is using Ba64URL for encoding anyway, as the Token uses JWT as a wrapper, it makes sense to use the same encoding!",
+              "createdAt": "2023-06-14T21:40:02Z",
+              "updatedAt": "2023-06-14T21:40:02Z"
+            }
+          ]
         }
       ]
     },
@@ -1023,24 +1235,26 @@
       "id": "PR_kwDOJZ2aqs5RscE6",
       "title": "add introduction text, rename to Referenced Token",
       "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/pull/20",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "paulbastian",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2023-05-30T14:43:32Z",
-      "updatedAt": "2023-06-12T15:07:12Z",
+      "updatedAt": "2023-06-14T20:06:49Z",
       "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
       "baseRefName": "main",
       "baseRefOid": "b90e150d6df05231298d446619924a1bfb5ad94e",
       "headRepository": "paulbastian/draft-looker-jwt-cwt-status-list",
       "headRefName": "introduction",
-      "headRefOid": "95bb340f8dcce89ab87d76b3df254e4f2f50d07b",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "ee8111fea6d2ac617a68cc2c0497a309c8944bd6",
+      "closedAt": "2023-06-14T20:06:49Z",
+      "mergedAt": "2023-06-14T20:06:49Z",
+      "mergedBy": "tplooker",
+      "mergeCommit": {
+        "oid": "97d29248904ebb29c899d094066f74d21aecfb04"
+      },
       "comments": [
         {
           "author": "paulbastian",
@@ -1065,14 +1279,14 @@
         },
         {
           "author": "Sakurann",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "can we simply use JWT/CWT instead of creating any kind of abstraction term like `subject token`? One person i asked for feedback associated `subject token` with a token used to communicate a subject of an email.",
           "createdAt": "2023-06-06T21:04:54Z",
           "updatedAt": "2023-06-06T21:04:54Z"
         },
         {
           "author": "Sakurann",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "or, bottomline, please stick to `token`. `subject token` is very confusing.",
           "createdAt": "2023-06-07T00:04:14Z",
           "updatedAt": "2023-06-07T00:04:14Z"
@@ -1086,7 +1300,7 @@
         },
         {
           "author": "Sakurann",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "I am really strongly against \"Subject Token\". Not only because it is not intuitive (I have been asking various people in this space and no one would associate what it trying to be conveyed), but we should not be introducing a new term in this already confusing ecosystem. \n\nMoreover, this status list mechanism can be used with a JWT/CWT that does not necessarily contain a subject (like SD-JWT-VC), so using a term subject because it is widely used is not a sufficient reason.\n\nKeep referring to it as a token, because this draft should not be opinionated about what is in the JWT/CWT whose status is being expressed should be fine, if a \"status list JWT/CWT\" is always referred as such. there are multiple occurrences where \"status list JWT\" is referred to simply as a JWT which should be fixed IMO.",
           "createdAt": "2023-06-07T05:53:43Z",
           "updatedAt": "2023-06-07T05:54:40Z"
@@ -1100,7 +1314,7 @@
         },
         {
           "author": "Sakurann",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Why call \"status list token\" and not \"status list JWT/CWT\"?",
           "createdAt": "2023-06-07T14:00:06Z",
           "updatedAt": "2023-06-07T14:00:16Z"
@@ -1114,7 +1328,7 @@
         },
         {
           "author": "Sakurann",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "btw sd-jwt vc spec mentions status provider :)",
           "createdAt": "2023-06-09T06:55:07Z",
           "updatedAt": "2023-06-09T06:55:07Z"
@@ -1125,6 +1339,27 @@
           "body": "@tlodderstedt @Sakurann can you approve this PR?",
           "createdAt": "2023-06-12T13:09:31Z",
           "updatedAt": "2023-06-12T13:09:31Z"
+        },
+        {
+          "author": "Sakurann",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Hi, thinking more about this, status list Token is being referenced in the token-whose-name-we-are-trying-to-find, so it's the status list token that is actually a \"referenced token\". Can we call token-whose-name-we-are-trying-to-find \"a Token with reference\"?",
+          "createdAt": "2023-06-13T06:04:16Z",
+          "updatedAt": "2023-06-13T06:04:16Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Yes, I agree and had the same thoughts when I changed the PR. I assume Referencing Token could be better. But let's accept this PR and move discussion to an issue instead...",
+          "createdAt": "2023-06-13T06:06:13Z",
+          "updatedAt": "2023-06-13T06:06:13Z"
+        },
+        {
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Multiple approvals and discussions on editors calls, merging",
+          "createdAt": "2023-06-14T20:06:46Z",
+          "updatedAt": "2023-06-14T20:06:46Z"
         }
       ],
       "reviews": [
@@ -1214,7 +1449,7 @@
             "abbreviatedOid": "31dd746"
           },
           "author": "tlodderstedt",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "APPROVED",
           "body": "",
           "createdAt": "2023-06-01T12:30:37Z",
@@ -1260,7 +1495,7 @@
             "abbreviatedOid": "5644ac8"
           },
           "author": "Sakurann",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2023-06-06T19:54:54Z",
@@ -1280,7 +1515,7 @@
             "abbreviatedOid": "5644ac8"
           },
           "author": "Sakurann",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2023-06-06T19:55:37Z",
@@ -1300,7 +1535,7 @@
             "abbreviatedOid": "5644ac8"
           },
           "author": "Sakurann",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "CHANGES_REQUESTED",
           "body": "I am sorry, I am completely lost with the idea of using a term `subject token` to say `digital credential/verifiable credential`. and the definition of a `subject token` does not really give a rationale why it is called `subject token` and only talks about relationship with the status list...",
           "createdAt": "2023-06-06T19:58:16Z",
@@ -1346,7 +1581,7 @@
             "abbreviatedOid": "5644ac8"
           },
           "author": "tlodderstedt",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "CHANGES_REQUESTED",
           "body": "I understand the concerns of @Sakurann. \r\n\r\nStatusList2021 just uses the term StatusList2021Credential. I think we could use the term status list token. status list JWT/CWT would be fine as well. ",
           "createdAt": "2023-06-07T16:10:54Z",
@@ -1385,6 +1620,78 @@
           "createdAt": "2023-06-12T15:07:12Z",
           "updatedAt": "2023-06-12T15:07:12Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5YBG0D",
+          "commit": {
+            "abbreviatedOid": "95bb340"
+          },
+          "author": "tlodderstedt",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2023-06-13T09:24:20Z",
+          "updatedAt": "2023-06-13T09:27:35Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "```suggestion\r\nThis document defines a Status List in JWT and CWT representations that describes the individual statuses of multiple Referenced Tokens. The statuses of all Referenced Tokens are conveyed via a bit array in the Status List. Each Referenced Token is allocated an index during issuance which represents a position within this bit array and the value of the bit(s) at this position correspond to the Referenced Token's status. The document also defines how an issuer of a Referenced Token in JWT or CWT representation references a Status List Token. Status Lists may be composed for expressing a range of Status Types, the document defines basic Status Types for the most common use cases as well as an extensibility mechanism for custom Status Types. The Status List Token may be used by an issuer in the Issuer-Holder-Verifier model, as described in (XXX) to express the status of verifiable credentials (Referenced Tokens) issued by an issuer.\r\n```",
+              "createdAt": "2023-06-13T09:24:20Z",
+              "updatedAt": "2023-06-13T09:27:35Z"
+            },
+            {
+              "originalPosition": 121,
+              "body": "Can we keep TODOs as issues, pls.? It makes it easier to grasp the TODOs for a certain draft. ",
+              "createdAt": "2023-06-13T09:27:28Z",
+              "updatedAt": "2023-06-13T09:27:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5YBLth",
+          "commit": {
+            "abbreviatedOid": "95bb340"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-06-13T09:33:58Z",
+          "updatedAt": "2023-06-13T09:33:58Z",
+          "comments": [
+            {
+              "originalPosition": 121,
+              "body": "these TODOs are partly resolved in other PRs and I would like to not change them in this PR as this resulsts to even more merge conflicts",
+              "createdAt": "2023-06-13T09:33:58Z",
+              "updatedAt": "2023-06-13T09:33:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5YByAd",
+          "commit": {
+            "abbreviatedOid": "ee8111f"
+          },
+          "author": "tlodderstedt",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "ok. Then please migrate the TODOs afterwards. ",
+          "createdAt": "2023-06-13T10:51:51Z",
+          "updatedAt": "2023-06-13T10:51:51Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5YFw-P",
+          "commit": {
+            "abbreviatedOid": "ee8111f"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "opened issue #26 to continue the terminology discussion",
+          "createdAt": "2023-06-13T19:22:56Z",
+          "updatedAt": "2023-06-13T19:22:56Z",
+          "comments": []
         }
       ]
     },
@@ -1400,13 +1707,13 @@
       "labels": [],
       "body": "",
       "createdAt": "2023-06-07T12:17:35Z",
-      "updatedAt": "2023-06-07T12:17:36Z",
+      "updatedAt": "2023-06-14T21:48:33Z",
       "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
       "baseRefName": "main",
-      "baseRefOid": "b90e150d6df05231298d446619924a1bfb5ad94e",
+      "baseRefOid": "97d29248904ebb29c899d094066f74d21aecfb04",
       "headRepository": "paulbastian/draft-looker-jwt-cwt-status-list",
       "headRefName": "privacy",
-      "headRefOid": "351968f72362ba41da2a4730bbf7f261c931a406",
+      "headRefOid": "a1fd5307d96a83685df7bb8dd06671ac72a2840f",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -1426,7 +1733,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2023-06-07T13:30:10Z",
-      "updatedAt": "2023-06-07T13:30:11Z",
+      "updatedAt": "2023-06-13T17:22:03Z",
       "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
       "baseRefName": "main",
       "baseRefOid": "b90e150d6df05231298d446619924a1bfb5ad94e",
@@ -1437,8 +1744,44 @@
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
-      "reviews": []
+      "comments": [
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "How does the described approach of the holder fetching the status list token compare to the validity credentials as presented by Andreas Freitag?",
+          "createdAt": "2023-06-13T16:16:42Z",
+          "updatedAt": "2023-06-13T16:16:42Z"
+        },
+        {
+          "author": "c2bo",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Imho validity credential would be very similar if we only go the route of the holder presenting the status list - the only benefit would be that we would not need to introduce another standard to check and could re-use the already known mechanism.\r\n\r\nThe main benefit for this approach would be that we could use a hybrid mode: the holder can carry the status lust with him (retrieved using holder authentication) and provide it for offline cases if necessary. For other cases, the verifier can get and check the status list themselves (using verifier authentication).",
+          "createdAt": "2023-06-13T17:22:03Z",
+          "updatedAt": "2023-06-13T17:22:03Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJZ2aqs5YEhyz",
+          "commit": {
+            "abbreviatedOid": "2a202ef"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-06-13T16:11:56Z",
+          "updatedAt": "2023-06-13T16:11:56Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "I would leave these two points out, as it is a repetition of what is/will be in the privacy section",
+              "createdAt": "2023-06-13T16:11:56Z",
+              "updatedAt": "2023-06-13T16:11:56Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
