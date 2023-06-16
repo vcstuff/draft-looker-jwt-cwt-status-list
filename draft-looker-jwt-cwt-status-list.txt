@@ -4,8 +4,8 @@
 
 Network Working Group                                          T. Looker
 Internet-Draft                                                     MATTR
-Intended status: Informational                              16 June 2023
-Expires: 18 December 2023
+Intended status: Informational                                P. Bastian
+Expires: 18 December 2023                                   16 June 2023
 
 
                         JWT and CWT Status List
@@ -88,7 +88,7 @@ Table of Contents
    8.  IANA Considerations
    9.  Normative References
    Acknowledgments
-   Author's Address
+   Authors' Addresses
 
 1.  Introduction
 
@@ -502,8 +502,12 @@ Acknowledgments
 
    TODO acknowledge.
 
-Author's Address
+Authors' Addresses
 
    Tobias Looker
    MATTR
    Email: tobias.looker@mattr.global
+
+
+   Paul Bastian
+   Email: paul.bastian@posteo.de
