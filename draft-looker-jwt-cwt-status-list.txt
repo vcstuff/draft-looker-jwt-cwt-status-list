@@ -4,8 +4,8 @@
 
 Network Working Group                                          T. Looker
 Internet-Draft                                                     MATTR
-Intended status: Informational                              15 June 2023
-Expires: 17 December 2023
+Intended status: Informational                              16 June 2023
+Expires: 18 December 2023
 
 
                         JWT and CWT Status List
@@ -45,7 +45,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 December 2023.
+   This Internet-Draft will expire on 18 December 2023.
 
 Copyright Notice
 
@@ -130,14 +130,14 @@ Table of Contents
 1.1.  Rationale
 
    Revocation mechanisms are an essential part for most identity
-   ecoosystems.  In the past, revocation of X.509 TLS certificates has
+   ecosystems.  In the past, revocation of X.509 TLS certificates has
    been proven difficult as traditional certificate revocation lists
    (CRLs) have limited scalability and the Online Certificate Status
    Protocol (OCSP) has additional privacy risks as the client is leaking
-   the requested website to a third party.  OSCP stapling is adressing
+   the requested website to a third party.  OCSP stapling is addressing
    some of these problems at the cost of less up-to-date data.  Modern
    approaches use accumulator-based revocation registries and Zero-
-   Knowledge-Proofs to accomodate for this privacy gap but face
+   Knowledge-Proofs to accommodate for this privacy gap but face
    scalability issues again.
 
    The approach of this specification seeks to find a balance between
@@ -214,11 +214,11 @@ Table of Contents
    1.  The claim value MUST be a valid JSON object.
 
    2.  The claim value object MUST contain an "idx" (index) attribute
-       with a numberic based value that represents the index to check
-       for status information in the Status List for the current JWT.
-       The value of this attribute MUST be a non-negative number,
-       containing a value of zero or greater.  Refer to xx for details
-       on the validation procedure.
+       with a numeric based value that represents the index to check for
+       status information in the Status List for the current JWT.  The
+       value of this attribute MUST be a non-negative number, containing
+       a value of zero or greater.  Refer to xx for details on the
+       validation procedure.
 
    3.  The claim value object MUST contain a "uri" attribute with a
        string based value that identifies the Status List containing the
@@ -380,11 +380,11 @@ Table of Contents
    A status describes the state, mode, condition or stage of an entity
    that is described by the status list.  Status Types MUST be numeric
    based values between 0 and 255.  Status types described by this
-   specifiction comprise: 0x00 - "VALID" - The status of the Token is
+   specification comprise: 0x00 - "VALID" - The status of the Token is
    valid, correct or legal. 0x01 - "INVALID" - The status of the Token
-   is revoked, annuled, taken back, recalled or cancelled.  This state
+   is revoked, annulled, taken back, recalled or cancelled.  This state
    is irreversible. 0x02 - "SUSPENDED" - The status of the Token is
-   temporarily unvalid, hanging, debared from privilege.  This state is
+   temporarily invalid, hanging, debarred from privilege.  This state is
    reversible.
 
    The issuer of the Status List Token MUST choose an adequate
@@ -408,7 +408,7 @@ Table of Contents
 6.1.  Correct decoding and parsing of the encoded status list
 
    TODO elaborate on risks of incorrect parsing/decoding leading to
-   erroneuos status data
+   erroneous status data
 
 6.2.  Cached and Stale status lists
 
