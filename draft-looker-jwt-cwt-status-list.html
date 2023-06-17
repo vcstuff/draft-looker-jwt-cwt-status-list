@@ -1428,14 +1428,14 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
           </h4>
 <p id="section-4.2.2-1">Each status of a Referenced Token <span class="bcp14">MUST</span> be represented with a bit size of 1,2,4, or 8. Therefore up to 2,4,16, or 256 statuses for a Referenced Token, depending on the bit-size, are possible. This limitation is intended to limit bit manipulation necessary to a single byte for every operation and thus keeping implementations simpler and less error prone.<a href="#section-4.2.2-1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-4.2.2-2">
-<li id="section-4.2.2-2.1">The overall status list is encoded as a byte array. Depending on the "bit-size" each byte corresponds to 8/(#bit-size) statuses (8,4,2, or 1). The status of each Referenced Token is identified using an index that maps to one or more specific bits within the byte array. The index starts counting at 0 and ends with "size" - 1(being the last valid entry). The bits within an array are counted from least significant bit "0" to the most significant bit ("7"). All bits of the byte array at a particular index are set to a status value.<a href="#section-4.2.2-2.1" class="pilcrow">¶</a>
+<li id="section-4.2.2-2.1">The overall Status List is encoded as a byte array. Depending on the "bit-size" each byte corresponds to 8/(#bit-size) statuses (8,4,2, or 1). The status of each Referenced Token is identified using the "index" that maps to one or more specific bits within the byte array. The index starts counting at 0 and ends with "size" - 1(being the last valid entry). The bits within an array are counted from least significant bit "0" to the most significant bit ("7"). All bits of the byte array at a particular index are set to a status value.<a href="#section-4.2.2-2.1" class="pilcrow">¶</a>
 </li>
             <li id="section-4.2.2-2.2">The complete byte array is compressed using gZIP <span>[<a href="#RFC1952" class="cite xref">RFC1952</a>]</span>.<a href="#section-4.2.2-2.2" class="pilcrow">¶</a>
 </li>
             <li id="section-4.2.2-2.3">The result of the gZIP compression is then encoded as URL-safe base64 encoding without padding encoding as defined in Section 2 of <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span> and stored as a string.<a href="#section-4.2.2-2.3" class="pilcrow">¶</a>
 </li>
           </ol>
-<p id="section-4.2.2-3">Example of a two byte status list representing 16 statuses (1-bit status list) with indices 0 to 16 (2 bytes):<a href="#section-4.2.2-3" class="pilcrow">¶</a></p>
+<p id="section-4.2.2-3">Example of a Status List representing the statuses of 16 Referenced Tokens (1-bit status type) with indices 0 to 15 (2 bytes):<a href="#section-4.2.2-3" class="pilcrow">¶</a></p>
 <div class="alignLeft art-ascii-art art-text artwork" id="section-4.2.2-4">
 <pre>
 status[0] = 1
@@ -1455,14 +1455,43 @@ status[13] = 1
 status[14] = 0
 status[15] = 1
 
-results in:
-byte_array[0] = 0b10111001 or 0xB9
-byte_array[1] = 0b10100011 or 0xA3
-lst = "H4sIABUJi2QC_9u5GABc9QE7AgAAAA"
 </pre><a href="#section-4.2.2-4" class="pilcrow">¶</a>
 </div>
-<p id="section-4.2.2-5">Example of a more complex status list of length 12 using 2 bit statuses (3 bytes):<a href="#section-4.2.2-5" class="pilcrow">¶</a></p>
+<p id="section-4.2.2-5">These bits are concatenated:<a href="#section-4.2.2-5" class="pilcrow">¶</a></p>
 <div class="alignLeft art-ascii-art art-text artwork" id="section-4.2.2-6">
+<pre>
+byte             0                  1               2
+bit       7 6 5 4 3 2 1 0    7 6 5 4 3 2 1 0    7
+         +-+-+-+-+-+-+-+-+  +-+-+-+-+-+-+-+-+  +-+...
+values   |1|0|1|1|1|0|0|1|  |1|0|1|0|0|0|1|1|  |0|...
+         +-+-+-+-+-+-+-+-+  +-+-+-+-+-+-+-+-+  +-+...
+index     7 6 5 4 3 2 1 0   15   ...  10 9 8   23
+         \_______________/  \_______________/
+                0xB9               0xA3
+</pre><a href="#section-4.2.2-6" class="pilcrow">¶</a>
+</div>
+<div class="alignLeft art-text artwork" id="section-4.2.2-7">
+<pre>
+This results in the byte array:
+
+~~~ ascii-art
+
+byte_array = [0xB9, 0xA3]
+
+</pre><a href="#section-4.2.2-7" class="pilcrow">¶</a>
+</div>
+<p id="section-4.2.2-8">After compression and Base64URL encoding the generated Status List is:<a href="#section-4.2.2-8" class="pilcrow">¶</a></p>
+<div class="alignLeft art-ascii-art art-text artwork" id="section-4.2.2-9">
+<pre>
+"status_list": {
+   "bits": 1,
+   "lst": "H4sIABUJi2QC_9u5GABc9QE7AgAAAA"
+}
+
+</pre><a href="#section-4.2.2-9" class="pilcrow">¶</a>
+</div>
+<p id="section-4.2.2-10">Example of a more complex status list of length 12 using 2 bit statuses (3 bytes):<a href="#section-4.2.2-10" class="pilcrow">¶</a></p>
+<div class="alignLeft art-ascii-art art-text artwork" id="section-4.2.2-11">
 <pre>
 status[0] = 1
 status[1] = 2
@@ -1477,10 +1506,35 @@ status[9] = 2
 status[10] = 3
 status[11] = 3
 
-results in:
+</pre><a href="#section-4.2.2-11" class="pilcrow">¶</a>
+</div>
+<p id="section-4.2.2-12">These bits are concatenated:<a href="#section-4.2.2-12" class="pilcrow">¶</a></p>
+<p id="section-4.2.2-13">byte             0                  1                  2
+bit       7 6 5 4 3 2 1 0    7 6 5 4 3 2 1 0    7 6 5 4 3 2 1 0
+         +-+-+-+-+-+-+-+-+  +-+-+-+-+-+-+-+-+  +-+-+-+-+-+-+-+-+
+values   |1|1|0|0|1|0|0|1|  |0|1|0|0|0|1|0|0|  |1|1|1|1|1|0|0|1|
+         +-+-+-+-+-+-+-+-+  +-+-+-+-+-+-+-+-+  +-+-+-+-+-+-+-+-+
+          \ / \ / \ / \ /    \ / \ / \ / \ /    \ / \ / \ / \ /
+status     3   0   2   1      1   0   1   0      3   3   2   1
+index      3   2   1   0      7   6   5   4      11  10  9   8
+           _<strong>__</strong><strong>__/      _</strong><strong>__</strong><strong>/      _</strong><strong>__</strong>__/
+                0xC9               0x44               0xF9<a href="#section-4.2.2-13" class="pilcrow">¶</a></p>
+<p id="section-4.2.2-14">This results in the byte array:<a href="#section-4.2.2-14" class="pilcrow">¶</a></p>
+<div class="alignLeft art-ascii-art art-text artwork" id="section-4.2.2-15">
+<pre>
 byte_array = [0xC9, 0x44, 0xF9]
-lst = "H4sIAErsimQC_zvp8hMAZLRLMQMAAAA"
-</pre><a href="#section-4.2.2-6" class="pilcrow">¶</a>
+
+</pre><a href="#section-4.2.2-15" class="pilcrow">¶</a>
+</div>
+<p id="section-4.2.2-16">After compression and Base64URL encoding the generated Status List is:<a href="#section-4.2.2-16" class="pilcrow">¶</a></p>
+<div class="alignLeft art-ascii-art art-text artwork" id="section-4.2.2-17">
+<pre>
+"status_list": {
+   "bits": 2,
+   "lst": "H4sIAErsimQC_zvp8hMAZLRLMQMAAAA"
+}
+
+</pre><a href="#section-4.2.2-17" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
