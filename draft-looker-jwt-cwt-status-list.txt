@@ -5,7 +5,7 @@
 Network Working Group                                          T. Looker
 Internet-Draft                                                     MATTR
 Intended status: Informational                                P. Bastian
-Expires: 19 December 2023                                   17 June 2023
+Expires: 20 December 2023                                   18 June 2023
 
 
                         JWT and CWT Status List
@@ -45,7 +45,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 19 December 2023.
+   This Internet-Draft will expire on 20 December 2023.
 
 Copyright Notice
 
@@ -276,7 +276,7 @@ Table of Contents
      "exp": 1686232115,
      "status_list": {
        "bits": 1,
-       "lst": "H4sIAAAAAAAAA-3BMQEAAADCoPVPbQwfoAA......IC3AYbSVKsAQAAA"
+       "lst": "H4sIAMo_jGQC_zvp..MAZLRLMQMAAAA"
      }
    }
 
@@ -353,9 +353,7 @@ Table of Contents
             \_______________/  \_______________/
                    0xB9               0xA3
 
-   This results in the byte array:
-
-   ~~~ ascii-art
+   Resulting in the byte array:
 
    byte_array = [0xB9, 0xA3]
 
@@ -364,7 +362,7 @@ Table of Contents
 
    "status_list": {
       "bits": 1,
-      "lst": "H4sIABUJi2QC_9u5GABc9QE7AgAAAA"
+      "lst": "H4sIAMo_jGQC_9u5GABc9QE7AgAAAA"
    }
 
    Example of a more complex status list of length 12 using 2 bit
@@ -385,14 +383,18 @@ Table of Contents
 
    These bits are concatenated:
 
-   byte 0 1 2 bit 7 6 5 4 3 2 1 0 7 6 5 4 3 2 1 0 7 6 5 4 3 2 1 0
-   +-+-+-+-+-+-+-+-+ +-+-+-+-+-+-+-+-+ +-+-+-+-+-+-+-+-+
-   values |1|1|0|0|1|0|0|1| |0|1|0|0|0|1|0|0| |1|1|1|1|1|0|0|1|
-   +-+-+-+-+-+-+-+-+ +-+-+-+-+-+-+-+-+ +-+-+-+-+-+-+-+-+ \ / \ / \ / \ /
-   \ / \ / \ / \ / \ / \ / \ / \ / status 3 0 2 1 1 0 1 0 3 3 2 1 index
-   3 2 1 0 7 6 5 4 11 10 9 8 _*__**__/ _**__**/ _**__*__/ 0xC9 0x44 0xF9
+   byte             0                  1                  2
+   bit       7 6 5 4 3 2 1 0    7 6 5 4 3 2 1 0    7 6 5 4 3 2 1 0
+            +-+-+-+-+-+-+-+-+  +-+-+-+-+-+-+-+-+  +-+-+-+-+-+-+-+-+
+   values   |1|1|0|0|1|0|0|1|  |0|1|0|0|0|1|0|0|  |1|1|1|1|1|0|0|1|
+            +-+-+-+-+-+-+-+-+  +-+-+-+-+-+-+-+-+  +-+-+-+-+-+-+-+-+
+             \ / \ / \ / \ /    \ / \ / \ / \ /    \ / \ / \ / \ /
+   status     3   0   2   1      1   0   1   0      3   3   2   1
+   index      3   2   1   0      7   6   5   4      11  10  9   8
+              \___________/      \___________/      \___________/
+                   0xC9               0x44               0xF9
 
-   This results in the byte array:
+   Resulting in the byte array:
 
    byte_array = [0xC9, 0x44, 0xF9]
 
@@ -401,7 +403,7 @@ Table of Contents
 
    "status_list": {
       "bits": 2,
-      "lst": "H4sIAErsimQC_zvp8hMAZLRLMQMAAAA"
+      "lst": "H4sIAMo_jGQC_zvp8hMAZLRLMQMAAAA"
    }
 
 5.  Status Types
