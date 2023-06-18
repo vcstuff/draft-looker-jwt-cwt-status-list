@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-06-15T01:09:33.822092+00:00",
+  "timestamp": "2023-06-18T01:19:10.876051+00:00",
   "repo": "vcstuff/draft-looker-jwt-cwt-status-list",
   "labels": [
     {
@@ -55,15 +55,15 @@
       "id": "I_kwDOJZ2aqs5mOZGo",
       "title": "Extensibility point - Allowing for different types of statuses",
       "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/issues/1",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "tplooker",
-      "authorAssociation": "COLLABORATOR",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "The draft currently sets at least directionally that there can be different types of status lists that convey different kinds of statuses (e.g revocation vs a more complex suspended/active/inactive status setup), w.r.t I think we need to agree:\r\n\r\n1. We think this extensibility point is useful\r\n2. What the extensibility point should control e.g does it affect things like the number of bits allocated per index (so more than a binary state can be expressed)\r\n3. Does it control the type of URI the status list can be resolved from e.g MUST be an HTTPS url or is that controlled else where.",
       "createdAt": "2023-05-18T06:08:10Z",
-      "updatedAt": "2023-05-21T21:17:13Z",
-      "closedAt": null,
+      "updatedAt": "2023-06-15T13:44:01Z",
+      "closedAt": "2023-06-15T13:44:01Z",
       "comments": [
         {
           "author": "paulbastian",
@@ -81,10 +81,17 @@
         },
         {
           "author": "tplooker",
-          "authorAssociation": "COLLABORATOR",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "> Our proposal was:\r\n\r\nThanks this is great to be able to review!  IMO the simplest possible conveyance about what statues a list can represent I believe can be done through the sts.typ alone. Because I think majority of implementations will require explicit handling of different status types rather than supporting generic statuses. For example as an implementation if I were to come across a JWT with a sts.typ value set to \"revocation-list\" it would mean each status entry in the list is represented by 1bit where when the bit is set to 0 it represents NOT REVOKED status and when the bit is set to 1 it represents REVOKED.",
           "createdAt": "2023-05-21T21:17:12Z",
           "updatedAt": "2023-05-21T21:17:12Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "This is addressed by #17, @tplooker please close this issue",
+          "createdAt": "2023-06-15T09:40:07Z",
+          "updatedAt": "2023-06-15T09:40:36Z"
         }
       ]
     },
@@ -440,19 +447,19 @@
       "id": "I_kwDOJZ2aqs5mqEtA",
       "title": "Add Terminology and rephrase the Token",
       "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/issues/13",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "paulbastian",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "We need a common and better name for the first JWT aka Token aka StatusListEntry.\r\nMy proposal would be:\r\n- Subject Token\r\n- **Subject JWT**\r\n- Status Holding JWT",
       "createdAt": "2023-05-23T15:24:35Z",
-      "updatedAt": "2023-05-30T14:44:54Z",
-      "closedAt": null,
+      "updatedAt": "2023-06-15T09:39:36Z",
+      "closedAt": "2023-06-15T09:39:36Z",
       "comments": [
         {
           "author": "tplooker",
-          "authorAssociation": "COLLABORATOR",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Yes I had a similar thought, I agree with Subject JWT.",
           "createdAt": "2023-05-25T04:15:33Z",
           "updatedAt": "2023-05-25T04:15:33Z"
@@ -478,15 +485,15 @@
       "id": "I_kwDOJZ2aqs5mqGA5",
       "title": "Remove typ from Token status data",
       "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/issues/14",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "paulbastian",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "The current proposal for the JWT having a status is:\r\n```\r\n{\r\n  \"alg\": \"ES256\",\r\n  \"kid\": \"11\"\r\n}\r\n.\r\n{\r\n  \"iss\": \"https://example.com\",\r\n  \"sts\": {\r\n    \"typ\": \"revocation-list\",\r\n    \"idx\": 0,\r\n    \"uri\": \"https://example.com/statuslists/1\"\r\n  }\r\n}\r\n```\r\nIn my opinion the `typ`claim here is absolete.\r\nThe type of the status list should be known from the `typ`claim in the Status List JWT.\r\nHow to fetch the Status List JWT is given by the specification or by the scheme in `uri`.",
       "createdAt": "2023-05-23T15:27:34Z",
-      "updatedAt": "2023-05-25T20:45:50Z",
-      "closedAt": null,
+      "updatedAt": "2023-06-15T09:41:14Z",
+      "closedAt": "2023-06-15T09:41:13Z",
       "comments": [
         {
           "author": "paulbastian",
@@ -497,7 +504,7 @@
         },
         {
           "author": "tplooker",
-          "authorAssociation": "COLLABORATOR",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Im not against this proposed simplification however removing it would prevent an extensibility point based of the 'typ' value to control what types of uri could be found in the URI e.g are these always https? or are other schemes supported?",
           "createdAt": "2023-05-25T04:14:48Z",
           "updatedAt": "2023-05-25T04:14:48Z"
@@ -515,6 +522,13 @@
           "body": "I agree with @c2bo . The scheme is probably enough. I would suggest making HTTPS schemes a MUST requirement and other schemes MAY be used",
           "createdAt": "2023-05-25T20:45:50Z",
           "updatedAt": "2023-05-25T20:45:50Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "This is addressed by #17 ",
+          "createdAt": "2023-06-15T09:41:13Z",
+          "updatedAt": "2023-06-15T09:41:13Z"
         }
       ]
     },
@@ -638,9 +652,71 @@
       "labels": [],
       "body": "remaining issue from PR #20. \r\n\r\nalternatives are \"referencing token\".",
       "createdAt": "2023-06-13T19:20:19Z",
-      "updatedAt": "2023-06-13T19:20:19Z",
+      "updatedAt": "2023-06-16T09:49:06Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Right now the diagram is a little confusing,\r\nthe upper arrow could point in both directions saying \"References\" or \"Referencing\"",
+          "createdAt": "2023-06-16T09:49:06Z",
+          "updatedAt": "2023-06-16T09:49:06Z"
+        }
+      ]
+    },
+    {
+      "number": 27,
+      "id": "I_kwDOJZ2aqs5ozHOP",
+      "title": "Add suggestions for API for batch fetching statuslists",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/issues/27",
+      "state": "OPEN",
+      "author": "paulbastian",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "If a verifier wants all statuslists for a specific type of Referenced Token, e.g. for offlien caching, then it would be handy, if the issuer provides a API endpoint to get those in one call, e.g. as an array.",
+      "createdAt": "2023-06-15T07:39:24Z",
+      "updatedAt": "2023-06-15T07:39:24Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 28,
+      "id": "I_kwDOJZ2aqs5o0jOy",
+      "title": "Include the uri in the Status List Token?",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/issues/28",
+      "state": "CLOSED",
+      "author": "paulbastian",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "If a verifier fetched the Status List Token and checked the status of the Referenced Token, he might want to store both of those, e.g. for archiving or regulative requirements.\r\nIF somebody were to review the data later, there is currently no guarantee that these matched together in the past, other than \u00ecss` is the same for both.\r\nI just thought about, if it makes sense to include the uri or some part of identifier in the Status List Token itself?",
+      "createdAt": "2023-06-15T11:18:06Z",
+      "updatedAt": "2023-06-17T06:24:33Z",
+      "closedAt": "2023-06-17T06:24:32Z",
+      "comments": [
+        {
+          "author": "c2bo",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "That is also missing for the offline case (bring your status list with you) to make sure we have the correct status list. \r\n\r\nImho, we can just use the subject claim and bind it to the URI that is also used in the Referenced Token? \r\nA status list JWT would then look like this:\r\n```\r\n{\r\n  \"sub\": \"https://example.com/statuslists/1\", \r\n  \"iss\": \"https://example.com\",\r\n  \"iat\": 1683560915,\r\n  \"exp\": 1686232115,\r\n  \"status_list\": {\r\n    \"bits\": 1,\r\n    \"lst\": \"H4sIAAAAAAAAA-3BMQEAAADCoPVPbQwfoAA......IC3AYbSVKsAQAAA\"\r\n  }\r\n}\r\n```\r\nWhat do you think?",
+          "createdAt": "2023-06-15T11:33:50Z",
+          "updatedAt": "2023-06-15T11:33:50Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "yes, this is what I thought. `sub` is probably the best choice",
+          "createdAt": "2023-06-15T11:35:56Z",
+          "updatedAt": "2023-06-15T11:35:56Z"
+        },
+        {
+          "author": "tplooker",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Resolved in #30 ",
+          "createdAt": "2023-06-17T06:24:32Z",
+          "updatedAt": "2023-06-17T06:24:32Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -838,24 +914,26 @@
       "id": "PR_kwDOJZ2aqs5RKpwh",
       "title": "draft for status types and defintiions",
       "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/pull/17",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "paulbastian",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2023-05-23T16:45:15Z",
-      "updatedAt": "2023-06-14T21:45:54Z",
+      "updatedAt": "2023-06-15T07:06:51Z",
       "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
       "baseRefName": "main",
       "baseRefOid": "97d29248904ebb29c899d094066f74d21aecfb04",
       "headRepository": "paulbastian/draft-looker-jwt-cwt-status-list",
       "headRefName": "types",
       "headRefOid": "64c70917a1f10b0576c2c8e525f5f914822d658a",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2023-06-15T07:06:51Z",
+      "mergedAt": "2023-06-15T07:06:50Z",
+      "mergedBy": "tplooker",
+      "mergeCommit": {
+        "oid": "052948599ca836550d5469d89b7a434a494a3a5c"
+      },
       "comments": [
         {
           "author": "paulbastian",
@@ -866,7 +944,7 @@
         },
         {
           "author": "tplooker",
-          "authorAssociation": "COLLABORATOR",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "I'm in agreement with Kristina, the more I look at this the more I think we should have one possible enumeration of statuses rather than allowing every issuer to define their own, the question then becomes how big that set needs to be as it controls how many bits are allocated to each credential in the status list.",
           "createdAt": "2023-06-06T20:51:34Z",
           "updatedAt": "2023-06-06T20:51:34Z"
@@ -894,7 +972,7 @@
         },
         {
           "author": "tplooker",
-          "authorAssociation": "COLLABORATOR",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Yeah that was captured here @Sakurann https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/pull/20#issuecomment-1581385983",
           "createdAt": "2023-06-09T09:04:41Z",
           "updatedAt": "2023-06-09T09:04:41Z"
@@ -1001,7 +1079,7 @@
             "abbreviatedOid": "9d7ae60"
           },
           "author": "tplooker",
-          "authorAssociation": "COLLABORATOR",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2023-06-13T19:09:08Z",
@@ -1034,7 +1112,7 @@
             "abbreviatedOid": "9d7ae60"
           },
           "author": "tplooker",
-          "authorAssociation": "COLLABORATOR",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "APPROVED",
           "body": "One minor typo",
           "createdAt": "2023-06-13T19:10:37Z",
@@ -1048,24 +1126,26 @@
       "id": "PR_kwDOJZ2aqs5RVzIX",
       "title": "First iteration for the encoding ",
       "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/pull/18",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "c2bo",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Questions for the encoding:\r\n- base64 vs url-safe base64\r\n- bitwise encoding right now is least significant bit to most significant bit\r\n\r\nThe part describing the bit-encoding still needs be rewritten\r\n\r\nIn general:\r\nI searched a bit for better ways to encode/compress but in terms of simplicity and support for different programming languages, it seems some form of byte array and gZIP seem to be a pretty decent pick.",
       "createdAt": "2023-05-25T12:34:58Z",
-      "updatedAt": "2023-06-14T21:41:47Z",
+      "updatedAt": "2023-06-15T13:43:30Z",
       "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
       "baseRefName": "main",
-      "baseRefOid": "b90e150d6df05231298d446619924a1bfb5ad94e",
+      "baseRefOid": "052948599ca836550d5469d89b7a434a494a3a5c",
       "headRepository": "c2bo/draft-looker-jwt-cwt-status-list",
       "headRefName": "feature/encoding",
-      "headRefOid": "34d588af7b05256ce87229df50e359e9bd8d7516",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "a6ef3d720e3fd4c299d06cfa6c9dd293b2bb4011",
+      "closedAt": "2023-06-15T13:43:29Z",
+      "mergedAt": "2023-06-15T13:43:29Z",
+      "mergedBy": "paulbastian",
+      "mergeCommit": {
+        "oid": "79b1b53200f5f4ca9cc3949ddfba28d7010df774"
+      },
       "comments": [
         {
           "author": "paulbastian",
@@ -1073,6 +1153,13 @@
           "body": "I've made a first implementation in Kotlin today.\r\nTo me, it feels very natural to count Byte indexes up from 0 to size(whether this is left to right or right to left feels a little philosophical) and Bit indexes from right to left.",
           "createdAt": "2023-06-13T15:11:18Z",
           "updatedAt": "2023-06-13T15:11:18Z"
+        },
+        {
+          "author": "c2bo",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Imho we need another iteration on the description of the bit encoding, most likely with some form of ASCII art. I would prefer to do that in another PR- what do you think?",
+          "createdAt": "2023-06-15T11:48:26Z",
+          "updatedAt": "2023-06-15T11:48:26Z"
         }
       ],
       "reviews": [
@@ -1102,7 +1189,7 @@
             "abbreviatedOid": "453c427"
           },
           "author": "tplooker",
-          "authorAssociation": "COLLABORATOR",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2023-05-30T21:30:25Z",
@@ -1227,6 +1314,59 @@
               "updatedAt": "2023-06-14T21:40:02Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5YTNWr",
+          "commit": {
+            "abbreviatedOid": "453c427"
+          },
+          "author": "c2bo",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-06-15T12:17:19Z",
+          "updatedAt": "2023-06-15T12:17:19Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "Updated with referenced token by paul",
+              "createdAt": "2023-06-15T12:17:19Z",
+              "updatedAt": "2023-06-15T12:17:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5YTNyn",
+          "commit": {
+            "abbreviatedOid": "34d588a"
+          },
+          "author": "c2bo",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-06-15T12:18:22Z",
+          "updatedAt": "2023-06-15T12:18:23Z",
+          "comments": [
+            {
+              "originalPosition": 41,
+              "body": "The encoded list example was added in the last commit",
+              "createdAt": "2023-06-15T12:18:22Z",
+              "updatedAt": "2023-06-15T12:18:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5YTr7e",
+          "commit": {
+            "abbreviatedOid": "6ac60aa"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-06-15T13:19:16Z",
+          "updatedAt": "2023-06-15T13:19:16Z",
+          "comments": []
         }
       ]
     },
@@ -1780,6 +1920,404 @@
               "updatedAt": "2023-06-13T16:11:56Z"
             }
           ]
+        }
+      ]
+    },
+    {
+      "number": 29,
+      "id": "PR_kwDOJZ2aqs5THFAQ",
+      "title": "ascii art for bit and byte ordering",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/pull/29",
+      "state": "MERGED",
+      "author": "paulbastian",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-06-15T15:32:34Z",
+      "updatedAt": "2023-06-17T06:21:32Z",
+      "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
+      "baseRefName": "main",
+      "baseRefOid": "79b1b53200f5f4ca9cc3949ddfba28d7010df774",
+      "headRepository": "paulbastian/draft-looker-jwt-cwt-status-list",
+      "headRefName": "encoding",
+      "headRefOid": "57d18cf2655df30ca37cdbc0be729d1d51945254",
+      "closedAt": "2023-06-17T06:21:31Z",
+      "mergedAt": "2023-06-17T06:21:31Z",
+      "mergedBy": "tplooker",
+      "mergeCommit": {
+        "oid": "1ffaa4afd1bfe26121499417283e27434f7c7d9e"
+      },
+      "comments": [
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "after writing this I figured out changing the byte ordering, i.e. starting with byte 0 on the left might be a little more intuitive?",
+          "createdAt": "2023-06-15T15:33:17Z",
+          "updatedAt": "2023-06-15T15:33:17Z"
+        },
+        {
+          "author": "tplooker",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> after writing this I figured out changing the byte ordering, i.e. starting with byte 0 on the left might be a little more intuitive?\r\n\r\nYeah with fresh eyes I definately think that would be better.",
+          "createdAt": "2023-06-16T03:07:09Z",
+          "updatedAt": "2023-06-16T03:07:09Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "reversed byte order and added the index to the ascii art",
+          "createdAt": "2023-06-16T08:08:42Z",
+          "updatedAt": "2023-06-16T08:08:42Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJZ2aqs5YaCUp",
+          "commit": {
+            "abbreviatedOid": "4fb63b0"
+          },
+          "author": "c2bo",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "More compact version",
+          "createdAt": "2023-06-16T10:59:26Z",
+          "updatedAt": "2023-06-16T11:03:04Z",
+          "comments": [
+            {
+              "originalPosition": 39,
+              "body": "```suggestion\r\n~~~ ascii-art\r\n\r\nbyte             0                  1               2\r\nbit       7 6 5 4 3 2 1 0    7 6 5 4 3 2 1 0    7\r\n         +-+-+-+-+-+-+-+-+  +-+-+-+-+-+-+-+-+  +-+...\r\nvalues   |1|0|1|1|1|0|0|1|  |1|0|1|0|0|0|1|1|  |0|...\r\n         +-+-+-+-+-+-+-+-+  +-+-+-+-+-+-+-+-+  +-+...\r\nindex     7 6 5 4 3 2 1 0   15   ...  10 9 8   23\r\n         \\_______________/  \\_______________/\r\n                0xB9               0xA3\r\n~~~\r\n~~~\r\n```",
+              "createdAt": "2023-06-16T10:59:26Z",
+              "updatedAt": "2023-06-16T11:04:29Z"
+            },
+            {
+              "originalPosition": 85,
+              "body": "```suggestion\r\nbyte             0                  1                  2\r\nbit       7 6 5 4 3 2 1 0    7 6 5 4 3 2 1 0    7 6 5 4 3 2 1 0\r\n         +-+-+-+-+-+-+-+-+  +-+-+-+-+-+-+-+-+  +-+-+-+-+-+-+-+-+\r\nvalues   |1|1|0|0|1|0|0|1|  |0|1|0|0|0|1|0|0|  |1|1|1|1|1|0|0|1|\r\n         +-+-+-+-+-+-+-+-+  +-+-+-+-+-+-+-+-+  +-+-+-+-+-+-+-+-+\r\n          \\ / \\ / \\ / \\ /    \\ / \\ / \\ / \\ /    \\ / \\ / \\ / \\ /\r\nstatus     3   0   2   1      1   0   1   0      3   3   2   1\r\nindex      3   2   1   0      7   6   5   4      11  10  9   8\r\n           \\___________/      \\___________/      \\___________/\r\n                0xC9               0x44               0xF9\r\n```",
+              "createdAt": "2023-06-16T11:01:50Z",
+              "updatedAt": "2023-06-16T11:03:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5YaSD5",
+          "commit": {
+            "abbreviatedOid": "57d18cf"
+          },
+          "author": "c2bo",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-06-16T11:44:15Z",
+          "updatedAt": "2023-06-16T11:44:15Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5YfsMi",
+          "commit": {
+            "abbreviatedOid": "57d18cf"
+          },
+          "author": "tplooker",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-06-17T06:21:22Z",
+          "updatedAt": "2023-06-17T06:21:22Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 30,
+      "id": "PR_kwDOJZ2aqs5TK1Fg",
+      "title": "adding a subject claim for Status List Token",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/pull/30",
+      "state": "MERGED",
+      "author": "paulbastian",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-06-16T09:02:46Z",
+      "updatedAt": "2023-06-17T06:20:15Z",
+      "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
+      "baseRefName": "main",
+      "baseRefOid": "79b1b53200f5f4ca9cc3949ddfba28d7010df774",
+      "headRepository": "paulbastian/draft-looker-jwt-cwt-status-list",
+      "headRefName": "sub",
+      "headRefOid": "387f015643c2fd682500a23cd893c75582d1cee8",
+      "closedAt": "2023-06-17T06:20:15Z",
+      "mergedAt": "2023-06-17T06:20:15Z",
+      "mergedBy": "tplooker",
+      "mergeCommit": {
+        "oid": "560f847ca34ebec674ceccb961638786cfeb970f"
+      },
+      "comments": [
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "This solves #28 ",
+          "createdAt": "2023-06-16T09:16:23Z",
+          "updatedAt": "2023-06-16T09:16:23Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJZ2aqs5YaISg",
+          "commit": {
+            "abbreviatedOid": "a4c313f"
+          },
+          "author": "c2bo",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-06-16T11:17:45Z",
+          "updatedAt": "2023-06-16T11:17:46Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "```suggestion\r\n2. The JWT MUST contain a \"sub\" (subject) claim that contains an unique string based identifier for that Referenced Token. The value MUST be equal to that of the \"uri\" claim contained in the \"status\" claim of the Referenced Token.\r\n```",
+              "createdAt": "2023-06-16T11:17:45Z",
+              "updatedAt": "2023-06-16T11:18:51Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5YaY3Z",
+          "commit": {
+            "abbreviatedOid": "387f015"
+          },
+          "author": "c2bo",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-06-16T11:50:35Z",
+          "updatedAt": "2023-06-16T11:50:35Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5Yfr1D",
+          "commit": {
+            "abbreviatedOid": "387f015"
+          },
+          "author": "tplooker",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-06-17T06:20:09Z",
+          "updatedAt": "2023-06-17T06:20:09Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 31,
+      "id": "PR_kwDOJZ2aqs5TK5Xv",
+      "title": "clarify bit and bit_size wording",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/pull/31",
+      "state": "MERGED",
+      "author": "paulbastian",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-06-16T09:15:29Z",
+      "updatedAt": "2023-06-16T21:16:47Z",
+      "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
+      "baseRefName": "main",
+      "baseRefOid": "79b1b53200f5f4ca9cc3949ddfba28d7010df774",
+      "headRepository": "paulbastian/draft-looker-jwt-cwt-status-list",
+      "headRefName": "minor_fixes",
+      "headRefOid": "248135ca2cc7870e25d5384cf0a416cb04f71003",
+      "closedAt": "2023-06-16T21:16:46Z",
+      "mergedAt": "2023-06-16T21:16:46Z",
+      "mergedBy": "tplooker",
+      "mergeCommit": {
+        "oid": "a56771322117372d4649d3d2064557854f359cad"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJZ2aqs5YaGQ0",
+          "commit": {
+            "abbreviatedOid": "6f14f56"
+          },
+          "author": "c2bo",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-06-16T11:11:18Z",
+          "updatedAt": "2023-06-16T11:11:19Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\r\n2. The claim value object MUST contain a \"bits\" (bit size) attribute with an numeric based value that represents the number of bits per Referenced Token in the Status List (\"lst\") of the Status List JWT. The allowed values for \"bits\" are 1,2,4 and 8.\r\n```",
+              "createdAt": "2023-06-16T11:11:19Z",
+              "updatedAt": "2023-06-16T11:11:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5YaZOY",
+          "commit": {
+            "abbreviatedOid": "248135c"
+          },
+          "author": "c2bo",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-06-16T11:50:55Z",
+          "updatedAt": "2023-06-16T11:50:55Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5YelDx",
+          "commit": {
+            "abbreviatedOid": "248135c"
+          },
+          "author": "tplooker",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-06-16T21:16:40Z",
+          "updatedAt": "2023-06-16T21:16:40Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 32,
+      "id": "PR_kwDOJZ2aqs5TLCvr",
+      "title": "add as author",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/pull/32",
+      "state": "MERGED",
+      "author": "paulbastian",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-06-16T09:46:21Z",
+      "updatedAt": "2023-06-16T21:16:07Z",
+      "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
+      "baseRefName": "main",
+      "baseRefOid": "79b1b53200f5f4ca9cc3949ddfba28d7010df774",
+      "headRepository": "paulbastian/draft-looker-jwt-cwt-status-list",
+      "headRefName": "author",
+      "headRefOid": "ad5dfad3ed42c9c3434349b101f07aca0891e045",
+      "closedAt": "2023-06-16T21:16:07Z",
+      "mergedAt": "2023-06-16T21:16:07Z",
+      "mergedBy": "tplooker",
+      "mergeCommit": {
+        "oid": "e59711c86c82341c3431ba5ed74df58533f4eaad"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJZ2aqs5Yekw8",
+          "commit": {
+            "abbreviatedOid": "ad5dfad"
+          },
+          "author": "tplooker",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-06-16T21:16:02Z",
+          "updatedAt": "2023-06-16T21:16:02Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 33,
+      "id": "PR_kwDOJZ2aqs5TNIY8",
+      "title": "some spelling fixes",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/pull/33",
+      "state": "MERGED",
+      "author": "c2bo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fixing some spelling errors",
+      "createdAt": "2023-06-16T15:53:00Z",
+      "updatedAt": "2023-06-16T21:15:52Z",
+      "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
+      "baseRefName": "main",
+      "baseRefOid": "79b1b53200f5f4ca9cc3949ddfba28d7010df774",
+      "headRepository": "c2bo/draft-looker-jwt-cwt-status-list",
+      "headRefName": "spelling",
+      "headRefOid": "257d3878d8fe8e2edf3664d50d0f3a7ea1b223c7",
+      "closedAt": "2023-06-16T21:15:51Z",
+      "mergedAt": "2023-06-16T21:15:51Z",
+      "mergedBy": "tplooker",
+      "mergeCommit": {
+        "oid": "6411d628b820a190f79238bedc85bee6f74245e6"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJZ2aqs5YcYHJ",
+          "commit": {
+            "abbreviatedOid": "257d387"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-06-16T16:08:09Z",
+          "updatedAt": "2023-06-16T16:08:10Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5YekSC",
+          "commit": {
+            "abbreviatedOid": "257d387"
+          },
+          "author": "tplooker",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-06-16T21:15:26Z",
+          "updatedAt": "2023-06-16T21:15:26Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 34,
+      "id": "PR_kwDOJZ2aqs5TP2FM",
+      "title": "fix examples",
+      "url": "https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/pull/34",
+      "state": "OPEN",
+      "author": "c2bo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "- fixes the examples to use constant timestamps in gzip encoding\r\n- minor changes/fixes to the ascii art / code blocks",
+      "createdAt": "2023-06-17T07:47:54Z",
+      "updatedAt": "2023-06-17T07:55:18Z",
+      "baseRepository": "vcstuff/draft-looker-jwt-cwt-status-list",
+      "baseRefName": "main",
+      "baseRefOid": "1ffaa4afd1bfe26121499417283e27434f7c7d9e",
+      "headRepository": "c2bo/draft-looker-jwt-cwt-status-list",
+      "headRefName": "jwt-examples",
+      "headRefOid": "1f6cef985060b5beafde96dc7367e86dd333a339",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJZ2aqs5YfvSA",
+          "commit": {
+            "abbreviatedOid": "1f6cef9"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-06-17T07:55:18Z",
+          "updatedAt": "2023-06-17T07:55:18Z",
+          "comments": []
         }
       ]
     }
