@@ -315,7 +315,7 @@ TODO elaborate on risks of incorrect parsing/decoding leading to erroneous statu
 ## Cached and Stale status lists
 TODO consumers/Verifiers of the status list should be aware if they fetch the up-to-date data
 
-## Authorized access to the Status List
+## Authorized access to the Status List {#security-authorization}
 TODO elaborate on authorization mechanisms preventing misuse and profiling as described in privacy section
 
 ## History
@@ -323,11 +323,16 @@ TODO elaborate on status list only providing the up-to date/latest status, no hi
 
 # Privacy Considerations
 
-## Herd Privacy
-TODO elaborate on herd privacy, size of the status list
+## Issuer tracking and Herd Privacy {#privacy-issuer}
+The main privacy consideration for a status list, especially in the context of the Issuer-Holder-Verifier model RFCXXX, is to prevent the Issuer/Status List Provider from tracking the usage of the Token when the status is being checked. If an issuer offers status information by referencing a specific Token, this would enable him to create a profile for the issued Token by correlating the date and identity of Verifiers, that are requesting the status.
 
-## Profiling
-TODO elaborate on Verifiers regularly fetching the status list to create a profile, possible countermeasures with authorized access to the status list
+The Status List approaches these privacy implications by integrating the status information of many Tokens into the same list. Therefore, the Status List Provider does not learn for which Token the Verifier is requesting the Status List. The privacy of the Token Holder is achieved by the anonymity within the set of Tokens in the Status List, also called herd privacy. This limits the risks of tracking by the Issuer.
+
+The herd privacy is depending on the number of entities within the Status List called its size. A larger size results in better privacy but also impacts the performance as more data has to be transferred to read the Status List.
+
+## Verifier tracking {#privacy-verifier}
+
+Once the Verifier got the Token, this enables him to request the Status List to validate the status of the Token through the provided "uri" property. However, the Verifier may store the "uri" and "index" of the Token to request the Status List at a later time. By doing so regularly, the Verifier may create a profile of the Token's validity status. This behaviour may be inteded as a feature, e.g. for a KYC process that requires regular validity checks, but might also be abused in cases where this is not intended and unknown to the Holder, e.g. profiling the suspension of a driving license. This behaviour could be constrained by adding authorization rules to the Status List, see [](#security-authorization).
 
 ## Correlation Risks and Tracking
 TODO elaborate on Issuer-Verifier correlation and Verifier-Verifier correlation as the status list introduces unique,trackable data
@@ -335,7 +340,7 @@ TODO elaborate on issuers avoiding sequential usage of indices and status lists
 TODO elaborate that a status list only gives information about the maximum number of possible statuses that a list conveys, issuers are recommended to pre-allocate lists, use dead entries that are never assigned or other obfuscation mechanisms
 
 ## Malicious Issuers
-TODO elaborate on issuers generating unique status lists per Referenced Token that do not offer herd privacy
+A malicious Issuer/Status List Provider could bypass the privacy benefits of the herd privacy by generating a unique Status List for every Token. By these means, he could maintain a mapping between Tokens and Status Lists and thus track the usage of Tokens as described above. This malicious behaviour could be detected by Verifiers that request large amounts of Tokens by comparing the number of different Status Lists and their size.
 
 ## Hosting Service (what's a better name here?)
 TODO elaborate on increased privacy if the status list is hosted by a third party instead of the issuer reducing tracking possiblities
