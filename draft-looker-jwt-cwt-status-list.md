@@ -316,12 +316,25 @@ TODO elaborate on risks of incorrect parsing/decoding leading to erroneous statu
 TODO consumers/Verifiers of the status list should be aware if they fetch the up-to-date data
 
 ## Authorized access to the Status List
-TODO elaborate on authorization mechanisms preventing misuse and profiling as described in privacy section
+If the status list token is provided without any kind of access restriction (allowing everyone to resolve and process the status list), there are some privacy considerations that need to be taken into account (discussed in detail in [](#privacy-considerations)):
+
+- Verifiers are able to re-check the validity of previously provided tokens without consent of the holder.
+- Third parties are able to do profiling by periodically checking the contents of the status list.
+
+While this might be wanted behavior depending on the use-case, this should be taken into the consideration when using the status list. Access to the status list can be restricted. There are three general approaches for status list regarding authorization:
+
+- no authentication: the status list can be retrieved and by all involved parties without any kind of restriction.
+
+- verifier authentication: the status list is retrieved by the verifier after successful authentication - this expects some form of verifier authentication to exist. This especially makes sense if verifier authentication is part of holder/verifier interactions and should be strongly considered in that case. This does not prevent re-checks from the verifier but at least excludes untrusted third parties from profiling.
+
+- holder authentication: instead of the status list getting retrieved by the verifier, the holder retrieves the status list (possibly re-using the authorization mechanism that was used for the token issuance) and provides it additionally to the token during a presentation. The verifier could still pool status list presentations from different holders and extract additional information but has no direct access to the status list.
+
+Restricted access to the status list token can be achieved using well-known authorization mechanisms like OAuth 2.0 and should be considered.
 
 ## History
 TODO elaborate on status list only providing the up-to date/latest status, no historical data, may be provided by the underlying hosting architecture
 
-# Privacy Considerations
+# Privacy Considerations {#privacy-considerations}
 
 ## Herd Privacy
 TODO elaborate on herd privacy, size of the status list
