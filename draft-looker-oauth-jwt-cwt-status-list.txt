@@ -88,6 +88,7 @@ Table of Contents
    8.  IANA Considerations
    9.  Normative References
    Acknowledgments
+   Document History
    Authors' Addresses
 
 1.  Introduction
@@ -545,6 +546,12 @@ Table of Contents
 Acknowledgments
 
    TODO acknowledge.
+
+Document History
+
+   -00
+
+   *  Initial draft
 
 Authors' Addresses
 
