@@ -5,7 +5,7 @@
 Network Working Group                                          T. Looker
 Internet-Draft                                                     MATTR
 Intended status: Informational                                P. Bastian
-Expires: 21 December 2023                                   19 June 2023
+Expires: 23 December 2023                                   21 June 2023
 
 
                         JWT and CWT Status List
@@ -45,7 +45,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 December 2023.
+   This Internet-Draft will expire on 23 December 2023.
 
 Copyright Notice
 
@@ -202,7 +202,6 @@ Table of Contents
    {
      "iss": "https://example.com",
      "status": {
-       "bits": 1,
        "idx": 0,
        "uri": "https://example.com/statuslists/1"
      }
