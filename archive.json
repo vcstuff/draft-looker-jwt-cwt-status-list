@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-06-20T01:07:47.495311+00:00",
+  "timestamp": "2023-06-22T01:11:15.977767+00:00",
   "repo": "vcstuff/draft-looker-oauth-jwt-cwt-status-list",
   "labels": [
     {
@@ -723,16 +723,33 @@
       "id": "I_kwDOJZ2aqs5pKHrK",
       "title": "\"bits\" in \"status\" claim example seems not right",
       "url": "https://github.com/vcstuff/draft-looker-oauth-jwt-cwt-status-list/issues/35",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "tplooker"
+      ],
       "labels": [],
       "body": "The example of the \"Referenced Token\" content https://www.ietf.org/archive/id/draft-looker-oauth-jwt-cwt-status-list-00.html#section-4.1-3 has \"bits\" in the \"status\" claim but \"bits\" isn't defined for that claim https://www.ietf.org/archive/id/draft-looker-oauth-jwt-cwt-status-list-00.html#name-status-claim-format \r\n\r\nIt seems like \"bits\" is only for \"status_list\" claim (where it's defined https://www.ietf.org/archive/id/draft-looker-oauth-jwt-cwt-status-list-00.html#name-status-list-claim-format ) and should be removed from the aforementioned example. \r\n",
       "createdAt": "2023-06-19T21:43:52Z",
-      "updatedAt": "2023-06-19T21:43:52Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2023-06-21T06:20:11Z",
+      "closedAt": "2023-06-21T06:20:11Z",
+      "comments": [
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Thanks for your review!\r\nThis seems correct from my view :+1: ",
+          "createdAt": "2023-06-20T13:25:01Z",
+          "updatedAt": "2023-06-20T13:25:01Z"
+        },
+        {
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Resolution is to remove the \"bit\" field/attribute from the \"status\" claim in reference token example and instead only have it in the status list.",
+          "createdAt": "2023-06-21T06:08:57Z",
+          "updatedAt": "2023-06-21T06:08:57Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -2348,6 +2365,61 @@
           "body": "",
           "createdAt": "2023-06-18T20:50:44Z",
           "updatedAt": "2023-06-18T20:50:44Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 36,
+      "id": "PR_kwDOJZ2aqs5TgbEl",
+      "title": "fix reference token example",
+      "url": "https://github.com/vcstuff/draft-looker-oauth-jwt-cwt-status-list/pull/36",
+      "state": "MERGED",
+      "author": "tplooker",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "<!-- If this pull request closes an issue, please mention the issue number below -->\r\nCloses #35\r\n\r\n## \ud83d\udcd1 Description\r\n\r\nSimple fix to example",
+      "createdAt": "2023-06-21T06:13:35Z",
+      "updatedAt": "2023-06-21T21:02:56Z",
+      "baseRepository": "vcstuff/draft-looker-oauth-jwt-cwt-status-list",
+      "baseRefName": "main",
+      "baseRefOid": "fa0432bb81cc5672625d8f9edfa2706bffab9179",
+      "headRepository": "vcstuff/draft-looker-oauth-jwt-cwt-status-list",
+      "headRefName": "tl/fix-example",
+      "headRefOid": "d9c847b04806bf201c3333a79fa3a7a2ef603a27",
+      "closedAt": "2023-06-21T06:20:10Z",
+      "mergedAt": "2023-06-21T06:20:10Z",
+      "mergedBy": "tplooker",
+      "mergeCommit": {
+        "oid": "bee05c44945b9c812ead181f558699990930d8c1"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJZ2aqs5YzTcY",
+          "commit": {
+            "abbreviatedOid": "d9c847b"
+          },
+          "author": "c2bo",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-06-21T06:19:26Z",
+          "updatedAt": "2023-06-21T06:19:26Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJZ2aqs5YzTcq",
+          "commit": {
+            "abbreviatedOid": "d9c847b"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-06-21T06:19:27Z",
+          "updatedAt": "2023-06-21T06:19:27Z",
           "comments": []
         }
       ]
