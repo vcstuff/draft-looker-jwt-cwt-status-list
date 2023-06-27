@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-06-22T01:11:15.977767+00:00",
+  "timestamp": "2023-06-27T01:19:13.455971+00:00",
   "repo": "vcstuff/draft-looker-oauth-jwt-cwt-status-list",
   "labels": [
     {
@@ -123,9 +123,17 @@
       "labels": [],
       "body": "As described in the title, detail the CWT representation of the status list which is complementary to the JWT representation.",
       "createdAt": "2023-05-18T06:10:35Z",
-      "updatedAt": "2023-05-18T06:10:35Z",
+      "updatedAt": "2023-06-26T21:31:52Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "NONE",
+          "body": "Maybe a naive question but what's the motivation for this draft having the two representations? When positioned\r\nas a companion of the SD-JWT VC draft and aiming for the OAuth WG, it seems like keeping the scope tighter and only having the JWT representation would be sufficient/okay/preferable.  \r\n",
+          "createdAt": "2023-06-26T21:31:52Z",
+          "updatedAt": "2023-06-26T21:31:52Z"
+        }
+      ]
     },
     {
       "number": 4,
