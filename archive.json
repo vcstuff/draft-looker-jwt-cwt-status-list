@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-07-06T01:20:43.245437+00:00",
+  "timestamp": "2023-07-11T01:12:05.339571+00:00",
   "repo": "vcstuff/draft-looker-oauth-jwt-cwt-status-list",
   "labels": [
     {
@@ -2437,26 +2437,42 @@
       "id": "PR_kwDOJZ2aqs5UwYHR",
       "title": "Mike's editorial suggestions",
       "url": "https://github.com/vcstuff/draft-looker-oauth-jwt-cwt-status-list/pull/37",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "selfissued",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2023-07-05T23:32:11Z",
-      "updatedAt": "2023-07-05T23:32:12Z",
+      "updatedAt": "2023-07-10T21:41:13Z",
       "baseRepository": "vcstuff/draft-looker-oauth-jwt-cwt-status-list",
       "baseRefName": "main",
       "baseRefOid": "bee05c44945b9c812ead181f558699990930d8c1",
       "headRepository": "selfissued/draft-looker-oauth-jwt-cwt-status-list",
       "headRefName": "mbj-editorial-suggestions",
       "headRefOid": "36c4fe7e0d5ebefb0c710f82531f22940467fe4a",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2023-07-10T21:41:12Z",
+      "mergedAt": "2023-07-10T21:41:12Z",
+      "mergedBy": "paulbastian",
+      "mergeCommit": {
+        "oid": "4210fba10aa1ce801668e3097b5c301d292e1f8b"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOJZ2aqs5ayBBj",
+          "commit": {
+            "abbreviatedOid": "36c4fe7"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-07-10T21:17:02Z",
+          "updatedAt": "2023-07-10T21:17:02Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
