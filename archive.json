@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-07-11T01:12:05.339571+00:00",
+  "timestamp": "2023-07-13T01:21:05.664631+00:00",
   "repo": "vcstuff/draft-looker-oauth-jwt-cwt-status-list",
   "labels": [
     {
@@ -47,6 +47,11 @@
       "name": "wontfix",
       "description": "This will not be worked on",
       "color": "ffffff"
+    },
+    {
+      "name": "02",
+      "description": "",
+      "color": "fef2c0"
     }
   ],
   "issues": [
@@ -104,10 +109,12 @@
       "author": "tplooker",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "02"
+      ],
       "body": "We need to document end to end the validation procedure for a JWT and CWT referencing a status list including resolution of the status list, validation of the status list and how to get the status information for the JWT referencing the status list.",
       "createdAt": "2023-05-18T06:09:52Z",
-      "updatedAt": "2023-05-18T06:09:52Z",
+      "updatedAt": "2023-07-11T06:36:12Z",
       "closedAt": null,
       "comments": []
     },
@@ -123,7 +130,7 @@
       "labels": [],
       "body": "As described in the title, detail the CWT representation of the status list which is complementary to the JWT representation.",
       "createdAt": "2023-05-18T06:10:35Z",
-      "updatedAt": "2023-06-26T21:31:52Z",
+      "updatedAt": "2023-07-11T16:42:32Z",
       "closedAt": null,
       "comments": [
         {
@@ -132,6 +139,20 @@
           "body": "Maybe a naive question but what's the motivation for this draft having the two representations? When positioned\r\nas a companion of the SD-JWT VC draft and aiming for the OAuth WG, it seems like keeping the scope tighter and only having the JWT representation would be sufficient/okay/preferable.  \r\n",
           "createdAt": "2023-06-26T21:31:52Z",
           "updatedAt": "2023-06-26T21:31:52Z"
+        },
+        {
+          "author": "tplooker",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@bc-pi, credential formats like mDocs do not have a status/revocation mechanism hence a CWT based representation is beneficial to these applications as they dont typically have JWT support.",
+          "createdAt": "2023-07-11T06:36:02Z",
+          "updatedAt": "2023-07-11T06:38:29Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "NONE",
+          "body": "I dunno, I'm not convinced that necessitates having multiple status list token representations. Especially in one draft. This draft, which again is being positioned as a companion to the SD-JWT VC. I suspect the work would be more palatable for adoption with a scope that's reflective of that. But maybe that's just me. Thanks for the context. ",
+          "createdAt": "2023-07-11T16:42:32Z",
+          "updatedAt": "2023-07-11T16:42:32Z"
         }
       ]
     },
@@ -178,15 +199,15 @@
       "id": "I_kwDOJZ2aqs5mWe-e",
       "title": "Add the size of the statusList as a property",
       "url": "https://github.com/vcstuff/draft-looker-oauth-jwt-cwt-status-list/issues/5",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "paulbastian",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "It could be handy to include the size of the statusList, i.e. the total number of entities and there status.\r\nThis could serve as an additional check that the statusList was correctly uncompressed and decoded by the verifier, especially if we think about including variable size of bits per status, see #1 \r\nProposed change to the current draft:\r\n```\r\n{\r\n  \"alg\": \"ES256\",\r\n  \"kid\": \"11\"\r\n}\r\n.\r\n{\r\n  \"iss\": \"https://example.com\",\r\n  \"iat\": 1683560915,\r\n  \"exp\": 1686232115,\r\n  \"sts_lst\": {\r\n    \"typ\": \"revocation-list\",\r\n    \"size\": 16384,\r\n    \"lst\": \"H4sIAAAAAAAAA-3BMQEAAADCoPVPbQwfoAA......IC3AYbSVKsAQAAA\"\r\n  }\r\n}\r\n```",
       "createdAt": "2023-05-19T12:27:52Z",
-      "updatedAt": "2023-05-22T20:31:38Z",
-      "closedAt": null,
+      "updatedAt": "2023-07-11T06:30:55Z",
+      "closedAt": "2023-07-11T06:30:55Z",
       "comments": [
         {
           "author": "tplooker",
@@ -215,6 +236,13 @@
           "body": "@tplooker are you arguing that it is not necessary at all? While I agree that you could get additional safety of correct deciding through test vectors, I think it is anyway a useful metadata to have and does not take large amounts of space.",
           "createdAt": "2023-05-22T20:31:38Z",
           "updatedAt": "2023-05-22T20:31:38Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Agreed to not integrate this",
+          "createdAt": "2023-07-11T06:30:55Z",
+          "updatedAt": "2023-07-11T06:30:55Z"
         }
       ]
     },
@@ -329,12 +357,12 @@
       "url": "https://github.com/vcstuff/draft-looker-oauth-jwt-cwt-status-list/issues/10",
       "state": "OPEN",
       "author": "peppelinux",
-      "authorAssociation": "NONE",
+      "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "we assume (and that's good) that the issuer of a VC is responsible of its lifecycle, and then it has to maintain the revocation status of its issued vcs.\r\n\r\nthere may be some cases where the revocation list could be deployed outside the issuer domain\r\n\r\nin this case the status JSON Object shouln't be a JWS instead, signed by the owner of the status list (different from the isser)? \r\n\r\n````\r\n  \"sts\": $JWS\r\n````  ",
       "createdAt": "2023-05-21T00:11:48Z",
-      "updatedAt": "2023-05-22T21:06:56Z",
+      "updatedAt": "2023-07-11T06:29:59Z",
       "closedAt": null,
       "comments": [
         {
@@ -346,7 +374,7 @@
         },
         {
           "author": "peppelinux",
-          "authorAssociation": "NONE",
+          "authorAssociation": "MEMBER",
           "body": "I prefer a decentralized approach, where each issuer manages the lifecycle of its issuance but there comes other models where revocation must or may be hosted to third parties \r\n\r\nso we should give a verifiable attestation of the status provider, and this attestation must be verifiable\r\n\r\nthis brings again the aspect to have this status object directly as a JWS for both cases but I'd prefer a plantext json is the issuer is the same, just because it is simple and the hope that there won't be centralized approaches\r\n\r\ndifferently, if the issuer is not the same and the status object should be a JWS, well in it we should have a verifiable trust (x5c, trust_chain ...) embedded or referenced in it -> payload increase but necessary ",
           "createdAt": "2023-05-21T21:15:51Z",
           "updatedAt": "2023-05-21T21:15:51Z"
@@ -360,7 +388,7 @@
         },
         {
           "author": "peppelinux",
-          "authorAssociation": "NONE",
+          "authorAssociation": "MEMBER",
           "body": "I dont like It but there May be some cases when It Is required\r\n\r\nNot in my implementations :-)",
           "createdAt": "2023-05-22T06:37:38Z",
           "updatedAt": "2023-05-22T06:37:38Z"
@@ -371,6 +399,13 @@
           "body": "I have this use case also in mind, I parked this concept in the privacy considerations part 5.5 as hosting service. It's an easy way to get additional privacy because the issuer can not track who accessed the status list",
           "createdAt": "2023-05-22T21:06:55Z",
           "updatedAt": "2023-05-22T21:06:55Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Clarify after discussions with @tplooker : This is only about hosting the Status List Token, not about the htird party signing the Token",
+          "createdAt": "2023-07-11T06:29:58Z",
+          "updatedAt": "2023-07-11T06:29:58Z"
         }
       ]
     },
@@ -549,10 +584,12 @@
       "author": "tlodderstedt",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "02"
+      ],
       "body": "I did a first review of this draft. As a newbie to the topic, I found the following issues:\r\n\r\n- I miss a description of the fundamental concept, i.e. the status list itself is a JWT (issued by the same issuer issuing the JWTs), the status list JWT is obtained from a URL hosted by that issuer or another party, the link between the JWT and its status list is provided through data in the JWT. I suggest to add this in the Introduction (or an Overview) section. \r\n- When reading Section 3.1. for the first time I was confused whether it describes the status list JWT or the JWT referring to the status list. I think it is the latter and it should be clear to the reader on first sight. \r\n- I  think the order of definition should be changed. Right now, I'm supposed to understand how a status list JWT is used in a JWT without even knowing what that status list JWT is. I suggest to change order: 1) Overview of the concepts, 2) specify status list JWT (structure and where/how to obtain), 3) embedding in a JWT (syntax, processing rules, ...). ",
       "createdAt": "2023-05-28T10:28:05Z",
-      "updatedAt": "2023-05-30T14:44:29Z",
+      "updatedAt": "2023-07-11T06:18:00Z",
       "closedAt": null,
       "comments": [
         {
@@ -575,6 +612,13 @@
           "body": "Addressing some of these issues in #20 ",
           "createdAt": "2023-05-30T14:44:28Z",
           "updatedAt": "2023-05-30T14:44:28Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "What's left to do: reorder Status List Token first and Referenced Token afterwards",
+          "createdAt": "2023-07-11T06:18:00Z",
+          "updatedAt": "2023-07-11T06:18:00Z"
         }
       ]
     },
@@ -587,10 +631,12 @@
       "author": "paulbastian",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "02"
+      ],
       "body": "I'm wondering whether\r\na) this document shall always only be about status list using bitarrays/bitstrings\r\nor\r\nb) we want to leave a window open to enable other forms of storage\r\n\r\nIn case of a) it could make sense to name bit array in the title of the document.\r\nIn case of b) it could make sense to add a field that reference the existing mechanism",
       "createdAt": "2023-06-07T10:23:03Z",
-      "updatedAt": "2023-06-07T10:23:03Z",
+      "updatedAt": "2023-07-11T06:13:16Z",
       "closedAt": null,
       "comments": []
     },
@@ -606,9 +652,17 @@
       "labels": [],
       "body": "Add:\r\n- prevent double allocating an index\r\n- randomize allocation of indexes/avoid sequential usage",
       "createdAt": "2023-06-07T19:34:15Z",
-      "updatedAt": "2023-06-07T19:34:15Z",
+      "updatedAt": "2023-07-11T09:52:39Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Peter proposes a dynamic sized list, I don't see anything preventing this",
+          "createdAt": "2023-07-11T09:52:38Z",
+          "updatedAt": "2023-07-11T09:52:38Z"
+        }
+      ]
     },
     {
       "number": 25,
@@ -619,10 +673,12 @@
       "author": "paulbastian",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "02"
+      ],
       "body": "              > umm I thought we agreed to remove the concept of the \"typ\" attribute.. so no `revocation-list` and no `suspention-status-list`.\r\n\r\nBut I assume the Status List Token will have a `typ` JOSE header to properly distinguish it from other JWTs, right?\r\n\r\n_Originally posted by @tlodderstedt in https://github.com/vcstuff/draft-looker-jwt-cwt-status-list/issues/17#issuecomment-1584372077_\r\n            ",
       "createdAt": "2023-06-12T15:25:01Z",
-      "updatedAt": "2023-06-13T18:05:25Z",
+      "updatedAt": "2023-07-11T06:11:22Z",
       "closedAt": null,
       "comments": [
         {
@@ -645,6 +701,13 @@
           "body": "yes!",
           "createdAt": "2023-06-13T18:05:24Z",
           "updatedAt": "2023-06-13T18:05:24Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "It's available in the example https://vcstuff.github.io/draft-looker-oauth-jwt-cwt-status-list/draft-looker-oauth-jwt-cwt-status-list.html#section-4.2-3 but its missing from the text. In general some text about header parameters is needed",
+          "createdAt": "2023-07-11T06:11:16Z",
+          "updatedAt": "2023-07-11T06:11:16Z"
         }
       ]
     },
@@ -657,10 +720,12 @@
       "author": "Sakurann",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "02"
+      ],
       "body": "remaining issue from PR #20. \r\n\r\nalternatives are \"referencing token\".",
       "createdAt": "2023-06-13T19:20:19Z",
-      "updatedAt": "2023-06-16T09:49:06Z",
+      "updatedAt": "2023-07-11T06:09:22Z",
       "closedAt": null,
       "comments": [
         {
@@ -758,6 +823,78 @@
           "updatedAt": "2023-06-21T06:08:57Z"
         }
       ]
+    },
+    {
+      "number": 38,
+      "id": "I_kwDOJZ2aqs5rLl0G",
+      "title": "Mixing JSON and CBOR formats",
+      "url": "https://github.com/vcstuff/draft-looker-oauth-jwt-cwt-status-list/issues/38",
+      "state": "OPEN",
+      "author": "paulbastian",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Is it allowed/recommended to have Status List Token in one format and the Referenced Token in another format?",
+      "createdAt": "2023-07-11T06:25:53Z",
+      "updatedAt": "2023-07-11T06:25:53Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 39,
+      "id": "I_kwDOJZ2aqs5rNHtH",
+      "title": "Use zlib instead of Gzip?",
+      "url": "https://github.com/vcstuff/draft-looker-oauth-jwt-cwt-status-list/issues/39",
+      "state": "OPEN",
+      "author": "paulbastian",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Gzip is for files and uses zlib internally",
+      "createdAt": "2023-07-11T10:15:27Z",
+      "updatedAt": "2023-07-12T15:17:06Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "paulbastian",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "After some research to the difference between gzip, zlib and Deflate, I would propose to consider zlib instead Gzip:\r\n- both rely on Deflate compression algorithm\r\n- Gzip is more focused on files\r\n- Gzip contains more metadata that we do not need as they are redundant in JWT or deprecated (modifytime, content type)\r\n- header is a little smaller",
+          "createdAt": "2023-07-12T15:17:05Z",
+          "updatedAt": "2023-07-12T15:17:05Z"
+        }
+      ]
+    },
+    {
+      "number": 40,
+      "id": "I_kwDOJZ2aqs5rRCxi",
+      "title": "Rename claim names of Referenced Token",
+      "url": "https://github.com/vcstuff/draft-looker-oauth-jwt-cwt-status-list/issues/40",
+      "state": "OPEN",
+      "author": "paulbastian",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "@tlodderstedt propoeses to:\r\n\r\n- rename `status` to something shorter\r\n- rename `uri` to `slt` (status list token)",
+      "createdAt": "2023-07-11T19:31:30Z",
+      "updatedAt": "2023-07-11T19:31:30Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 41,
+      "id": "I_kwDOJZ2aqs5rRDt8",
+      "title": "Does Status List need to be signed as JWT?",
+      "url": "https://github.com/vcstuff/draft-looker-oauth-jwt-cwt-status-list/issues/41",
+      "state": "OPEN",
+      "author": "paulbastian",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "@bc-pi questions whether Status List needs to be signed as a JWT and what are the arguments for doing so",
+      "createdAt": "2023-07-11T19:34:19Z",
+      "updatedAt": "2023-07-11T19:34:19Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
